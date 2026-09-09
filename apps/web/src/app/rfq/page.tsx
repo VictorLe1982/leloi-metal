@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Button, Card, FormGroup, Input, Select, Textarea } from '@leloi/ui';
 import { BuyerTypeCode } from '@leloi/types';
 import { trackB2BEvent } from '@leloi/analytics';
@@ -18,7 +19,13 @@ import {
   AlertCircle
 } from 'lucide-react';
 
-export default function RfqPage() {
+function RfqFormContent() {
+  const searchParams = useSearchParams();
+  const productParam = searchParams.get('product');
+  const categoryParam = searchParams.get('category');
+  const alloyParam = searchParams.get('alloy');
+  const modeParam = searchParams.get('mode');
+
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedRfq, setSubmittedRfq] = useState<{
@@ -74,6 +81,22 @@ export default function RfqPage() {
   });
 
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (productParam) {
+      setFormData((prev) => ({
+        ...prev,
+        product: {
+          ...prev.product,
+          profileDescription: `Inquiry for product: ${productParam.replace(/-/g, ' ')}`,
+          alloy: alloyParam || prev.product.alloy
+        }
+      }));
+    }
+    if (modeParam === 'upload') {
+      setCurrentStep(4);
+    }
+  }, [productParam, categoryParam, alloyParam, modeParam]);
 
   const updateCompany = (key: string, value: any) =>
     setFormData((prev) => ({ ...prev, company: { ...prev.company, [key]: value } }));
@@ -712,5 +735,13 @@ export default function RfqPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RfqPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate-500 font-medium">Loading RFQ Builder...</div>}>
+      <RfqFormContent />
+    </Suspense>
   );
 }

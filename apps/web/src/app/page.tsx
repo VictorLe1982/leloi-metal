@@ -83,65 +83,86 @@ export default function HomePage() {
               {/* Micro trust indicators */}
               <div className="pt-4 flex flex-wrap justify-center lg:justify-start items-center gap-6 text-xs text-slate-300 font-medium">
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#2F7BFF]" />
-                  24h Engineering DFM Review
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  Confidential Drawing Storage & Bilateral NDA
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  Confidential CAD Storage & NDA
+                  <CheckCircle2 className="w-4 h-4 text-[#2F7BFF]" />
+                  Custom Profile Engineering & DFM
                 </span>
                 <span className="flex items-center gap-1.5">
                   <FileCheck className="w-4 h-4 text-[#2F7BFF]" />
-                  ASTM / EN 755 Compliant
+                  Origin-Certified (CPTPP / EVFTA / VKFTA)
                 </span>
               </div>
             </div>
 
-            {/* Hero Visual Card: Technical Extrusion Specifications */}
+            {/* Hero Visual Card: 4 Verified Core Capabilities */}
             <div className="lg:col-span-5">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 shadow-2xl text-slate-100">
-                <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 shadow-2xl text-slate-100 space-y-5">
+                <div className="flex items-center justify-between pb-3 border-b border-white/10">
                   <div className="text-xs uppercase font-heading font-semibold text-[#2F7BFF] tracking-wider">
-                    Manufacturing Capabilities At A Glance
+                    Core Manufacturing Capabilities
                   </div>
-                  <span className="text-[11px] font-mono bg-white/10 px-2 py-0.5 rounded text-slate-200">
-                    OEM / Tier 1
+                  <span className="text-[11px] font-mono bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded border border-emerald-400/30">
+                    VERIFIED
                   </span>
                 </div>
 
-                <div className="space-y-4 text-sm">
-                  <div className="flex items-start justify-between py-2 border-b border-white/10">
-                    <span className="text-slate-300">Alloy Capabilities:</span>
-                    <span className="font-semibold text-white font-mono">6063, 6061, 6005A, 6082</span>
+                <div className="space-y-3.5 text-xs sm:text-sm">
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                    <div className="font-bold text-white flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F7BFF]" />
+                      Custom Extrusion Tooling & Dies
+                    </div>
+                    <div className="text-slate-300 text-xs pl-3.5">
+                      Solid, hollow, and complex multi-void profiles engineered from proprietary 2D/3D customer drawings.
+                    </div>
                   </div>
-                  <div className="flex items-start justify-between py-2 border-b border-white/10">
-                    <span className="text-slate-300">Temper Treatments:</span>
-                    <span className="font-semibold text-white font-mono">T4, T5, T6, T66</span>
+
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                    <div className="font-bold text-white flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F7BFF]" />
+                      Precision CNC Machining & Fabrication
+                    </div>
+                    <div className="text-slate-300 text-xs pl-3.5">
+                      Mitre cutting, slot punching, drilling, tapping, and CNC milling tailored to industrial assemblies.
+                    </div>
                   </div>
-                  <div className="flex items-start justify-between py-2 border-b border-white/10">
-                    <span className="text-slate-300">Secondary CNC:</span>
-                    <span className="font-semibold text-white">3/4-Axis Milling, Punch, Tap</span>
+
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                    <div className="font-bold text-white flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F7BFF]" />
+                      Protective Surface Finishing
+                    </div>
+                    <div className="text-slate-300 text-xs pl-3.5">
+                      Clear & satin color anodizing (up to 25µm) and electrostatic architectural powder coating.
+                    </div>
                   </div>
-                  <div className="flex items-start justify-between py-2 border-b border-white/10">
-                    <span className="text-slate-300">Surface Treatments:</span>
-                    <span className="font-semibold text-white">Anodized, Powder Coat, Sandblast</span>
-                  </div>
-                  <div className="flex items-start justify-between py-2">
-                    <span className="text-slate-300">Target Export Lead:</span>
-                    <span className="font-semibold text-white">FOB Hai Phong / Da Nang / Cat Lai</span>
+
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                    <div className="font-bold text-white flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      Confidential Intellectual Property Protection
+                    </div>
+                    <div className="text-slate-300 text-xs pl-3.5">
+                      Customer profile dies are proprietary and protected under signed Non-Disclosure Agreements (NDA).
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-white/10">
+                <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs">
                   <Link
-                    href="/tools/aluminium-weight-calculator"
-                    className="flex items-center justify-between p-3 rounded-lg bg-white/10 hover:bg-white/15 transition-all text-xs text-white"
+                    href="/rfq?mode=upload"
+                    className="text-[#2F7BFF] hover:underline font-semibold flex items-center gap-1"
                   >
-                    <span className="flex items-center gap-2">
-                      <Scale className="w-4 h-4 text-[#2F7BFF]" />
-                      Calculate Profile Theoretical Weight
-                    </span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    Upload Drawing for DFM Review <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                  <Link
+                    href="/capabilities"
+                    className="text-slate-300 hover:text-white transition-colors"
+                  >
+                    Explore Facilities →
                   </Link>
                 </div>
               </div>
@@ -162,21 +183,21 @@ export default function HomePage() {
             </div>
           </div>
           <div className="p-4 bg-white rounded-lg border border-[#E2E8F0] shadow-xs">
-            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">EN 755 / ASTM</div>
+            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">0% Duty</div>
             <div className="text-xs font-medium text-slate-600 uppercase tracking-wider mt-1">
-              International Tolerances
+              FTA Preferential (CPTPP / EVFTA)
             </div>
           </div>
           <div className="p-4 bg-white rounded-lg border border-[#E2E8F0] shadow-xs">
-            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">&lt; 24h</div>
+            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">Direct Port</div>
             <div className="text-xs font-medium text-slate-600 uppercase tracking-wider mt-1">
-              Engineering DFM Response
+              Hai Phong & Cat Lai Logistics
             </div>
           </div>
           <div className="p-4 bg-white rounded-lg border border-[#E2E8F0] shadow-xs">
-            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">Global</div>
+            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">Strict NDA</div>
             <div className="text-xs font-medium text-slate-600 uppercase tracking-wider mt-1">
-              Direct Sea-Freight Export
+              Confidential CAD Data Security
             </div>
           </div>
         </div>

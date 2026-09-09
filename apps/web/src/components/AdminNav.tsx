@@ -36,12 +36,10 @@ export const AdminNav: React.FC = () => {
     <div className="bg-[#061D3B] text-white border-b border-white/10 px-4 sm:px-8 py-3">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-6">
-          <Link href="/admin/dashboard" className="flex items-center gap-2">
-            <span className="font-heading font-extrabold text-base tracking-wider text-white">
-              LELOI<span className="text-[#2F7BFF]">METAL</span>
-            </span>
+          <Link href="/admin/dashboard" className="flex items-center gap-3">
+            <Logo variant="horizontal" theme="dark" iconSize={32} />
             <span className="text-[10px] bg-blue-500/20 text-blue-300 font-mono px-2 py-0.5 rounded border border-blue-400/30">
-              INTERNAL CRM / BACK-OFFICE
+              CRM BACK-OFFICE
             </span>
           </Link>
 
