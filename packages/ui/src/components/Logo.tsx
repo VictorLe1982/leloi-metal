@@ -5,90 +5,132 @@ export interface LogoProps {
   theme?: 'light' | 'dark';
   showSlogan?: boolean;
   className?: string;
+  width?: number;
   iconSize?: number;
+  responsiveSlogan?: boolean;
 }
 
 /**
- * Pure SVG Fallback for Two-L Mark
+ * Official Two-L Mark Component
  */
 export const TwoLMark: React.FC<{
   size?: number;
   theme?: 'light' | 'dark';
   className?: string;
-}> = ({ size = 48, theme = 'light', className = '' }) => {
+}> = ({ size = 44, className = '' }) => {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src="/images/brand/logo-symbol.png"
       alt="LELOI METAL Two-L Symbol"
       width={size}
-      height={size}
+      height={Math.round(size * 0.75)}
       className={`object-contain ${className}`}
-      style={{ width: `${size}px`, height: `${size}px` }}
+      style={{ width: `${size}px`, height: 'auto' }}
     />
   );
 };
 
 /**
- * Official LELOI METAL Logo Image Component
- * Renders authentic raster assets extracted directly from the approved Brand Identity Board.
- * Eliminates font distortion, text discrepancies and scaling artifacts.
+ * Official LELOI METAL Logo Component
+ * CODEX V3 Compliant:
+ * - Uses approved transparent PNGs (no background, no bounding box artifacts)
+ * - Desktop width: 180–205px (Header), 210–240px (Footer)
+ * - Preserves aspect ratio with object-contain and height: auto
+ * - Responsive slogan hiding below ~1180px when enabled
  */
 export const Logo: React.FC<LogoProps> = ({
   variant = 'horizontal',
   theme = 'light',
+  showSlogan = true,
   className = '',
-  iconSize = 44
+  width,
+  iconSize = 44,
+  responsiveSlogan = false
 }) => {
   const isDark = theme === 'dark';
 
   if (variant === 'icon') {
     return (
-      <div className={`inline-flex items-center ${className}`}>
+      <div className={`inline-flex items-center shrink-0 ${className}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/brand/logo-symbol.png"
-          alt="LELOI METAL Two-L Profile Symbol"
+          alt="LELOI METAL Symbol"
           width={iconSize}
-          height={iconSize}
+          height={Math.round(iconSize * 0.75)}
           className="object-contain"
-          style={{ width: `${iconSize}px`, height: `${iconSize}px` }}
+          style={{ width: `${iconSize}px`, height: 'auto' }}
         />
       </div>
     );
   }
 
   if (variant === 'stacked') {
-    const height = Math.round(iconSize * 1.5);
+    const targetWidth = width || 160;
+    const imageSrc = isDark
+      ? '/images/brand/logo-white-transparent.png'
+      : '/images/brand/logo-primary-transparent.png';
     return (
-      <div className={`inline-flex flex-col items-center select-none ${className}`}>
+      <div className={`inline-flex flex-col items-center select-none shrink-0 ${className}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/brand/logo-stacked.png"
+          src={imageSrc}
           alt="LELOI METAL - Aluminium for a Better World"
-          height={height}
-          className="object-contain h-auto"
-          style={{ maxHeight: `${height}px` }}
+          width={targetWidth}
+          className="object-contain w-auto h-auto max-w-full"
+          style={{ width: `${targetWidth}px` }}
         />
       </div>
     );
   }
 
   // Default: Horizontal Logo
-  const height = iconSize;
-  const imageSrc = isDark
-    ? '/images/brand/logo-horizontal-dark.png'
-    : '/images/brand/logo-horizontal-light.png';
+  // Header standard: 185-200px. Footer standard: 210-235px.
+  const targetWidth = width || (isDark ? 220 : 195);
+  const fullSrc = isDark
+    ? '/images/brand/logo-white-transparent.png'
+    : '/images/brand/logo-primary-transparent.png';
+  const noSloganSrc = isDark
+    ? '/images/brand/logo-white-no-slogan.png'
+    : '/images/brand/logo-primary-no-slogan.png';
+
+  if (responsiveSlogan) {
+    return (
+      <div className={`inline-flex items-center select-none shrink-0 ${className}`}>
+        {/* With Slogan on >= 1180px */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={fullSrc}
+          alt="LELOI METAL - Aluminium for a Better World"
+          width={targetWidth}
+          className="hidden min-[1180px]:block object-contain h-auto"
+          style={{ width: `${targetWidth}px` }}
+        />
+        {/* Without Slogan on < 1180px */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={noSloganSrc}
+          alt="LELOI METAL"
+          width={Math.round(targetWidth * 0.88)}
+          className="block min-[1180px]:hidden object-contain h-auto"
+          style={{ width: `${Math.round(targetWidth * 0.88)}px` }}
+        />
+      </div>
+    );
+  }
+
+  const selectedSrc = showSlogan ? fullSrc : noSloganSrc;
 
   return (
-    <div className={`inline-flex items-center select-none ${className}`}>
+    <div className={`inline-flex items-center select-none shrink-0 ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={imageSrc}
+        src={selectedSrc}
         alt="LELOI METAL - Aluminium for a Better World"
-        height={height}
-        className="object-contain w-auto rounded-xs"
-        style={{ height: `${height}px`, maxHeight: `${height}px` }}
+        width={targetWidth}
+        className="object-contain h-auto max-w-full"
+        style={{ width: `${targetWidth}px` }}
       />
     </div>
   );

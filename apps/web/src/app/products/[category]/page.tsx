@@ -134,7 +134,7 @@ export default async function CategoryLandingPage({
                 {category.name} Profiles ({categoryProducts.length})
               </h2>
               <p className="text-xs text-slate-500">
-                Verified technical configurations engineered in Vietnam for global B2B supply chains.
+                Engineered in Vietnam for global B2B supply chains according to customer specifications.
               </p>
             </div>
             <Link

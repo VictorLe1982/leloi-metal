@@ -22,9 +22,14 @@ import {
 } from 'lucide-react';
 
 export function generateStaticParams() {
-  return PRODUCTS_V2.map((p) => ({
-    slug: p.slug
-  }));
+  const params: { slug: string }[] = [];
+  PRODUCTS_V2.forEach((p) => {
+    params.push({ slug: p.slug });
+    if (p.aliases) {
+      p.aliases.forEach((alias) => params.push({ slug: alias }));
+    }
+  });
+  return params;
 }
 
 export async function generateMetadata({
@@ -33,7 +38,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = PRODUCTS_V2.find((p) => p.slug === slug);
+  const product = PRODUCTS_V2.find((p) => p.slug === slug || (p.aliases && p.aliases.includes(slug)));
 
   if (!product) {
     return {
@@ -59,7 +64,7 @@ export default async function ProductDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = PRODUCTS_V2.find((p) => p.slug === slug);
+  const product = PRODUCTS_V2.find((p) => p.slug === slug || (p.aliases && p.aliases.includes(slug)));
 
   if (!product) {
     notFound();
@@ -69,7 +74,38 @@ export default async function ProductDetailPage({
     (p) => p.category === product.category && p.slug !== product.slug
   ).slice(0, 3);
 
-  // Schema.org Product JSON-LD
+  // Schema.org Structured Data: Product + BreadcrumbList
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://leloimetal.com'
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Products',
+        item: 'https://leloimetal.com/products'
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.categoryName,
+        item: `https://leloimetal.com/products/${product.category}`
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: product.name,
+        item: `https://leloimetal.com/product/${product.slug}`
+      }
+    ]
+  };
+
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -90,9 +126,15 @@ export default async function ProductDetailPage({
     }
   };
 
+  const rfqQuery = `product_id=${product.id}&slug=${product.slug}&product=${product.slug}&category=${product.category}&alloy=${product.alloys[0]}&source=product_detail`;
+
   return (
     <div className="min-h-screen bg-[#F1F4F8]/60 py-10 px-4 sm:px-6 lg:px-8">
       {/* Inject Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
@@ -139,7 +181,7 @@ export default async function ProductDetailPage({
                   {product.profileGeometry} Section
                 </span>
                 <span className="text-slate-300">•</span>
-                <Badge variant="verified" size="sm">
+                <Badge variant={product.verificationStatus === 'VERIFIED' ? 'verified' : 'unverified'} size="sm">
                   {product.verificationStatus}
                 </Badge>
               </div>
@@ -163,13 +205,13 @@ export default async function ProductDetailPage({
                   <span className="font-semibold text-[#0A2D5B]">{product.profileGeometry}</span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-slate-200/60">
-                  <span className="text-slate-500 font-medium">Verified Alloys:</span>
+                  <span className="text-slate-500 font-medium">Standard Alloys:</span>
                   <span className="font-mono font-bold text-[#2F7BFF]">
                     {product.alloys.join(', ')}
                   </span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-slate-200/60">
-                  <span className="text-slate-500 font-medium">Verified Tempers:</span>
+                  <span className="text-slate-500 font-medium">Available Tempers:</span>
                   <span className="font-mono font-bold text-slate-700">
                     {product.tempers.join(', ')}
                   </span>
@@ -181,9 +223,9 @@ export default async function ProductDetailPage({
                   </span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="text-slate-500 font-medium">Proprietary Drawing:</span>
+                  <span className="text-slate-500 font-medium">Tooling / Drawing:</span>
                   <span className="font-bold text-emerald-700">
-                    {product.requiresDrawing ? 'Required (2D/3D)' : 'Standard Extrusion'}
+                    {product.requiresDrawing ? 'Custom 2D/3D CAD Drawing' : 'Standard Metric Tooling'}
                   </span>
                 </div>
               </div>
@@ -192,7 +234,7 @@ export default async function ProductDetailPage({
             {/* CTAs */}
             <div className="space-y-3 pt-2">
               <Link
-                href={`/rfq?product=${product.slug}&category=${product.category}&alloy=${product.alloys[0]}&source=product_detail`}
+                href={`/rfq?${rfqQuery}`}
                 className="block"
               >
                 <Button variant="cta" size="lg" className="w-full" rightIcon={<ArrowRight className="w-4 h-4" />}>
@@ -200,7 +242,7 @@ export default async function ProductDetailPage({
                 </Button>
               </Link>
               <Link
-                href={`/rfq?product=${product.slug}&category=${product.category}&mode=upload`}
+                href={`/rfq?${rfqQuery}&mode=upload`}
                 className="block"
               >
                 <Button
@@ -237,10 +279,10 @@ export default async function ProductDetailPage({
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold font-heading text-[#0A2D5B] flex items-center gap-2">
                 <Settings className="w-5 h-5 text-[#2F7BFF]" />
-                Verified Engineering Specifications
+                Engineering Specifications & Sourcing Constraints
               </h2>
               <span className="text-xs text-slate-400">
-                Values reflect verified factory tooling constraints
+                Specifications calibrated upon drawing review
               </span>
             </div>
 
@@ -384,9 +426,9 @@ export default async function ProductDetailPage({
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-2.5 right-2.5">
-                      <Badge variant="verified" size="sm">
+                      <span className="text-[9px] font-mono font-bold bg-white/95 text-slate-700 px-1.5 py-0.5 rounded shadow-xs border border-slate-200">
                         {rel.profileGeometry}
-                      </Badge>
+                      </span>
                     </div>
                   </div>
                   <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
@@ -406,7 +448,7 @@ export default async function ProductDetailPage({
                         View Profile <ChevronRight className="w-3 h-3" />
                       </Link>
                       <Link
-                        href={`/rfq?product=${rel.slug}&category=${rel.category}`}
+                        href={`/rfq?product_id=${rel.id}&slug=${rel.slug}&product=${rel.slug}&category=${rel.category}`}
                         className="text-xs font-semibold text-slate-600 hover:text-[#0A2D5B]"
                       >
                         RFQ
@@ -435,7 +477,7 @@ export default async function ProductDetailPage({
 
           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
             <Link
-              href={`/rfq?product=${product.slug}&category=${product.category}&mode=upload`}
+              href={`/rfq?${rfqQuery}&mode=upload`}
               className="w-full sm:w-auto"
             >
               <Button
@@ -448,7 +490,7 @@ export default async function ProductDetailPage({
               </Button>
             </Link>
             <Link
-              href={`/rfq?product=${product.slug}&category=${product.category}&alloy=${product.alloys[0]}`}
+              href={`/rfq?${rfqQuery}`}
               className="w-full sm:w-auto"
             >
               <Button

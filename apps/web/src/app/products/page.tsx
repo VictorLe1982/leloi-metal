@@ -3,7 +3,8 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Card, Badge, Button } from '@leloi/ui';
-import { PRODUCTS_V2, CATEGORIES_V2, ProductCatalogItem } from '@leloi/types';
+import { PRODUCTS_V2, CATEGORIES_V2 } from '@leloi/types';
+import { ProductCard } from '@/components/catalog/ProductCard';
 import {
   Search,
   Filter,
@@ -11,12 +12,9 @@ import {
   FileUp,
   Scale,
   CheckCircle2,
-  Layers,
-  Sparkles,
   SlidersHorizontal,
   RotateCcw,
   X,
-  ShieldCheck,
   ChevronRight
 } from 'lucide-react';
 
@@ -39,6 +37,7 @@ export default function ProductsCatalogPage() {
         selectedFinish === 'all' ||
         p.surfaceFinishes.some((f) => f.toLowerCase().includes(selectedFinish.toLowerCase()));
       const matchSearch =
+        searchQuery.trim() === '' ||
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.applications.some((app) => app.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -47,6 +46,13 @@ export default function ProductsCatalogPage() {
       return matchCategory && matchGeometry && matchAlloy && matchFinish && matchSearch;
     });
   }, [selectedCategory, selectedGeometry, selectedAlloy, selectedFinish, searchQuery]);
+
+  const hasActiveFilters =
+    selectedCategory !== 'all' ||
+    selectedGeometry !== 'all' ||
+    selectedAlloy !== 'all' ||
+    selectedFinish !== 'all' ||
+    searchQuery.trim() !== '';
 
   const handleResetFilters = () => {
     setSelectedCategory('all');
@@ -68,9 +74,9 @@ export default function ProductsCatalogPage() {
     <div className="min-h-screen bg-[#F1F4F8]/60 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-10">
         {/* Compact Hero */}
-        <div className="bg-gradient-to-br from-[#061D3B] to-[#0A2D5B] text-white rounded-2xl p-8 sm:p-12 shadow-lg relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#061D3B] via-[#0A2D5B] to-[#0F3A72] text-white rounded-2xl p-8 sm:p-12 shadow-lg relative overflow-hidden">
           <div className="max-w-3xl space-y-4">
-            <div className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF]">
+            <div className="text-xs uppercase font-mono font-semibold tracking-widest text-[#2F7BFF]">
               B2B TECHNICAL PRODUCT CATALOGUE
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
@@ -98,7 +104,7 @@ export default function ProductsCatalogPage() {
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
           <button
             onClick={() => setSelectedCategory('all')}
-            className={`px-4 py-2 rounded-xl text-xs font-heading font-semibold whitespace-nowrap transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs font-heading font-semibold whitespace-nowrap transition-all cursor-pointer ${
               selectedCategory === 'all'
                 ? 'bg-[#0A2D5B] text-white shadow-xs'
                 : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -113,7 +119,7 @@ export default function ProductsCatalogPage() {
               <button
                 key={cat.slug}
                 onClick={() => setSelectedCategory(cat.slug)}
-                className={`px-4 py-2 rounded-xl text-xs font-heading font-semibold whitespace-nowrap transition-all ${
+                className={`px-4 py-2 rounded-xl text-xs font-heading font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   isSelected
                     ? 'bg-[#2F7BFF] text-white shadow-xs'
                     : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -125,25 +131,22 @@ export default function ProductsCatalogPage() {
           })}
         </div>
 
-        {/* Main Content Layout: Sticky Sidebar + Product Grid */}
+        {/* Main Catalog Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Desktop Filter Sidebar (Sticky) */}
-          <aside className="hidden lg:block lg:col-span-3 bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-xs space-y-6 sticky top-28">
+          <aside className="hidden lg:block lg:col-span-3 bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-xs space-y-6 sticky top-24">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <span className="font-heading font-bold text-sm text-[#0A2D5B] flex items-center gap-1.5">
+              <div className="flex items-center gap-2 text-sm font-bold font-heading text-[#0A2D5B]">
                 <SlidersHorizontal className="w-4 h-4 text-[#2F7BFF]" />
-                Filter Specifications
-              </span>
-              {(selectedCategory !== 'all' ||
-                selectedGeometry !== 'all' ||
-                selectedAlloy !== 'all' ||
-                selectedFinish !== 'all' ||
-                searchQuery !== '') && (
+                Filter Catalog
+              </div>
+              {hasActiveFilters && (
                 <button
                   onClick={handleResetFilters}
-                  className="text-[11px] text-[#2F7BFF] hover:underline flex items-center gap-1"
+                  className="text-xs text-[#2F7BFF] hover:underline flex items-center gap-1 font-medium cursor-pointer"
                 >
-                  <RotateCcw className="w-3 h-3" /> Reset
+                  <RotateCcw className="w-3 h-3" />
+                  Reset
                 </button>
               )}
             </div>
@@ -154,18 +157,45 @@ export default function ProductsCatalogPage() {
                 Search Catalog
               </label>
               <div className="relative">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-3 text-slate-400" />
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Keyword, alloy, application..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-8 pr-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
+                  className="w-full pl-9 pr-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
                 />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
             </div>
 
-            {/* Profile Geometry Filter */}
+            {/* Category Filter */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
+                Product Category
+              </label>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
+              >
+                <option value="all">All 6 Categories</option>
+                {CATEGORIES_V2.map((c) => (
+                  <option key={c.slug} value={c.slug}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Profile Geometry */}
             <div className="space-y-1.5">
               <label className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
                 Profile Geometry
@@ -176,20 +206,20 @@ export default function ProductsCatalogPage() {
                 className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
               >
                 <option value="all">All Geometries</option>
-                <option value="Solid">Solid Sections</option>
-                <option value="Hollow">Hollow / Tubular</option>
-                <option value="Semi-Hollow">Semi-Hollow Channels</option>
+                <option value="Solid">Solid Section</option>
+                <option value="Hollow">Hollow Tube / Box</option>
+                <option value="Semi-Hollow">Semi-Hollow Channel</option>
                 <option value="Complex Multi-Void">Complex Multi-Void</option>
-                <option value="T-Slot Modular">T-Slot Modular</option>
-                <option value="Fin Array">Fin Array / Heat Sink</option>
-                <option value="CNC Component">CNC Milled Component</option>
+                <option value="T-Slot Modular">T-Slot / V-Slot Modular</option>
+                <option value="Fin Array">Fin Array (Heat Sink)</option>
+                <option value="CNC Component">CNC Machined Component</option>
               </select>
             </div>
 
-            {/* Alloy Selection */}
+            {/* Verified Alloy Selection */}
             <div className="space-y-1.5">
               <label className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
-                Alloy Grade
+                Alloy Family
               </label>
               <select
                 value={selectedAlloy}
@@ -222,7 +252,7 @@ export default function ProductsCatalogPage() {
               </select>
             </div>
 
-            {/* Category Landing Fast-Links */}
+            {/* Category Dossiers Links */}
             <div className="pt-4 border-t border-slate-100 space-y-2">
               <div className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
                 Category Dossiers
@@ -258,12 +288,20 @@ export default function ProductsCatalogPage() {
           </div>
 
           {/* Product Grid Area */}
-          <div className="lg:col-span-9 space-y-8">
-            {/* Header info strip */}
-            <div className="flex items-center justify-between text-xs text-slate-500">
-              <span>
-                Displaying <strong>{filteredProducts.length}</strong> verified technical products
-              </span>
+          <div className="lg:col-span-9 space-y-6">
+            {/* Header info strip - CODEX V3 COMPLIANT */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-600 bg-white p-4 rounded-xl border border-[#E2E8F0]">
+              <div>
+                <span>
+                  Explore <strong>{filteredProducts.length}</strong> aluminium product families
+                </span>
+                {searchQuery && (
+                  <span className="text-slate-400 ml-1">
+                    matching &ldquo;{searchQuery}&rdquo;
+                  </span>
+                )}
+              </div>
+
               {selectedCategory !== 'all' && (
                 <Link
                   href={`/products/${selectedCategory}`}
@@ -274,110 +312,87 @@ export default function ProductsCatalogPage() {
               )}
             </div>
 
-            {/* 3-Column Grid */}
+            {/* Active Filter Chips Bar */}
+            {hasActiveFilters && (
+              <div className="flex flex-wrap items-center gap-2 bg-[#F8FAFC] p-3 rounded-xl border border-slate-200 text-xs">
+                <span className="text-slate-500 font-medium">Active Filters:</span>
+                {selectedCategory !== 'all' && (
+                  <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
+                    Category: {CATEGORIES_V2.find((c) => c.slug === selectedCategory)?.name}
+                    <button onClick={() => setSelectedCategory('all')} className="hover:text-red-500 cursor-pointer">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+                {selectedGeometry !== 'all' && (
+                  <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
+                    Geometry: {selectedGeometry}
+                    <button onClick={() => setSelectedGeometry('all')} className="hover:text-red-500 cursor-pointer">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+                {selectedAlloy !== 'all' && (
+                  <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
+                    Alloy: {selectedAlloy}
+                    <button onClick={() => setSelectedAlloy('all')} className="hover:text-red-500 cursor-pointer">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+                {selectedFinish !== 'all' && (
+                  <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
+                    Finish: {selectedFinish}
+                    <button onClick={() => setSelectedFinish('all')} className="hover:text-red-500 cursor-pointer">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+                {searchQuery && (
+                  <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
+                    Search: &ldquo;{searchQuery}&rdquo;
+                    <button onClick={() => setSearchQuery('')} className="hover:text-red-500 cursor-pointer">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+                <button
+                  onClick={handleResetFilters}
+                  className="text-[#2F7BFF] font-semibold hover:underline ml-auto cursor-pointer"
+                >
+                  Clear all
+                </button>
+              </div>
+            )}
+
+            {/* 3-Column Grid (CODEX V3 Redesigned ProductCard) */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredProducts.map((prod, idx) => {
                 const isCompared = compareList.includes(prod.slug);
 
                 return (
                   <React.Fragment key={prod.slug}>
-                    <Card
-                      variant="default"
-                      className="p-0 overflow-hidden flex flex-col justify-between border border-[#E2E8F0] hover:border-[#2F7BFF] hover:shadow-md transition-all group bg-white"
-                    >
-                      {/* 4:3 Studio Image */}
-                      <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={prod.primaryImage}
-                          alt={`${prod.name} 4:3 technical extrusion render`}
-                          className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                          loading="lazy"
-                        />
-                        <div className="absolute top-2.5 left-2.5 flex items-center gap-1">
-                          <span className="text-[10px] font-bold bg-[#0A2D5B]/90 text-white px-2 py-0.5 rounded backdrop-blur-xs font-heading uppercase">
-                            {prod.categoryName}
-                          </span>
-                        </div>
-                        <div className="absolute top-2.5 right-2.5">
-                          <span className="text-[9px] font-mono font-bold bg-white/95 text-slate-700 px-1.5 py-0.5 rounded shadow-xs border border-slate-200">
-                            {prod.profileGeometry}
-                          </span>
-                        </div>
-                      </div>
+                    <ProductCard
+                      product={prod}
+                      isCompared={isCompared}
+                      onToggleCompare={toggleCompare}
+                      priority={idx < 3}
+                    />
 
-                      {/* Content Details */}
-                      <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
-                        <div className="space-y-2">
-                          <Link href={`/product/${prod.slug}`}>
-                            <h3 className="font-heading font-bold text-base text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors line-clamp-1 leading-snug">
-                              {prod.name}
-                            </h3>
-                          </Link>
-                          <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                            {prod.shortDescription}
-                          </p>
-
-                          {/* 3 Verified Chips */}
-                          <div className="flex flex-wrap gap-1 pt-1">
-                            {prod.verifiedChips.slice(0, 3).map((chip, cIdx) => (
-                              <span
-                                key={cIdx}
-                                className="text-[10px] bg-blue-50 text-blue-800 font-semibold px-2 py-0.5 rounded"
-                              >
-                                {chip}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                          <Link href={`/product/${prod.slug}`} className="flex-1">
-                            <Button variant="primary" size="sm" className="w-full text-xs">
-                              View Product
-                            </Button>
-                          </Link>
-                          <Link
-                            href={`/rfq?product=${prod.slug}&category=${prod.category}&source=catalog`}
-                            className="shrink-0"
-                          >
-                            <Button variant="outline" size="sm" className="text-xs px-2.5">
-                              RFQ
-                            </Button>
-                          </Link>
-                          <button
-                            onClick={() => toggleCompare(prod.slug)}
-                            className={`p-2 rounded-lg border text-xs transition-colors ${
-                              isCompared
-                                ? 'bg-blue-600 text-white border-blue-600'
-                                : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'
-                            }`}
-                            title="Compare Profile"
-                          >
-                            <Scale className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </div>
-                    </Card>
-
-                    {/* Engineering Callout Strip after every 6 items */}
-                    {(idx + 1) % 6 === 0 && (
-                      <div className="col-span-1 md:col-span-2 xl:col-span-3 bg-gradient-to-r from-[#061D3B] to-[#0A2D5B] text-white rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm my-2">
+                    {/* Engineering Callout Strip after every 6 products */}
+                    {(idx + 1) % 6 === 0 && idx + 1 < filteredProducts.length && (
+                      <div className="col-span-1 md:col-span-2 xl:col-span-3 bg-gradient-to-r from-[#061D3B] to-[#0A2D5B] text-white p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 my-2 border border-slate-700 shadow-md">
                         <div className="space-y-1 text-center sm:text-left">
-                          <div className="text-xs uppercase font-mono font-semibold text-[#2F7BFF]">
-                            CUSTOM DIES & NON-STANDARD CROSS SECTIONS
-                          </div>
-                          <h4 className="text-lg sm:text-xl font-bold font-heading">
-                            Can&apos;t find your exact section? Send us your drawing.
+                          <h4 className="font-heading font-bold text-base text-white">
+                            Can&apos;t find your exact extrusion geometry?
                           </h4>
-                          <p className="text-xs text-slate-300">
-                            STEP / DWG / DXF / PDF accepted. Our tooling engineers provide free DFM die verification within 24 hours.
+                          <p className="text-xs text-slate-300 max-w-xl">
+                            We manufacture 100% made-to-drawing profiles from customer STEP, DWG, DXF, or PDF files. Complete DFM flow analysis and die tooling quotes issued within 24 hours.
                           </p>
                         </div>
                         <Link href="/rfq?mode=upload" className="shrink-0">
-                          <Button variant="cta" size="md" leftIcon={<FileUp className="w-4 h-4" />}>
-                            Upload Drawing
+                          <Button variant="cta" size="sm" leftIcon={<FileUp className="w-4 h-4" />}>
+                            Upload Your Drawing
                           </Button>
                         </Link>
                       </div>
@@ -386,35 +401,157 @@ export default function ProductsCatalogPage() {
                 );
               })}
             </div>
+
+            {filteredProducts.length === 0 && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-4">
+                <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
+                  <Search className="w-6 h-6" />
+                </div>
+                <h3 className="font-heading font-bold text-lg text-[#0A2D5B]">
+                  No matching aluminium profiles found
+                </h3>
+                <p className="text-xs text-slate-500 max-w-md mx-auto">
+                  Try adjusting your search criteria or resetting filters to view all standard and custom profiles.
+                </p>
+                <Button variant="outline" size="sm" onClick={handleResetFilters}>
+                  Reset All Filters
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Floating Compare Bar */}
         {compareList.length > 0 && (
-          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-[#0A2D5B] text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20 animate-in slide-in-from-bottom-2">
-            <div className="text-xs font-semibold flex items-center gap-2">
-              <Scale className="w-4 h-4 text-[#2F7BFF]" />
-              <span>{compareList.length} profiles selected for comparison</span>
-            </div>
+          <div className="fixed bottom-6 right-6 z-50 bg-[#0A2D5B] text-white p-4 rounded-2xl shadow-2xl border border-white/20 flex items-center gap-4 animate-in slide-in-from-bottom-5">
             <div className="flex items-center gap-2">
+              <Scale className="w-5 h-5 text-[#2F7BFF]" />
+              <div className="text-xs">
+                <span className="font-bold">{compareList.length}</span> / 4 profiles selected
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5">
               {comparedProducts.map((p) => (
                 <span
                   key={p.slug}
-                  className="text-[11px] bg-white/10 px-2 py-0.5 rounded font-medium truncate max-w-[100px]"
+                  className="text-[10px] bg-white/10 px-2 py-0.5 rounded truncate max-w-[100px]"
                 >
-                  {p.name.split(' ')[0]}
+                  {p.name}
                 </span>
               ))}
             </div>
             <button
               onClick={() => setCompareList([])}
-              className="text-slate-300 hover:text-white text-xs ml-2"
+              className="text-xs text-slate-300 hover:text-white underline cursor-pointer"
             >
               Clear
             </button>
           </div>
         )}
       </div>
+
+      {/* Mobile Filter Drawer */}
+      {mobileFilterOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex justify-end">
+          <div className="w-full max-w-xs bg-white h-full p-6 space-y-6 overflow-y-auto animate-in slide-in-from-right duration-200">
+            <div className="flex items-center justify-between border-b pb-4">
+              <span className="font-bold text-sm text-[#0A2D5B]">Filter Profiles</span>
+              <button onClick={() => setMobileFilterOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {/* Category */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600">Category</label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full p-2 text-xs border rounded-lg"
+                >
+                  <option value="all">All Categories</option>
+                  {CATEGORIES_V2.map((c) => (
+                    <option key={c.slug} value={c.slug}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Geometry */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600">Profile Geometry</label>
+                <select
+                  value={selectedGeometry}
+                  onChange={(e) => setSelectedGeometry(e.target.value)}
+                  className="w-full p-2 text-xs border rounded-lg"
+                >
+                  <option value="all">All Geometries</option>
+                  <option value="Solid">Solid</option>
+                  <option value="Hollow">Hollow</option>
+                  <option value="Semi-Hollow">Semi-Hollow</option>
+                  <option value="Complex Multi-Void">Complex Multi-Void</option>
+                  <option value="T-Slot Modular">T-Slot / V-Slot</option>
+                  <option value="Fin Array">Fin Array</option>
+                  <option value="CNC Component">CNC Component</option>
+                </select>
+              </div>
+
+              {/* Alloy */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600">Alloy</label>
+                <select
+                  value={selectedAlloy}
+                  onChange={(e) => setSelectedAlloy(e.target.value)}
+                  className="w-full p-2 text-xs border rounded-lg"
+                >
+                  <option value="all">All Alloys</option>
+                  <option value="6063">6063</option>
+                  <option value="6061">6061</option>
+                  <option value="6005A">6005A</option>
+                  <option value="6082">6082</option>
+                  <option value="7075">7075</option>
+                </select>
+              </div>
+
+              {/* Finish */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600">Surface Finish</label>
+                <select
+                  value={selectedFinish}
+                  onChange={(e) => setSelectedFinish(e.target.value)}
+                  className="w-full p-2 text-xs border rounded-lg"
+                >
+                  <option value="all">All Finishes</option>
+                  <option value="Anodized">Anodized</option>
+                  <option value="Powder">Powder Coated</option>
+                  <option value="Mill">Mill Finish</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t flex flex-col gap-2">
+              <Button
+                variant="cta"
+                size="md"
+                className="w-full"
+                onClick={() => setMobileFilterOpen(false)}
+              >
+                Apply Filters ({filteredProducts.length})
+              </Button>
+              <Button
+                variant="outline"
+                size="md"
+                className="w-full"
+                onClick={handleResetFilters}
+              >
+                Reset All
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

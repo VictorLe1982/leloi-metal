@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "name": "Square & Rectangular Hollow Profiles",
+    "slug": "square_rectangular_hollow_profiles",
+    "file": "products/01_square_rectangular_hollow_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 2,
+    "name": "Round Tubes",
+    "slug": "round_tubes",
+    "file": "products/02_round_tubes.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 3,
+    "name": "Solid Bars",
+    "slug": "solid_bars",
+    "file": "products/03_solid_bars.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 4,
+    "name": "Angle Profiles",
+    "slug": "angle_profiles",
+    "file": "products/04_angle_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 5,
+    "name": "U-Channel Profiles",
+    "slug": "u_channel_profiles",
+    "file": "products/05_u_channel_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 6,
+    "name": "T Profiles",
+    "slug": "t_profiles",
+    "file": "products/06_t_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 7,
+    "name": "I-Beam Profiles",
+    "slug": "i_beam_profiles",
+    "file": "products/07_i_beam_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 8,
+    "name": "H Profiles",
+    "slug": "h_profiles",
+    "file": "products/08_h_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 9,
+    "name": "T-Slot Modular Profiles",
+    "slug": "t_slot_modular_profiles",
+    "file": "products/09_t_slot_modular_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 10,
+    "name": "V-Slot Profiles",
+    "slug": "v_slot_profiles",
+    "file": "products/10_v_slot_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 11,
+    "name": "Solar Panel Frame Profiles",
+    "slug": "solar_panel_frame_profiles",
+    "file": "products/11_solar_panel_frame_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 12,
+    "name": "Solar Mounting Rails",
+    "slug": "solar_mounting_rails",
+    "file": "products/12_solar_mounting_rails.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 13,
+    "name": "Solar Mid Clamps",
+    "slug": "solar_mid_clamps",
+    "file": "products/13_solar_mid_clamps.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 14,
+    "name": "Solar End Clamps",
+    "slug": "solar_end_clamps",
+    "file": "products/14_solar_end_clamps.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 15,
+    "name": "Heat Sink Profiles",
+    "slug": "heat_sink_profiles",
+    "file": "products/15_heat_sink_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 16,
+    "name": "LED Lighting Profiles",
+    "slug": "led_lighting_profiles",
+    "file": "products/16_led_lighting_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 17,
+    "name": "Curtain Wall Profiles",
+    "slug": "curtain_wall_profiles",
+    "file": "products/17_curtain_wall_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 18,
+    "name": "Window & Door Profiles",
+    "slug": "window_door_profiles",
+    "file": "products/18_window_door_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 19,
+    "name": "Handrail Profiles",
+    "slug": "handrail_profiles",
+    "file": "products/19_handrail_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 20,
+    "name": "Railing & Balustrade Profiles",
+    "slug": "railing_balustrade_profiles",
+    "file": "products/20_railing_balustrade_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 21,
+    "name": "Enclosure Profiles",
+    "slug": "enclosure_profiles",
+    "file": "products/21_enclosure_profiles.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 22,
+    "name": "CNC Machined Components",
+    "slug": "cnc_machined_components",
+    "file": "products/22_cnc_machined_components.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 23,
+    "name": "Custom Aluminium Parts",
+    "slug": "custom_aluminium_parts",
+    "file": "products/23_custom_aluminium_parts.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  },
+  {
+    "id": 24,
+    "name": "Industrial Assemblies",
+    "slug": "industrial_assemblies",
+    "file": "products/24_industrial_assemblies.webp",
+    "source_type": "LELOI_CUSTOM_GENERATED",
+    "approval_status": "APPROVED_VISUAL_V1",
+    "technical_claim_status": "UNVERIFIED",
+    "note": "Visual reference only; not proof of exact factory capability."
+  }
+]

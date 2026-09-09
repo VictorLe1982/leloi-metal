@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Col 1: Brand & Parent Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Logo variant="horizontal" theme="dark" iconSize={40} showSlogan={true} />
+            <Logo variant="horizontal" theme="dark" width={225} showSlogan={true} />
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed mt-4">
               Precision aluminium extrusion, CNC machining, surface treatment and OEM manufacturing from Vietnam for global B2B industries.
             </p>

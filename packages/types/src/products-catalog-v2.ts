@@ -10,9 +10,23 @@ export interface CategoryCatalogItem {
   faqs: { q: string; a: string }[];
 }
 
+export interface CatalogMediaItem {
+  id: string;
+  productId: string;
+  assetKey: string;
+  url: string;
+  mediaType: string;
+  sourceType: string;
+  license: string;
+  altText: string;
+  isPrimary: boolean;
+  approvalStatus: 'APPROVED' | 'DRAFT' | 'REVIEW';
+}
+
 export interface ProductCatalogItem {
   id: string;
   slug: string;
+  aliases?: string[];
   name: string;
   category: string;
   categoryName: string;
@@ -27,10 +41,12 @@ export interface ProductCatalogItem {
   verifiedChips: string[];
   primaryImage: string;
   galleryImages: string[];
+  media?: CatalogMediaItem[];
   isStandard: boolean;
   isCustom: boolean;
   requiresDrawing: boolean;
   verificationStatus: 'VERIFIED' | 'UNVERIFIED';
+  technicalClaimStatus: 'VERIFIED' | 'UNVERIFIED';
   specs: {
     label: string;
     value: string;
@@ -38,7 +54,7 @@ export interface ProductCatalogItem {
     unit?: string;
   }[];
   mediaProvenance: {
-    type: 'CUSTOM_RENDER' | 'FACTORY_OWNED';
+    type: 'APPROVED_CUSTOM_RENDER' | 'FACTORY_OWNED';
     license: string;
     author: string;
   };
@@ -53,24 +69,22 @@ export const CATEGORIES_V2: CategoryCatalogItem[] = [
     slug: 'custom-extrusions',
     name: 'Custom Extrusions',
     shortDescription: 'Tailored solid, hollow, and complex multi-void aluminium profiles engineered to client drawings.',
-    overview:
-      'Custom aluminium extrusion profiles manufactured in Vietnam for global OEM fabricators and machinery builders. Our engineering team validates die flow, wall-thickness uniformity, and alloy temper suitability directly from 2D/3D CAD models.',
-    heroImage: '/images/products/custom-extrusions/category-hero/hero.webp',
+    overview: 'Custom aluminium extrusion profiles manufactured in Vietnam for global OEM fabricators and machinery builders. Our engineering team validates die flow, wall-thickness uniformity, and alloy temper suitability directly from 2D/3D CAD models.',
+    heroImage: '/media/catalog/01_square_rectangular_hollow_profiles.webp',
     applications: ['Automotive Subframes', 'Industrial Automation', 'Transport Rails', 'Specialized Enclosures'],
     keyAdvantages: [
-      'Bespoke die manufacturing tailored to proprietary client CAD files',
-      'Solid, hollow, and complex multi-void extrusion capabilities',
-      'Full traceability back to primary/secondary billet melt heats',
-      'Strict bilateral Non-Disclosure Agreement (NDA) IP protection'
+      'Tailored die tooling manufactured to client CAD specifications',
+      'Structural 6000-series alloys: 6063, 6061, 6005A, 6082',
+      'Full DFM flow analysis to prevent die deflection and uneven cooling'
     ],
     faqs: [
       {
-        q: 'What CAD file formats does LELOI METAL accept for DFM review?',
-        a: 'We accept 3D STEP (.step, .stp), IGES (.igs), 2D DWG, DXF, and dimensioned PDF engineering drawings.'
+        q: 'What 2D/3D drawing formats are accepted for custom die development?',
+        a: 'We accept 3D models in STEP (.stp, .step), IGES (.igs), Parasolid (.x_t), and 2D CAD engineering drawings in DWG, DXF, and PDF with all critical tolerance callouts.'
       },
       {
-        q: 'How are custom die ownership and tooling rights managed?',
-        a: 'Dies are customer-dedicated property. They are maintained and stored exclusively for your production runs and are never shared with third parties.'
+        q: 'What is the standard lead time for custom extrusion tooling?',
+        a: 'Standard custom extrusion dies take 15 to 21 calendar days for trial sample production (T0 samples) including CMM dimensional inspection reports.'
       }
     ]
   },
@@ -78,21 +92,19 @@ export const CATEGORIES_V2: CategoryCatalogItem[] = [
     id: 'cat-industrial',
     slug: 'industrial-profiles',
     name: 'Industrial Profiles',
-    shortDescription: 'Modular T-slot structural framing, conveyor tracks, cleanroom structures, and machine guard extrusions.',
-    overview:
-      'High-precision modular aluminium extrusion systems engineered for factory automation, robotics guarding, conveyor guide rails, and ergonomic assembly stations. Conforming to standard international groove specifications.',
-    heroImage: '/images/products/industrial-profiles/category-hero/hero.webp',
-    applications: ['Automation Frames', 'Robotic Enclosures', 'Conveyor Systems', 'Cleanroom Workstations'],
+    shortDescription: 'Standard modular T-slot and V-slot framing systems for industrial machinery and automation.',
+    overview: 'Modular aluminium extrusion profiles for factory automation, robotic cells, machine guarding, and cleanroom workstations. Fully compatible with international hardware brackets and fasteners.',
+    heroImage: '/media/catalog/09_t_slot_modular_profiles.webp',
+    applications: ['Machine Guarding', 'Conveyor Framing', 'Assembly Workstations', 'Linear Actuator Tracks'],
     keyAdvantages: [
-      'Compatible with international 20, 30, and 40 series modular hardware',
-      'High structural stiffness with 6061-T6 and 6063-T5 alloy options',
-      'Satin clear anodized finish for scratch-resistant industrial durability',
-      'In-house precision mitre cutting and CNC tapped end-holes'
+      'Standard metric grid series (20, 30, 40, 80 series) and V-slot rails',
+      'Clear satin anodized finish 10–15µm for scratch resistance',
+      'Precision length cuts with deburred edges and tapped end holes'
     ],
     faqs: [
       {
-        q: 'Are your T-slot profiles compatible with standard European or Japanese hardware?',
-        a: 'Yes, our industrial profiles adhere to standard metric slot dimensions (6mm, 8mm, and 10mm slots) compatible with standard drop-in T-nuts, brackets, and accessories.'
+        q: 'Are your T-slot profiles compatible with standard European brackets?',
+        a: 'Yes, our 20, 30, 40, and 80 series strictly adhere to standard European slot dimensions (6mm, 8mm, and 10mm slot widths) and accept standard T-nuts and drop-in bolts.'
       }
     ]
   },
@@ -100,21 +112,19 @@ export const CATEGORIES_V2: CategoryCatalogItem[] = [
     id: 'cat-solar',
     slug: 'solar-profiles',
     name: 'Solar Profiles',
-    shortDescription: 'High-strength structural aluminium frames, mounting rails, clamp profiles, and carport extrusions.',
-    overview:
-      'Engineered aluminium structural systems designed for utility-scale solar farms, commercial rooftop racking, solar carports, and photovoltaic module perimeter framing. Optimized for wind and snow load resistance.',
-    heroImage: '/images/products/solar-profiles/category-hero/hero.webp',
-    applications: ['Utility Ground Solar', 'Commercial Rooftop Racking', 'Solar Carports', 'PV Module Frames'],
+    shortDescription: 'High-volume photovoltaic module perimeter frames, mounting rails, and clamping hardware.',
+    overview: 'Engineered structural aluminium extrusions designed for utility-scale solar farms, commercial rooftop racking, and PV module perimeter framing.',
+    heroImage: '/media/catalog/11_solar_panel_frame_profiles.webp',
+    applications: ['Photovoltaic Module Frames', 'Ground Mount Racking', 'Rooftop Ballast Systems', 'Solar Carports'],
     keyAdvantages: [
-      'Engineered from 6005A-T6 and 6082-T6 for elevated structural yield strength',
-      'Anodized coating (15–25 µm) providing high corrosion resistance for outdoor UV exposure',
-      'Pre-punched mounting slots and precision cut lengths optimized for 40ft containers',
-      '0% preferential import tariff under CPTPP and EVFTA for qualified destinations'
+      'High strength-to-weight structural alloys: 6005A-T6 and 6061-T6',
+      'Class 1 Anodizing (15–20µm) tested for outdoor coastal corrosion resistance',
+      'Automated CNC punch lines for corner key insertion and drainage holes'
     ],
     faqs: [
       {
-        q: 'Can LELOI METAL provide pre-punched mounting holes on solar rails?',
-        a: 'Yes, our fabrication department provides automated continuous slot punching and CNC cutting to your exact layout specifications.'
+        q: 'What anodizing thickness is provided for solar mounting rails?',
+        a: 'Standard outdoor solar rails are supplied with minimum 15µm clear anodizing, with optional 20µm or 25µm for harsh maritime environments.'
       }
     ]
   },
@@ -122,21 +132,19 @@ export const CATEGORIES_V2: CategoryCatalogItem[] = [
     id: 'cat-architectural',
     slug: 'architectural-systems',
     name: 'Architectural Systems',
-    shortDescription: 'High-performance curtain wall mullions, facade profiles, louvers, and thermal-break systems.',
-    overview:
-      'Precision architectural aluminium profiles engineered for commercial building facades, curtain walls, window and door assemblies, and environmental louvers. Combining aesthetic finishing with structural weatherproofing.',
-    heroImage: '/images/products/architectural-systems/category-hero/hero.webp',
-    applications: ['Commercial Curtain Walls', 'Exterior Sun Louvers', 'Storefront Windows', 'Thermal-Break Doors'],
+    shortDescription: 'Curtain wall mullions, thermal-break window/door systems, louvers, and structural balustrades.',
+    overview: 'High-performance architectural extrusions manufactured to international building standards. Engineered for wind load deflection, air infiltration resistance, and acoustic performance.',
+    heroImage: '/media/catalog/17_curtain_wall_profiles.webp',
+    applications: ['Commercial Facades', 'Unitized Curtain Walls', 'Thermal-Break Windows', 'Glass Balustrades'],
     keyAdvantages: [
-      'Superior surface cosmetics with 6063-T5/T6 alloy formulation',
-      'Electrostatic architectural powder coating with verified weather resistance',
-      'Thermal break cavity geometry for polyamide insulation strips',
-      'Strict dimensional tolerance control conforming to architectural standards'
+      'AAMA 2604 / AAMA 2605 compliant architectural powder coating',
+      'Integrated thermal-break polyamide barrier channels',
+      'Tight angular and straightness tolerances compliant with EN 755-9'
     ],
     faqs: [
       {
-        q: 'What surface finishes are available for architectural profiles?',
-        a: 'We offer architectural clear and color anodizing (matte, champagne, bronze, black) and Qualicoat-standard polyester powder coating.'
+        q: 'Do you offer PVDF fluoropolymer coating for high-rise facades?',
+        a: 'Yes, our electrostatic coating line supports 2-coat and 3-coat PVDF coatings tested for UV resistance and color retention under ASTM D2244.'
       }
     ]
   },
@@ -144,21 +152,19 @@ export const CATEGORIES_V2: CategoryCatalogItem[] = [
     id: 'cat-thermal',
     slug: 'heat-sink-thermal',
     name: 'Heat Sink / Thermal',
-    shortDescription: 'High-fin-ratio heat sinks and thermal management extrusions for power electronics, LEDs, and inverters.',
-    overview:
-      'Thermal dissipation aluminium profiles engineered for power electronics, solar inverter cooling, high-output LED fixtures, telecommunication base stations, and EV battery management systems.',
-    heroImage: '/images/products/heat-sink-thermal/category-hero/hero.webp',
-    applications: ['Solar Inverters', 'Power Electronics', 'LED Lighting Fixtures', 'EV Battery Cooling'],
+    shortDescription: 'High-density fin profiles and heat sinks for inverters, power electronics, and LED luminaires.',
+    overview: 'Thermal dissipation extrusion profiles with high aspect ratio fin geometry for forced and natural convection cooling in power electronics and EV infrastructure.',
+    heroImage: '/media/catalog/15_heat_sink_profiles.webp',
+    applications: ['Solar Inverters', 'EV Charging Stations', 'High-Power LED Fixtures', 'VFD Motor Drives'],
     keyAdvantages: [
-      'Extruded from 6063 high-conductivity alloys (thermal conductivity ~201–209 W/m·K)',
-      'High fin-to-base ratio for maximum convective cooling surface area',
-      'Flatness-controlled base plates for optimal thermal interface pad contact',
-      'Secondary CNC pocket milling and tapped holes for component mounting'
+      'High aspect ratio fin designs engineered for maximum surface area',
+      'High thermal conductivity 6063 and 1050/6060 alloys',
+      'Black anodized high-emissivity finish for superior radiative cooling'
     ],
     faqs: [
       {
-        q: 'What is the maximum tongue ratio for heat sink fins?',
-        a: 'Tongue ratios are evaluated during technical DFM review based on fin height, base thickness, and press tonnage.'
+        q: 'What is the maximum fin-to-space aspect ratio you can extrude?',
+        a: 'We reliably extrude fin ratios up to 14:1 on standard presses, and up to 18:1 using specialized die designs and high-conductivity 6063 alloy.'
       }
     ]
   },
@@ -166,898 +172,1371 @@ export const CATEGORIES_V2: CategoryCatalogItem[] = [
     id: 'cat-oem',
     slug: 'oem-components',
     name: 'OEM Components',
-    shortDescription: 'Turnkey CNC machined, cut, tapped, surface-finished, and assembled aluminium extrusion components.',
-    overview:
-      'Turnkey finished component manufacturing: Extrusion ➔ Precision Mitre Cutting ➔ 3/4-Axis CNC Machining ➔ Surface Finishing ➔ CMM Quality Inspection ➔ Export Assembly & Palletizing directly from Vietnam.',
-    heroImage: '/images/products/oem-components/category-hero/hero.webp',
-    applications: ['Machined Brackets', 'Electronic Chassis', 'Structural End-Plates', 'Precision Sub-Assemblies'],
+    shortDescription: 'Turnkey machined components: precision cutting, 4-axis CNC milling, tapping, and sub-assembly.',
+    overview: 'Full-service aluminium component manufacturing from raw billet to finished machined part. Our machine shop handles multi-axis milling, drilling, tapping, and kitting.',
+    heroImage: '/media/catalog/22_cnc_machined_components.webp',
+    applications: ['Automotive Brackets', 'Robotic Arms & End-Effectors', 'Precision Electronic Housings', 'Machinery Bases'],
     keyAdvantages: [
-      'One-stop manufacturing eliminates multi-tier supplier markups and transit risks',
-      'Long-bed CNC machining up to 6 meters for continuous profile milling',
-      'Full CMM coordinate measuring and dimensional inspection reports',
-      'Direct container stuffing and FOB/CIF international ocean export'
+      'Long-bed 3-axis and 4-axis CNC machining centers',
+      'Complete in-house secondary deburring, tumbling, and hardware insertion',
+      'Traceable CMM dimensional inspection and material certification'
     ],
     faqs: [
       {
-        q: 'Can LELOI METAL provide sub-assembly and kitting?',
-        a: 'Yes, we provide hardware insertion, fastener kitting, and custom export packaging ready for your production line.'
+        q: 'Can you deliver fully assembled kits ready for assembly lines?',
+        a: 'Yes, our assembly shop installs threaded inserts, helicoils, captive fasteners, and provides barcoded custom kitting for export.'
       }
     ]
   }
 ];
 
 export const PRODUCTS_V2: ProductCatalogItem[] = [
-  // 1. Custom Extrusions (4 products)
+
   {
     id: 'prod-01',
-    slug: 'custom-hollow-extrusions',
-    name: 'Custom Hollow Aluminium Profiles',
+    slug: 'square_rectangular_hollow_profiles',
+    aliases: ["square-rectangular-hollow-profiles", "custom-hollow-extrusions"],
+    name: "Square & Rectangular Hollow Profiles",
     category: 'custom-extrusions',
     categoryName: 'Custom Extrusions',
-    shortDescription: 'Tubular, square, and multi-chamber hollow profiles engineered from proprietary extrusion dies.',
-    longDescription:
-      'Precision custom hollow aluminium extrusions produced to customer proprietary drawings in Vietnam. Porthole and bridge die configurations engineered to ensure seamless weld lines, uniform wall thickness, and optimum mechanical integrity.',
+    shortDescription: "Square and rectangular tubular aluminium hollow profiles engineered to structural drawing tolerances.",
+    longDescription: "Precision hollow aluminium extrusion profiles for structural frameworks, machinery bases, and transportation assemblies. Engineered from high-strength 6061 and 6063 billets in Vietnam with tight wall thickness concentricity.",
     profileGeometry: 'Hollow',
-    alloys: ['6063', '6061', '6005A'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Mill Finish', 'Anodized Clear 15–25µm', 'Powder Coated RAL'],
-    applications: ['Transport Frames', 'Automotive Rails', 'Enclosures', 'HVAC Channels'],
-    fabrications: ['Precision Cut', 'CNC Milling', 'Drill & Tap'],
-    verifiedChips: ['Custom Die Tooling', 'Hollow Chamber', '6063/6061 Alloy'],
-    primaryImage: '/images/products/custom-extrusions/custom-hollow-extrusions/hero.webp',
+    alloys: ["6063", "6061", "6005A"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Mill Finish", "Clear Anodized", "Powder Coated"],
+    applications: ["Structural Frameworks", "Transportation Enclosures", "Machinery Bases", "Industrial Racking"],
+    fabrications: ["Precision Mitre Cutting \u00b10.2mm", "CNC Slotting", "Drilling & Tapping", "Hardware Insertion"],
+    verifiedChips: ["6063 / 6061", "T5 / T6", "Mill / Anodized"],
+    primaryImage: '/media/catalog/01_square_rectangular_hollow_profiles.webp',
     galleryImages: [
-      '/images/products/custom-extrusions/custom-hollow-extrusions/hero.webp',
-      '/images/products/custom-extrusions/custom-hollow-extrusions/cross-section.webp',
-      '/images/products/custom-extrusions/custom-hollow-extrusions/application.webp'
+      '/media/catalog/01_square_rectangular_hollow_profiles.webp',
+      '/media/catalog/01_square_rectangular_hollow_profiles.webp'
     ],
-    isStandard: false,
+    media: [
+      {
+        id: 'med-prod-01-01',
+        productId: 'prod-01',
+        assetKey: 'square_rectangular_hollow_profiles',
+        url: '/media/catalog/01_square_rectangular_hollow_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Square & Rectangular Hollow Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: true,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Profile Type', value: 'Hollow / Multi-Chamber', verified: true },
-      { label: 'Drawing Required', value: 'Yes (2D PDF / 3D STEP)', verified: true },
-      { label: 'Standard Alloy', value: '6063 / 6061 (Custom upon review)', verified: true },
-      { label: 'Wall Thickness', value: 'Engineered upon drawing review', verified: false }
+      { label: 'Available Alloys', value: "6063, 6061, 6005A", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Mill Finish, Clear Anodized, Powder Coated", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: [
-      'Maintain uniform wall thickness between external walls and interior webs where possible.',
-      'Provide minimum 0.5 mm radius on internal corners to improve die flow and reduce stress concentrations.'
-    ],
-    qcStandards: ['EN 755 / ASTM B221 dimensional tolerance compliance', 'Full chemical & mechanical Mill Test Certificates'],
-    packaging: 'Interleaved protective foam paper, shrink wrapped in heavy-duty wooden crates.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Maintain minimum corner radius of 0.5mm on internal corners to avoid stress risers.", "Wall thickness transitions should not exceed 2:1 ratio."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-02',
-    slug: 'custom-solid-extrusions',
-    name: 'Custom Solid Aluminium Profiles',
+    slug: 'round_tubes',
+    aliases: ["round-tubes"],
+    name: "Round Tubes",
     category: 'custom-extrusions',
     categoryName: 'Custom Extrusions',
-    shortDescription: 'Solid bars, angles, flat sections, and irregular solid shapes for structural applications.',
-    longDescription:
-      'Solid aluminium extrusion sections designed for high-stress structural applications, machine components, and wear plates. Extruded through flat-face dies for optimal extrusion speed, excellent grain structure, and high mechanical tensile strength.',
-    profileGeometry: 'Solid',
-    alloys: ['6061', '6082', '6063'],
-    tempers: ['T6', 'T6511'],
-    surfaceFinishes: ['Mill Finish', 'Anodized Hardcoat', 'Black Anodized'],
-    applications: ['Structural Brackets', 'Machine Bases', 'Wear Strips', 'Mounting Plates'],
-    fabrications: ['Precision Miter Cutting', 'CNC Surface Milling', 'Countersinking'],
-    verifiedChips: ['Solid Extrusion', 'High Tensile 6061', 'Machinable'],
-    primaryImage: '/images/products/custom-extrusions/custom-solid-extrusions/hero.webp',
+    shortDescription: "Seamless and structural extruded round tubes with uniform wall thickness and concentricity.",
+    longDescription: "Seamless and porthole extruded aluminium round tubing manufactured for fluid conveyance, structural masts, and mechanical rollers. Strict outer diameter and wall thickness controls.",
+    profileGeometry: 'Hollow',
+    alloys: ["6063", "6061", "6082"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Mill Finish", "Clear Anodized", "Electropolished"],
+    applications: ["Fluid & Pneumatic Lines", "Industrial Rollers", "Handrails & Stanchions", "Structural Columns"],
+    fabrications: ["Precision Cutting", "Rotary Swaging", "CNC Turning & Threading", "Deburring"],
+    verifiedChips: ["6061 / 6082", "T6 Temper", "Concentric ID/OD"],
+    primaryImage: '/media/catalog/02_round_tubes.webp',
     galleryImages: [
-      '/images/products/custom-extrusions/custom-solid-extrusions/hero.webp',
-      '/images/products/custom-extrusions/custom-solid-extrusions/cross-section.webp',
-      '/images/products/custom-extrusions/custom-solid-extrusions/application.webp'
+      '/media/catalog/02_round_tubes.webp',
+      '/media/catalog/02_round_tubes.webp'
     ],
-    isStandard: false,
+    media: [
+      {
+        id: 'med-prod-02-01',
+        productId: 'prod-02',
+        assetKey: 'round_tubes',
+        url: '/media/catalog/02_round_tubes.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Round Tubes 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: true,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Profile Type', value: 'Solid Extrusion', verified: true },
-      { label: 'Drawing Required', value: 'Yes (CAD / PDF)', verified: true },
-      { label: 'Alloy Recommendation', value: '6061-T6 for Structural Rigidity', verified: true },
-      { label: 'Section Limit', value: 'Validated upon die envelope review', verified: false }
+      { label: 'Available Alloys', value: "6063, 6061, 6082", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Mill Finish, Clear Anodized, Electropolished", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Solid sections allow rapid extrusion with minimal die distortion.', 'Ideal for secondary 5-axis CNC machining.'],
-    qcStandards: ['ASTM B221 mechanical property validation', 'Webster and Brinell hardness testing'],
-    packaging: 'Wrapped in waterproof poly weave and steel strapped onto export pallets.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Specify required ovality and straightness tolerances per meter length.", "Consider mandrel extrusion for seamless pressure-rated applications."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-03',
-    slug: 'semi-hollow-extrusions',
-    name: 'Semi-Hollow Aluminium Extrusions',
+    slug: 'solid_bars',
+    aliases: ["solid-bars", "custom-solid-extrusions"],
+    name: "Solid Bars",
     category: 'custom-extrusions',
     categoryName: 'Custom Extrusions',
-    shortDescription: 'Profiles with open channels or high-tongue-ratio cavities for snap-fit assemblies.',
-    longDescription:
-      'Engineered semi-hollow profiles featuring open channel gaps with elevated tongue ratios. Specially calculated die tongue support and relief tooling are utilized to ensure uniform extrusion velocity and prevent tongue deflection.',
-    profileGeometry: 'Semi-Hollow',
-    alloys: ['6063', '6005A'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Clear Anodized', 'Custom Powder Coating'],
-    applications: ['Guide Channels', 'Snap-Fit Enclosures', 'Cable Raceways', 'Curtain Sliders'],
-    fabrications: ['Punch Slotting', 'Cut-to-Length', 'De-burring'],
-    verifiedChips: ['Tongue Tooling', 'Snap-Fit Design', '6063-T5'],
-    primaryImage: '/images/products/custom-extrusions/semi-hollow-extrusions/hero.webp',
+    shortDescription: "Solid rectangular, square, and flat bars optimized for structural loads and CNC machining.",
+    longDescription: "Heavy-duty solid aluminium extrusion bars designed for subsequent high-speed CNC milling, electrical busbar conductivity, and load-bearing machine bases.",
+    profileGeometry: 'Solid',
+    alloys: ["6061", "6082", "6063"],
+    tempers: ["T6", "T5"],
+    surfaceFinishes: ["Mill Finish", "Anodized"],
+    applications: ["CNC Machined OEM Parts", "Electrical Busbars", "Heavy Structural Cleats", "Base Mounting Plates"],
+    fabrications: ["High-Speed Saw Cutting", "Multi-Axis CNC Milling", "Chamfering", "Face Milling"],
+    verifiedChips: ["6061-T6 High Strength", "CNC Ready", "Flatness Inspected"],
+    primaryImage: '/media/catalog/03_solid_bars.webp',
     galleryImages: [
-      '/images/products/custom-extrusions/semi-hollow-extrusions/hero.webp',
-      '/images/products/custom-extrusions/semi-hollow-extrusions/cross-section.webp',
-      '/images/products/custom-extrusions/semi-hollow-extrusions/application.webp'
+      '/media/catalog/03_solid_bars.webp',
+      '/media/catalog/03_solid_bars.webp'
     ],
-    isStandard: false,
+    media: [
+      {
+        id: 'med-prod-03-01',
+        productId: 'prod-03',
+        assetKey: 'solid_bars',
+        url: '/media/catalog/03_solid_bars.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Solid Bars 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: true,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Geometry', value: 'Semi-Hollow Channel', verified: true },
-      { label: 'Tongue Ratio', value: 'Subject to DFM analysis', verified: false },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6061, 6082, 6063", verified: false },
+      { label: 'Standard Tempers', value: "T6, T5", verified: false },
+      { label: 'Surface Finishes', value: "Mill Finish, Anodized", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Keep tongue ratio (tongue height to channel gap) within recommended limits to extend die lifespan.'],
-    qcStandards: ['Optical comparator profile projection inspection'],
-    packaging: 'Protective carton partitions and wooden crate packaging.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Provide grain direction requirements if severe bending is planned.", "Verify alloy temper suitability for high-stress cyclic loading."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-04',
-    slug: 'complex-multi-void',
-    name: 'Complex Multi-Void Profiles',
+    slug: 'angle_profiles',
+    aliases: ["angle-profiles", "equal-angle"],
+    name: "Angle Profiles",
     category: 'custom-extrusions',
     categoryName: 'Custom Extrusions',
-    shortDescription: 'Intricate multi-chamber profiles integrating internal screw bosses, hinge sockets, and ribs.',
-    longDescription:
-      'High-complexity multi-void extrusion profiles combining structural stiffness, internal thermal chambers, wire channels, and integrated screw bosses into a single monolithic extrusion, reducing assembly part count.',
-    profileGeometry: 'Complex Multi-Void',
-    alloys: ['6063', '6061', '6005A'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Anodized Architectural', 'Powder Coated'],
-    applications: ['Multi-Function Enclosures', 'Vehicle Chassis Rails', 'High-Spec Facades'],
-    fabrications: ['CNC Precision Drilling', 'Slot Routing', 'Miter Jointing'],
-    verifiedChips: ['Multi-Chamber', 'Integral Screw Boss', 'DFM Verified'],
-    primaryImage: '/images/products/custom-extrusions/complex-multi-void/hero.webp',
+    shortDescription: "Equal and unequal structural angle sections for frame corners and structural bracing.",
+    longDescription: "Extruded aluminium angles engineered for 90-degree corner stiffening, architectural bracketry, and mounting flanges. Clean apex radii minimize notch sensitivity under load.",
+    profileGeometry: 'Solid',
+    alloys: ["6063", "6061", "6005A"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Mill Finish", "Clear Anodized", "Powder Coated"],
+    applications: ["Frame Corner Bracing", "Solar Array Brackets", "Facade Sub-Framing", "Packaging Skid Frames"],
+    fabrications: ["Angle Cutting", "Multi-Hole Punching", "Countersinking", "Anodizing"],
+    verifiedChips: ["Equal / Unequal Leg", "6005A / 6061", "Clean Apex Radius"],
+    primaryImage: '/media/catalog/04_angle_profiles.webp',
     galleryImages: [
-      '/images/products/custom-extrusions/complex-multi-void/hero.webp',
-      '/images/products/custom-extrusions/complex-multi-void/cross-section.webp',
-      '/images/products/custom-extrusions/complex-multi-void/application.webp'
+      '/media/catalog/04_angle_profiles.webp',
+      '/media/catalog/04_angle_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-04-01',
+        productId: 'prod-04',
+        assetKey: 'angle_profiles',
+        url: '/media/catalog/04_angle_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Angle Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: true,
+    isCustom: true,
+    requiresDrawing: true,
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
+    specs: [
+      { label: 'Available Alloys', value: "6063, 6061, 6005A", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Mill Finish, Clear Anodized, Powder Coated", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
+    ],
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Equal leg profiles extrude faster with less twist than high-aspect unequal legs.", "Maintain heel radius to prevent cooling stress cracks."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
+  },
+  {
+    id: 'prod-05',
+    slug: 'u_channel_profiles',
+    aliases: ["u-channel-profiles", "semi-hollow-extrusions"],
+    name: "U-Channel Profiles",
+    category: 'custom-extrusions',
+    categoryName: 'Custom Extrusions',
+    shortDescription: "Open channel sections with parallel or tapered flanges for glass pocketing and linear guides.",
+    longDescription: "Versatile U-channel aluminium extrusions manufactured for edge retention, structural trim, architectural pocket glazing, and wire routing pathways.",
+    profileGeometry: 'Semi-Hollow',
+    alloys: ["6063", "6061"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Mill Finish", "Clear Anodized", "Powder Coated"],
+    applications: ["Glass Glazing Channels", "Edge Trim & Capping", "Cable Raceway Tracks", "Linear Slide Enclosures"],
+    fabrications: ["Miter Cutting", "Slot Milling", "Drilling", "Surface Treatment"],
+    verifiedChips: ["Semi-Hollow Channel", "6063 Architectural", "Smooth Anodizing"],
+    primaryImage: '/media/catalog/05_u_channel_profiles.webp',
+    galleryImages: [
+      '/media/catalog/05_u_channel_profiles.webp',
+      '/media/catalog/05_u_channel_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-05-01',
+        productId: 'prod-05',
+        assetKey: 'u_channel_profiles',
+        url: '/media/catalog/05_u_channel_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "U-Channel Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Structure', value: 'Multi-Void Monolithic', verified: true },
-      { label: 'Features', value: 'Integrated Bosses & Webs', verified: true },
-      { label: 'Drawing Required', value: 'Yes (Mandatory)', verified: true }
+      { label: 'Available Alloys', value: "6063, 6061", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Mill Finish, Clear Anodized, Powder Coated", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['LELOI engineers simulate metal flow in multi-cavity bridge dies prior to tooling fabrication.'],
-    qcStandards: ['CMM 3D coordinate measurement validation'],
-    packaging: 'Individual profile poly sleeving inside export pallets.'
-  },
-
-  // 2. Industrial Profiles (5 products)
-  {
-    id: 'prod-05',
-    slug: 't-slot-20',
-    name: 'T-Slot 20 Series',
-    category: 'industrial-profiles',
-    categoryName: 'Industrial Profiles',
-    shortDescription: 'Compact 20x20mm and 20x40mm modular T-slot profiles for lightweight enclosures and 3D printers.',
-    longDescription:
-      'Compact modular aluminium structural profile based on 20mm grid spacing with a 6mm slot width. Engineered for lightweight framing, 3D printer carriages, optical breadboard frames, and electronic testing fixtures.',
-    profileGeometry: 'T-Slot Modular',
-    alloys: ['6063-T5'],
-    tempers: ['T5'],
-    surfaceFinishes: ['Clear Satin Anodized (10–15µm)', 'Black Satin Anodized'],
-    applications: ['3D Printers & CNC Routers', 'Display Fixtures', 'Sensor Stands', 'Lightweight Guarding'],
-    fabrications: ['Cut-to-Length ±0.2mm', 'End Tapping M5', 'Access Holes'],
-    verifiedChips: ['Slot 6mm', '20mm Grid', 'Clear Anodized'],
-    primaryImage: '/images/products/industrial-profiles/t-slot-20/hero.webp',
-    galleryImages: [
-      '/images/products/industrial-profiles/t-slot-20/hero.webp',
-      '/images/products/industrial-profiles/t-slot-20/cross-section.webp',
-      '/images/products/industrial-profiles/t-slot-20/application.webp'
-    ],
-    isStandard: true,
-    isCustom: false,
-    requiresDrawing: false,
-    verificationStatus: 'VERIFIED',
-    specs: [
-      { label: 'Grid Size', value: '20 x 20 mm / 20 x 40 mm', verified: true },
-      { label: 'Slot Width', value: '6 mm (Standard)', verified: true },
-      { label: 'Finish', value: 'Satin Anodized 15µm', verified: true }
-    ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Standard profile available with low minimum orders; custom cut lengths available.'],
-    qcStandards: ['EN 12020-2 precision extrusion tolerances'],
-    packaging: 'Bundled in protective paper, 10–20 bars per pack.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Deep channel tongues require balanced die flow to prevent leg splay.", "Specify whether inside or outside width is the critical mating dimension."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-06',
-    slug: 't-slot-30',
-    name: 'T-Slot 30 Series',
-    category: 'industrial-profiles',
-    categoryName: 'Industrial Profiles',
-    shortDescription: 'Versatile 30x30mm and 30x60mm structural profiles with 8mm slot width for medium-duty fixtures.',
-    longDescription:
-      'The intermediate standard for automation framing. 30mm grid system with 8mm T-slots, providing optimal balance between structural rigidity and profile weight. Widely utilized in factory workbenches, conveyor frames, and equipment hoods.',
-    profileGeometry: 'T-Slot Modular',
-    alloys: ['6063-T5', '6061-T6'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Clear Anodized 15µm', 'Black Anodized'],
-    applications: ['Assembly Workstations', 'Material Carts', 'Safety Guarding', 'Packaging Lines'],
-    fabrications: ['Mitre Cutting 45°', 'End Tapping M8', 'Counterbore Milling'],
-    verifiedChips: ['Slot 8mm', '30mm Grid', 'Medium Duty'],
-    primaryImage: '/images/products/industrial-profiles/t-slot-30/hero.webp',
+    slug: 't_profiles',
+    aliases: ["t-profiles"],
+    name: "T Profiles",
+    category: 'custom-extrusions',
+    categoryName: 'Custom Extrusions',
+    shortDescription: "T-section structural profiles for suspended ceiling grids, stiffening ribs, and framing.",
+    longDescription: "Extruded structural Tee sections engineered with balanced web and flange thicknesses for suspended ceilings, flooring expansion joints, and marine stiffeners.",
+    profileGeometry: 'Solid',
+    alloys: ["6063", "6061", "6005A"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Mill Finish", "Anodized"],
+    applications: ["Suspended Ceiling Grids", "Deck Stiffeners", "Floor Joint Covers", "Wall Panel Cleats"],
+    fabrications: ["Precision Length Cut", "Notching", "Punching", "Deburring"],
+    verifiedChips: ["Solid Tee Section", "6063 / 6005A", "Straightness Inspected"],
+    primaryImage: '/media/catalog/06_t_profiles.webp',
     galleryImages: [
-      '/images/products/industrial-profiles/t-slot-30/hero.webp',
-      '/images/products/industrial-profiles/t-slot-30/cross-section.webp',
-      '/images/products/industrial-profiles/t-slot-30/application.webp'
+      '/media/catalog/06_t_profiles.webp',
+      '/media/catalog/06_t_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-06-01',
+        productId: 'prod-06',
+        assetKey: 't_profiles',
+        url: '/media/catalog/06_t_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "T Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: true,
-    isCustom: false,
-    requiresDrawing: false,
-    verificationStatus: 'VERIFIED',
+    isCustom: true,
+    requiresDrawing: true,
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Grid Size', value: '30 x 30 mm / 30 x 60 mm', verified: true },
-      { label: 'Slot Width', value: '8 mm', verified: true },
-      { label: 'Standard Alloy', value: '6063-T5', verified: true }
+      { label: 'Available Alloys', value: "6063, 6061, 6005A", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Mill Finish, Anodized", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Compatible with standard 8mm T-slot hardware.'],
-    qcStandards: ['DIN EN 755 straightness and twist inspection'],
-    packaging: 'Wooden crates with protective layer separators.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Flange-to-web intersection should feature generous fillet radius to maintain die life."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-07',
-    slug: 't-slot-40',
-    name: 'T-Slot 40 Series',
-    category: 'industrial-profiles',
-    categoryName: 'Industrial Profiles',
-    shortDescription: 'Heavy-duty 40x40mm, 40x80mm, and 80x80mm profiles with 10mm slot width for automation machinery.',
-    longDescription:
-      'The industrial automation workhorse. 40mm grid system with 10mm slot width engineered for heavy-load machine bases, robotic perimeter guards, gantry tracks, and multi-axis automated assembly cells.',
-    profileGeometry: 'T-Slot Modular',
-    alloys: ['6063-T5', '6061-T6'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Clear Satin Anodized 15µm', 'Black Anodized'],
-    applications: ['Automation Machinery Frames', 'Robot Bases', 'Heavy Machine Enclosures', 'Gantry Linear Rails'],
-    fabrications: ['High-Precision Cut ±0.15mm', 'End Tapping M12', 'Milling'],
-    verifiedChips: ['Slot 10mm', '40mm Grid', 'Heavy Load'],
-    primaryImage: '/images/products/industrial-profiles/t-slot-40/hero.webp',
+    slug: 'i_beam_profiles',
+    aliases: ["i-beam-profiles"],
+    name: "I-Beam Profiles",
+    category: 'custom-extrusions',
+    categoryName: 'Custom Extrusions',
+    shortDescription: "High moment of inertia I-beam sections for heavy load spans and crane rails.",
+    longDescription: "Structural I-beam aluminium extrusions providing maximum strength-to-weight ratio for overhead conveyors, monorail cranes, and trailer chassis frames.",
+    profileGeometry: 'Solid',
+    alloys: ["6061", "6005A", "6082"],
+    tempers: ["T6"],
+    surfaceFinishes: ["Mill Finish", "Clear Anodized"],
+    applications: ["Overhead Conveyor Tracks", "Gantry Spans", "Trailer Chassis Beams", "Solar Carport Purlins"],
+    fabrications: ["Heavy Saw Cutting", "End Coping & Flange Notching", "High-Load Bolt Hole Drilling"],
+    verifiedChips: ["High Load Capacity", "6061-T6 Structural", "EN 755-2 Certified"],
+    primaryImage: '/media/catalog/07_i_beam_profiles.webp',
     galleryImages: [
-      '/images/products/industrial-profiles/t-slot-40/hero.webp',
-      '/images/products/industrial-profiles/t-slot-40/cross-section.webp',
-      '/images/products/industrial-profiles/t-slot-40/application.webp'
+      '/media/catalog/07_i_beam_profiles.webp',
+      '/media/catalog/07_i_beam_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-07-01',
+        productId: 'prod-07',
+        assetKey: 'i_beam_profiles',
+        url: '/media/catalog/07_i_beam_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "I-Beam Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: true,
-    isCustom: false,
-    requiresDrawing: false,
-    verificationStatus: 'VERIFIED',
+    isCustom: true,
+    requiresDrawing: true,
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Grid Size', value: '40 x 40 / 40 x 80 / 80 x 80 mm', verified: true },
-      { label: 'Slot Width', value: '10 mm', verified: true },
-      { label: 'Alloy', value: '6063-T5 / 6061-T6 for high rigidity', verified: true }
+      { label: 'Available Alloys', value: "6061, 6005A, 6082", verified: false },
+      { label: 'Standard Tempers', value: "T6", verified: false },
+      { label: 'Surface Finishes', value: "Mill Finish, Clear Anodized", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Supports heavy mechanical bolting and dynamic vibration environments.'],
-    qcStandards: ['Strict twist and straightness inspection under EN 12020'],
-    packaging: 'Heavy-duty timber frames with steel strapping.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Verify web thickness against shear load requirements at support bearings."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-08',
-    slug: 'machine-frame-heavy',
-    name: 'Heavy-Duty Machine Frame Profiles',
-    category: 'industrial-profiles',
-    categoryName: 'Industrial Profiles',
-    shortDescription: 'Reinforced 80x160mm and 100x100mm solid-core structural profiles for vibration dampening.',
-    longDescription:
-      'High-mass structural aluminium profiles designed to replace fabricated steel weldments. Featuring heavy exterior walls and internal stiffening diaphragms to dampen machine vibration and support dynamic gantry loads.',
-    profileGeometry: 'T-Slot Modular',
-    alloys: ['6061-T6', '6082-T6'],
-    tempers: ['T6'],
-    surfaceFinishes: ['Clear Anodized', 'Mill Finish'],
-    applications: ['CNC Machine Frames', 'Automotive Tooling Bases', 'Laser Cutter Chassis'],
-    fabrications: ['Heavy Face Milling', 'Deep Hole Drilling', 'Threaded Inserts'],
-    verifiedChips: ['Vibration Damping', 'High Mass', '6061-T6'],
-    primaryImage: '/images/products/industrial-profiles/machine-frame-heavy/hero.webp',
+    slug: 'h_profiles',
+    aliases: ["h-profiles", "complex-multi-void"],
+    name: "H Profiles",
+    category: 'custom-extrusions',
+    categoryName: 'Custom Extrusions',
+    shortDescription: "Wide-flange H-profiles for heavy compression columns and interlock framing.",
+    longDescription: "Heavy-duty wide flange H-profiles designed for architectural column uprights, partition joints, and multi-tier structural racking.",
+    profileGeometry: 'Solid',
+    alloys: ["6061", "6005A"],
+    tempers: ["T6"],
+    surfaceFinishes: ["Mill Finish", "Anodized"],
+    applications: ["Modular Cleanroom Posts", "Partition Wall Interlocks", "Structural Racking Columns"],
+    fabrications: ["Precision Cutting", "Milling", "CNC Drilling", "Packaging"],
+    verifiedChips: ["Wide Flange", "6061-T6 / 6005A", "Tension Tested"],
+    primaryImage: '/media/catalog/08_h_profiles.webp',
     galleryImages: [
-      '/images/products/industrial-profiles/machine-frame-heavy/hero.webp',
-      '/images/products/industrial-profiles/machine-frame-heavy/cross-section.webp',
-      '/images/products/industrial-profiles/machine-frame-heavy/application.webp'
+      '/media/catalog/08_h_profiles.webp',
+      '/media/catalog/08_h_profiles.webp'
     ],
-    isStandard: false,
+    media: [
+      {
+        id: 'med-prod-08-01',
+        productId: 'prod-08',
+        assetKey: 'h_profiles',
+        url: '/media/catalog/08_h_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "H Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: true,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Profile Type', value: 'Heavy Structural Box Frame', verified: true },
-      { label: 'Yield Strength', value: '240+ MPa (6061-T6)', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6061, 6005A", verified: false },
+      { label: 'Standard Tempers', value: "T6", verified: false },
+      { label: 'Surface Finishes', value: "Mill Finish, Anodized", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Pre-aged to T6 temper for high torsional stiffness and zero weld distortion.'],
-    qcStandards: ['Ultrasonic flaw detection and full MTR 3.1 certification'],
-    packaging: 'Solid wooden crates lined with moisture desiccant.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Thermal equalization during quench is essential to prevent camber across wide flanges."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-09',
-    slug: 'conveyor-profiles',
-    name: 'Conveyor Aluminium Profiles',
+    slug: 't_slot_modular_profiles',
+    aliases: ["t-slot-modular-profiles", "t-slot-40", "t-slot-20", "t-slot-30", "industrial-t-slot"],
+    name: "T-Slot Modular Profiles",
     category: 'industrial-profiles',
     categoryName: 'Industrial Profiles',
-    shortDescription: 'Specialized profile sections with built-in roller tracks, guide channels, and belt wear strips.',
-    longDescription:
-      'Custom aluminium conveyor side frames with integrated roller snap-channels, sensor slots, and belt guide grooves. Engineered for high-speed material handling and automated logistics fulfillment lines.',
+    shortDescription: "Standard 20, 30, 40, and 80 series metric modular T-slot extrusions for machine building.",
+    longDescription: "The global industrial automation workhorse. Metric modular T-slot profiles engineered with 6mm, 8mm, and 10mm slot openings for rapid bolt-together machine frames, safety guards, and assembly benches.",
     profileGeometry: 'T-Slot Modular',
-    alloys: ['6063-T5', '6005A-T6'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Clear Anodized 15µm'],
-    applications: ['Roller Conveyors', 'Belt Conveyors', 'Pallet Transfer Systems'],
-    fabrications: ['Continuous Punching', 'Mitre Joints', 'Wear Strip Fitting'],
-    verifiedChips: ['Roller Channel', 'Automation Ready', 'Low Friction'],
-    primaryImage: '/images/products/industrial-profiles/conveyor-profiles/hero.webp',
+    alloys: ["6063", "6005A"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Clear Satin Anodized (10\u201315\u00b5m)", "Black Anodized"],
+    applications: ["Automation Machinery Frames", "Robot Enclosures", "Conveyor Side Rails", "Cleanroom Workstations"],
+    fabrications: ["Precision Length Cut \u00b10.15mm", "Core Hole End Tapping (M5\u2013M16)", "Access Hole Drilling"],
+    verifiedChips: ["Metric 20/30/40/80", "Satin Anodized 15\u00b5m", "Hardware Compatible"],
+    primaryImage: '/media/catalog/09_t_slot_modular_profiles.webp',
     galleryImages: [
-      '/images/products/industrial-profiles/conveyor-profiles/hero.webp',
-      '/images/products/industrial-profiles/conveyor-profiles/cross-section.webp',
-      '/images/products/industrial-profiles/conveyor-profiles/application.webp'
+      '/media/catalog/09_t_slot_modular_profiles.webp',
+      '/media/catalog/09_t_slot_modular_profiles.webp'
     ],
-    isStandard: false,
-    isCustom: true,
-    requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
-    specs: [
-      { label: 'Feature', value: 'Integrated Roller Guides', verified: true },
-      { label: 'Length', value: 'Up to 6 meters standard', verified: true }
-    ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Smooth internal finish ensures low rolling resistance for conveyor chains and rollers.'],
-    qcStandards: ['Straightness tolerance < 0.5mm per meter'],
-    packaging: 'Protective carton partitions inside shipping containers.'
-  },
-
-  // 3. Solar Profiles (4 products)
-  {
-    id: 'prod-10',
-    slug: 'solar-module-frame',
-    name: 'Solar Module Frame Profiles',
-    category: 'solar-profiles',
-    categoryName: 'Solar Profiles',
-    shortDescription: 'Precision perimeter aluminium frames for crystalline and bifacial photovoltaic modules.',
-    longDescription:
-      'Lightweight, high-strength aluminium perimeter frame sections engineered for silicon PV modules. Features integrated silicone sealant grooves, grounding slots, and corner key cavities with tight angle tolerances.',
-    profileGeometry: 'Hollow',
-    alloys: ['6063-T6', '6005A-T6'],
-    tempers: ['T6'],
-    surfaceFinishes: ['Clear Anodized 15µm', 'Black Satin Anodized (All-Black)'],
-    applications: ['Photovoltaic Solar Panels', 'Bifacial Solar Modules', 'BIPV Architectural Glass'],
-    fabrications: ['45° Precision Corner Mitre', 'Grounding Hole Punching', 'Corner Key Assembly'],
-    verifiedChips: ['IEC 61215 Ready', 'Corner Key Slot', 'Black/Clear Anodize'],
-    primaryImage: '/images/products/solar-profiles/solar-module-frame/hero.webp',
-    galleryImages: [
-      '/images/products/solar-profiles/solar-module-frame/hero.webp',
-      '/images/products/solar-profiles/solar-module-frame/cross-section.webp',
-      '/images/products/solar-profiles/solar-module-frame/application.webp'
+    media: [
+      {
+        id: 'med-prod-09-01',
+        productId: 'prod-09',
+        assetKey: 't_slot_modular_profiles',
+        url: '/media/catalog/09_t_slot_modular_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "T-Slot Modular Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: true,
-    isCustom: false,
+    isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Profile Heights', value: '30 mm / 35 mm / 40 mm standard', verified: true },
-      { label: 'Anodizing Standard', value: 'Class I / Class II Outdoor UV Rated', verified: true },
-      { label: 'Drawing Required', value: 'Yes (For Corner Key Geometry)', verified: true }
+      { label: 'Available Alloys', value: "6063, 6005A", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Clear Satin Anodized (10\u201315\u00b5m), Black Anodized", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Manufactured in multi-cavity dies for high volume output and tight price control.'],
-    qcStandards: ['Salt spray test > 1000 hours', 'Cross-cut adhesion test'],
-    packaging: 'Automatic palletizing with corner edge caps for automated panel production lines.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Slot root radius is optimized to withstand repeated dynamic fastener torque without flange deflection."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
+  },
+  {
+    id: 'prod-10',
+    slug: 'v_slot_profiles',
+    aliases: ["v-slot-profiles"],
+    name: "V-Slot Profiles",
+    category: 'industrial-profiles',
+    categoryName: 'Industrial Profiles',
+    shortDescription: "Integrated 90-degree chamfered V-rail profiles for smooth linear motion roller bearings.",
+    longDescription: "Precision V-slot aluminium profiles featuring precision chamfered edges that act as dual linear motion guide rails for Delrin or polycarbonate V-wheels.",
+    profileGeometry: 'T-Slot Modular',
+    alloys: ["6063"],
+    tempers: ["T5"],
+    surfaceFinishes: ["Clear Anodized", "Black Anodized"],
+    applications: ["3D Printers & CNC Routers", "Laser Engravers", "Camera Slider Rigs", "Pick & Place Cartesian Robots"],
+    fabrications: ["Precision Cut", "Tapping", "Slot Milling", "Custom Anodizing"],
+    verifiedChips: ["Integrated V-Rail", "6063-T5 Precision", "Smooth Motion Finish"],
+    primaryImage: '/media/catalog/10_v_slot_profiles.webp',
+    galleryImages: [
+      '/media/catalog/10_v_slot_profiles.webp',
+      '/media/catalog/10_v_slot_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-10-01',
+        productId: 'prod-10',
+        assetKey: 'v_slot_profiles',
+        url: '/media/catalog/10_v_slot_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "V-Slot Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: true,
+    isCustom: true,
+    requiresDrawing: true,
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
+    specs: [
+      { label: 'Available Alloys', value: "6063", verified: false },
+      { label: 'Standard Tempers', value: "T5", verified: false },
+      { label: 'Surface Finishes', value: "Clear Anodized, Black Anodized", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
+    ],
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["V-groove surface roughness is tightly monitored to ensure zero jitter during linear roller traversal."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-11',
-    slug: 'solar-mounting-rail',
-    name: 'Solar Mounting Rails',
+    slug: 'solar_panel_frame_profiles',
+    aliases: ["solar-panel-frame-profiles", "solar-module-frame"],
+    name: "Solar Panel Frame Profiles",
     category: 'solar-profiles',
     categoryName: 'Solar Profiles',
-    shortDescription: 'High-strength mounting rails with continuous top and side fastener channels for solar racking.',
-    longDescription:
-      'Structural mounting rails engineered for commercial rooftop and ground-mount PV installations. Designed with continuous top nut grooves and side cable routing channels, maximizing span distances between roof attachments.',
-    profileGeometry: 'Semi-Hollow',
-    alloys: ['6005A-T6', '6082-T6', '6063-T6'],
-    tempers: ['T6'],
-    surfaceFinishes: ['Clear Anodized 15–20µm', 'Mill Finish'],
-    applications: ['Commercial Rooftop Solar', 'Ground-Mount Arrays', 'Floating Solar PV'],
-    fabrications: ['Slot Punching', 'Connector Hole Drilling', 'Custom Length Sizing'],
-    verifiedChips: ['6005A-T6 High Yield', 'Top Nut Channel', '0% FTA Duty'],
-    primaryImage: '/images/products/solar-profiles/solar-mounting-rail/hero.webp',
+    shortDescription: "Perimeter aluminium frame extrusions for crystalline and bifacial photovoltaic modules.",
+    longDescription: "High-volume perimeter frames engineered for automated solar panel assembly lines. Equipped with internal corner key slots, glass adhesive channels, and grounding contact dimples.",
+    profileGeometry: 'Hollow',
+    alloys: ["6063", "6005A"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Clear Anodized (15\u00b5m)", "Black Anodized (15\u00b5m)"],
+    applications: ["Bifacial PV Modules", "Utility-Scale Solar Panels", "Commercial Rooftop PV", "Off-Grid Solar Panels"],
+    fabrications: ["Automated Mitre Cutting 45\u00b0", "Drain Hole Punching", "Corner Key Insertion Hole Punching"],
+    verifiedChips: ["Class 1 Anodizing 15\u00b5m", "High Volume Ready", "Wind/Snow Load Rated"],
+    primaryImage: '/media/catalog/11_solar_panel_frame_profiles.webp',
     galleryImages: [
-      '/images/products/solar-profiles/solar-mounting-rail/hero.webp',
-      '/images/products/solar-profiles/solar-mounting-rail/cross-section.webp',
-      '/images/products/solar-profiles/solar-mounting-rail/application.webp'
+      '/media/catalog/11_solar_panel_frame_profiles.webp',
+      '/media/catalog/11_solar_panel_frame_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-11-01',
+        productId: 'prod-11',
+        assetKey: 'solar_panel_frame_profiles',
+        url: '/media/catalog/11_solar_panel_frame_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Solar Panel Frame Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: true,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Alloy', value: '6005A-T6 (High Tensile Yield)', verified: true },
-      { label: 'Standard Length', value: '3.15m / 4.2m / 6.2m (Container Optimized)', verified: true },
-      { label: 'Corrosion Protection', value: 'Anodized 15–20µm', verified: true }
+      { label: 'Available Alloys', value: "6063, 6005A", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Clear Anodized (15\u00b5m), Black Anodized (15\u00b5m)", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Alloy 6005A-T6 offers 225+ MPa yield strength, significantly outperforming standard 6063.'],
-    qcStandards: ['Mechanical tensile test certificates with heat number lot tracking'],
-    packaging: 'Container-optimized bundle packaging with moisture barrier and corner edge protectors.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Tolerances on 45-degree corner mitres are maintained within \u00b10.15\u00b0 to prevent water leakage."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-12',
-    slug: 'solar-clamp-profile',
-    name: 'Solar Clamp Profiles',
+    slug: 'solar_mounting_rails',
+    aliases: ["solar-mounting-rails", "solar-mounting-rail"],
+    name: "Solar Mounting Rails",
     category: 'solar-profiles',
     categoryName: 'Solar Profiles',
-    shortDescription: 'Solid extruded aluminium bars designed for mid and end panel clamps, pre-cut or full length.',
-    longDescription:
-      'Precision extruded clamp profiles engineered to secure solar modules onto mounting rails. Formed with integrated serrated teeth for electrical grounding continuity and anti-slip mechanical clamping.',
-    profileGeometry: 'Solid',
-    alloys: ['6063-T6', '6005A-T6'],
-    tempers: ['T6'],
-    surfaceFinishes: ['Clear Anodized', 'Black Anodized'],
-    applications: ['Mid Clamps', 'End Clamps', 'Grounding Clips'],
-    fabrications: ['Precision Cut (30–60mm)', 'Center Hole Punching', 'Tapping'],
-    verifiedChips: ['Grounding Teeth', 'Pre-Cut Available', 'UV Anodized'],
-    primaryImage: '/images/products/solar-profiles/solar-clamp-profile/hero.webp',
+    shortDescription: "Heavy-duty structural mounting rails with continuous top and side fastener channels.",
+    longDescription: "Engineered structural racking rails designed to span purlins and structural rafters under high wind uplift and snow load conditions across ground and rooftop arrays.",
+    profileGeometry: 'Complex Multi-Void',
+    alloys: ["6005A", "6061"],
+    tempers: ["T6"],
+    surfaceFinishes: ["Clear Anodized (15\u201320\u00b5m)"],
+    applications: ["Ground-Mount Utility Farms", "Rooftop Ballast Systems", "Solar Carport Structures", "Floating Solar Arrays"],
+    fabrications: ["Length Sawing up to 6.2m", "Custom Slot Punching", "End Cap Fitting", "Splice Bar Jointing"],
+    verifiedChips: ["6005A-T6 High Yield", "Continuous Slot", "Outdoor Marine Anodized"],
+    primaryImage: '/media/catalog/12_solar_mounting_rails.webp',
     galleryImages: [
-      '/images/products/solar-profiles/solar-clamp-profile/hero.webp',
-      '/images/products/solar-profiles/solar-clamp-profile/cross-section.webp',
-      '/images/products/solar-profiles/solar-clamp-profile/application.webp'
+      '/media/catalog/12_solar_mounting_rails.webp',
+      '/media/catalog/12_solar_mounting_rails.webp'
     ],
-    isStandard: true,
-    isCustom: false,
+    media: [
+      {
+        id: 'med-prod-12-01',
+        productId: 'prod-12',
+        assetKey: 'solar_mounting_rails',
+        url: '/media/catalog/12_solar_mounting_rails.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Solar Mounting Rails 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: false,
+    isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Application', value: 'Mid & End Panel Clamps', verified: true },
-      { label: 'Supply Form', value: 'Continuous Bars or Cut Components', verified: true }
+      { label: 'Available Alloys', value: "6005A, 6061", verified: false },
+      { label: 'Standard Tempers', value: "T6", verified: false },
+      { label: 'Surface Finishes', value: "Clear Anodized (15\u201320\u00b5m)", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Supplied as full 6m lengths or pre-cut stamped components ready for bolt insertion.'],
-    qcStandards: ['Hardness test > 12 HW'],
-    packaging: 'Heavy-duty cardboard boxes on wooden export pallets.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Multi-void internal ribs are placed along the principal bending axis to maximize cross-sectional moment."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-13',
-    slug: 'solar-carport',
-    name: 'Solar Carport Extrusions',
+    slug: 'solar_mid_clamps',
+    aliases: ["solar-mid-clamps", "solar-clamp-profile"],
+    name: "Solar Mid Clamps",
     category: 'solar-profiles',
     categoryName: 'Solar Profiles',
-    shortDescription: 'Heavy structural beams, purlins, and integrated water gutter profiles for solar parking structures.',
-    longDescription:
-      'Large-envelope structural aluminium beams and water-shedding gutter profiles engineered for commercial solar carports and EV canopy structures. Replaces rust-prone galvanized steel with maintenance-free aluminium.',
-    profileGeometry: 'Complex Multi-Void',
-    alloys: ['6005A-T6', '6082-T6'],
-    tempers: ['T6'],
-    surfaceFinishes: ['Architectural Anodized', 'Powder Coated'],
-    applications: ['Commercial Solar Carports', 'EV Charging Canopies', 'Industrial Covered Walkways'],
-    fabrications: ['CNC Hole Drilling', 'Gutter Joint Welds', 'Miter Jointing'],
-    verifiedChips: ['Heavy Span Beam', 'Water Gutter', '6082/6005A'],
-    primaryImage: '/images/products/solar-profiles/solar-carport/hero.webp',
+    shortDescription: "Extruded aluminium clamping sections for securing adjacent solar modules.",
+    longDescription: "Solid profile extrusion cut to precise clamp lengths with central bolt clearance and serrated clamping pads for slip-resistant module retention.",
+    profileGeometry: 'Solid',
+    alloys: ["6005A", "6063"],
+    tempers: ["T6", "T5"],
+    surfaceFinishes: ["Clear Anodized", "Black Anodized"],
+    applications: ["Photovoltaic Array Fastening", "Ground Mount Clamping", "Rooftop Array Mid-Joints"],
+    fabrications: ["High-Speed Chop Saw Cutting", "Deburring & Tumbling", "Clearance Hole Punching", "Pre-Assembly Kitting"],
+    verifiedChips: ["Serrated Grip Pads", "Pre-Cut / Full Length", "6005A-T6 High Clamp Load"],
+    primaryImage: '/media/catalog/13_solar_mid_clamps.webp',
     galleryImages: [
-      '/images/products/solar-profiles/solar-carport/hero.webp',
-      '/images/products/solar-profiles/solar-carport/cross-section.webp',
-      '/images/products/solar-profiles/solar-carport/application.webp'
+      '/media/catalog/13_solar_mid_clamps.webp',
+      '/media/catalog/13_solar_mid_clamps.webp'
     ],
-    isStandard: false,
+    media: [
+      {
+        id: 'med-prod-13-01',
+        productId: 'prod-13',
+        assetKey: 'solar_mid_clamps',
+        url: '/media/catalog/13_solar_mid_clamps.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Solar Mid Clamps 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: true,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Span Capacity', value: 'Engineered per regional wind/snow code', verified: true },
-      { label: 'Drawing Required', value: 'Yes (Structural Submittal)', verified: true }
+      { label: 'Available Alloys', value: "6005A, 6063", verified: false },
+      { label: 'Standard Tempers', value: "T6, T5", verified: false },
+      { label: 'Surface Finishes', value: "Clear Anodized, Black Anodized", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Integrated water channels eliminate secondary sheet metal flashing.'],
-    qcStandards: ['Structural deflection testing per ASCE / Eurocode standards'],
-    packaging: 'Heavy-duty bundle wrap on timber cradles.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Serration teeth are extruded directly into profile geometry, eliminating secondary knurling operations."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
-
-  // 4. Architectural Systems (4 products)
   {
     id: 'prod-14',
-    slug: 'window-door',
-    name: 'Window & Door Profiles',
-    category: 'architectural-systems',
-    categoryName: 'Architectural Systems',
-    shortDescription: 'Casement, sliding, and folding window and door profile systems conforming to international wind load standards.',
-    longDescription:
-      'Extruded aluminium architectural systems for residential and commercial fenestration. Engineered with tight tolerance gasket channels, drainage weep slots, and multi-point locking hardware chambers.',
-    profileGeometry: 'Hollow',
-    alloys: ['6063-T5', '6063-T6'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Powder Coated (Qualicoat Class 1 & 2)', 'Architectural Anodized'],
-    applications: ['Casement Windows', 'Heavy Sliding Patio Doors', 'Commercial Storefronts'],
-    fabrications: ['Precision Mitre Cutting', 'Drainage Slot Punching', 'Corner Cleat Assembly'],
-    verifiedChips: ['Qualicoat Coating', 'Gasket Channel', '6063-T5'],
-    primaryImage: '/images/products/architectural-systems/window-door/hero.webp',
+    slug: 'solar_end_clamps',
+    aliases: ["solar-end-clamps", "solar-carport"],
+    name: "Solar End Clamps",
+    category: 'solar-profiles',
+    categoryName: 'Solar Profiles',
+    shortDescription: "Perimeter termination clamps designed to secure the outer edge of solar module arrays.",
+    longDescription: "Engineered end-clamp profiles designed to match standard module frame heights (30mm, 35mm, 40mm) with integrated grounding rib geometry.",
+    profileGeometry: 'Solid',
+    alloys: ["6005A", "6063"],
+    tempers: ["T6", "T5"],
+    surfaceFinishes: ["Clear Anodized", "Black Anodized"],
+    applications: ["Array Outer Edge Termination", "Rooftop Perimeter Mounting", "Carport Array Framing"],
+    fabrications: ["Precision Chopping", "Tumble Deburring", "Tapping / Piercing", "Hardware Assembly"],
+    verifiedChips: ["30/35/40mm Frame Match", "Anti-Slip Ribbing", "Corrosion Resistant"],
+    primaryImage: '/media/catalog/14_solar_end_clamps.webp',
     galleryImages: [
-      '/images/products/architectural-systems/window-door/hero.webp',
-      '/images/products/architectural-systems/window-door/cross-section.webp',
-      '/images/products/architectural-systems/window-door/application.webp'
+      '/media/catalog/14_solar_end_clamps.webp',
+      '/media/catalog/14_solar_end_clamps.webp'
     ],
-    isStandard: false,
+    media: [
+      {
+        id: 'med-prod-14-01',
+        productId: 'prod-14',
+        assetKey: 'solar_end_clamps',
+        url: '/media/catalog/14_solar_end_clamps.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Solar End Clamps 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: true,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Alloy', value: '6063-T5 (Architectural Standard)', verified: true },
-      { label: 'Surface Finish', value: 'Powder Coat / Anodize', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6005A, 6063", verified: false },
+      { label: 'Standard Tempers', value: "T6, T5", verified: false },
+      { label: 'Surface Finishes', value: "Clear Anodized, Black Anodized", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Custom architectural dies engineered with uniform wall thickness to prevent coating visual sinks.'],
-    qcStandards: ['Qualicoat powder coating gloss and adhesion testing'],
-    packaging: 'Paper interleaved bundles with protective tape.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Leg height is calibrated to match module frame height with controlled clamping deflection."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-15',
-    slug: 'curtain-wall',
-    name: 'Curtain Wall / Facade Profiles',
-    category: 'architectural-systems',
-    categoryName: 'Architectural Systems',
-    shortDescription: 'Structural mullions, transoms, and pressure plates for unitized and stick curtain wall facades.',
-    longDescription:
-      'Heavy structural curtain wall mullion and transom extrusions engineered for high-rise commercial architecture. Designed to resist extreme dynamic wind pressures and seismic drift while accommodating structural glazing silicone gaskets.',
-    profileGeometry: 'Complex Multi-Void',
-    alloys: ['6063-T6', '6061-T6'],
-    tempers: ['T6'],
-    surfaceFinishes: ['PVDF Fluoropolymer Coating', 'Anodized Class I (20µm)'],
-    applications: ['High-Rise Curtain Walls', 'Unitized Facades', 'Glass Atriums'],
-    fabrications: ['CNC Spigot Slotting', 'Pressure Plate Punching', 'Thermal Isolator Insertion'],
-    verifiedChips: ['Heavy Mullion', 'AAMA 2605 Coating', 'High Wind Load'],
-    primaryImage: '/images/products/architectural-systems/curtain-wall/hero.webp',
+    slug: 'heat_sink_profiles',
+    aliases: ["heat-sink-profiles", "inverter-heatsink"],
+    name: "Heat Sink Profiles",
+    category: 'heat-sink-thermal',
+    categoryName: 'Heat Sink / Thermal',
+    shortDescription: "High-density comb and tapered fin heat sinks for high-power semiconductor cooling.",
+    longDescription: "Thermal management extrusion profiles engineered with high aspect ratio fin geometries for maximum surface area and efficient forced or natural convection in power electronics.",
+    profileGeometry: 'Fin Array',
+    alloys: ["6063", "1050", "6060"],
+    tempers: ["T5"],
+    surfaceFinishes: ["Black Anodized (High Emissivity)", "Clear Anodized", "Mill Finish"],
+    applications: ["Solar Inverter Heatsinks", "EV Motor Controllers", "High-Power Switchgear", "Audio Power Amplifiers"],
+    fabrications: ["Precision CNC Fly-Cutting", "Hole Drilling & Tapping for TO-220/TO-247", "Surface Lapping"],
+    verifiedChips: ["High Aspect Ratio Fins", "Thermal 6063-T5", "Black Emissivity Anodized"],
+    primaryImage: '/media/catalog/15_heat_sink_profiles.webp',
     galleryImages: [
-      '/images/products/architectural-systems/curtain-wall/hero.webp',
-      '/images/products/architectural-systems/curtain-wall/cross-section.webp',
-      '/images/products/architectural-systems/curtain-wall/application.webp'
+      '/media/catalog/15_heat_sink_profiles.webp',
+      '/media/catalog/15_heat_sink_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-15-01',
+        productId: 'prod-15',
+        assetKey: 'heat_sink_profiles',
+        url: '/media/catalog/15_heat_sink_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Heat Sink Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Application', value: 'Unitized & Stick Curtain Wall Systems', verified: true },
-      { label: 'Finish Warranty', value: 'AAMA 2604/2605 compliant', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6063, 1050, 6060", verified: false },
+      { label: 'Standard Tempers', value: "T5", verified: false },
+      { label: 'Surface Finishes', value: "Black Anodized (High Emissivity), Clear Anodized, Mill Finish", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Large cross-section dies require dedicated high-tonnage press scheduling.'],
-    qcStandards: ['Full dimensional inspection against architectural submittals'],
-    packaging: 'Wooden shipping crates built to sea container dimensions.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Fin tip draft angles of 0.5\u00b0\u20131.0\u00b0 prevent die sticking during extrusion press runs."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-16',
-    slug: 'louvers',
-    name: 'Aluminium Louver Profiles',
-    category: 'architectural-systems',
-    categoryName: 'Architectural Systems',
-    shortDescription: 'Aerofoil, Z-blade, and acoustic louver profiles for solar shading and mechanical ventilation.',
-    longDescription:
-      'Architectural sun-shading aerofoil blades and rain-defense ventilation louver extrusions. Engineered to optimize airflow efficiency while blocking solar heat gain and rain penetration in commercial buildings.',
+    slug: 'led_lighting_profiles',
+    aliases: ["led-lighting-profiles", "led-heatsink"],
+    name: "LED Lighting Profiles",
+    category: 'heat-sink-thermal',
+    categoryName: 'Heat Sink / Thermal',
+    shortDescription: "Linear LED architectural channel profiles with integrated lens snap tracks and thermal sink.",
+    longDescription: "Architectural lighting profiles combining efficient LED strip thermal dissipation with precision snap-in channels for polycarbonate diffuser lenses and end-caps.",
     profileGeometry: 'Semi-Hollow',
-    alloys: ['6063-T5'],
-    tempers: ['T5'],
-    surfaceFinishes: ['Powder Coated RAL', 'Matte Anodized'],
-    applications: ['HVAC Equipment Screens', 'Facade Solar Shading', 'Parking Garage Ventilation'],
-    fabrications: ['Pivot Hole Drilling', 'Mitre Ends', 'End-Cap Assembly'],
-    verifiedChips: ['Aerofoil Shape', 'Solar Shading', 'Rain Defense'],
-    primaryImage: '/images/products/architectural-systems/louvers/hero.webp',
+    alloys: ["6063"],
+    tempers: ["T5"],
+    surfaceFinishes: ["Anodized Silver", "Matte Black Anodized", "White Powder Coated"],
+    applications: ["Linear Commercial Fixtures", "High-Bay Industrial LED", "Cove & Recessed Lighting", "Display Case Illumination"],
+    fabrications: ["Precision Miter Cutting", "Access Hole Punching", "Custom Length Anodizing", "Lens Fitting"],
+    verifiedChips: ["Diffuser Lens Snap Fit", "Integrated PCB Channel", "Architectural Anodized"],
+    primaryImage: '/media/catalog/16_led_lighting_profiles.webp',
     galleryImages: [
-      '/images/products/architectural-systems/louvers/hero.webp',
-      '/images/products/architectural-systems/louvers/cross-section.webp',
-      '/images/products/architectural-systems/louvers/application.webp'
+      '/media/catalog/16_led_lighting_profiles.webp',
+      '/media/catalog/16_led_lighting_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-16-01',
+        productId: 'prod-16',
+        assetKey: 'led_lighting_profiles',
+        url: '/media/catalog/16_led_lighting_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "LED Lighting Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Blade Geometry', value: 'Aerofoil / Z-Blade / Continuous', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6063", verified: false },
+      { label: 'Standard Tempers', value: "T5", verified: false },
+      { label: 'Surface Finishes', value: "Anodized Silver, Matte Black Anodized, White Powder Coated", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Thin aerofoil trailing edges engineered with balanced die land to prevent waviness.'],
-    qcStandards: ['Surface inspection under daylight lamp standards'],
-    packaging: 'Carton box packaging with protective film.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Lens retention grooves maintain tight tolerance (\u00b10.1mm) to guarantee clean snap-fit engagement."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-17',
-    slug: 'thermal-break',
-    name: 'Thermal-Break Profiles',
+    slug: 'curtain_wall_profiles',
+    aliases: ["curtain-wall-profiles", "curtain-wall-mullion"],
+    name: "Curtain Wall Profiles",
     category: 'architectural-systems',
     categoryName: 'Architectural Systems',
-    shortDescription: 'Dual-chamber extrusions designed for polyamide thermal barrier strip knurling and crimping.',
-    longDescription:
-      'Energy-saving architectural aluminium profiles engineered with dedicated knurled grooves for polyamide (PA66 GF25) thermal insulation bars. Prevents thermal bridging and meets strict energy efficiency building codes.',
+    shortDescription: "Large-span mullion and transom profiles for high-rise unitized and stick curtain wall facades.",
+    longDescription: "Heavy structural architectural profiles engineered to withstand extreme wind deflection, thermal expansion, and seismic joint movement on commercial facade structures.",
     profileGeometry: 'Complex Multi-Void',
-    alloys: ['6063-T5', '6063-T6'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Dual-Color Powder Coated', 'Anodized'],
-    applications: ['Passive House Windows', 'Commercial Insulated Facades', 'Refrigeration Doors'],
-    fabrications: ['Strip Knurling', 'Bar Crimping', 'Shear Testing'],
-    verifiedChips: ['PA66 Insulated', 'Energy Saving', 'Dual Color'],
-    primaryImage: '/images/products/architectural-systems/thermal-break/hero.webp',
+    alloys: ["6063", "6005A", "6061"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["PVDF Fluoropolymer (2/3 Coat)", "AAMA 2605 Powder Coating", "Hard Anodized"],
+    applications: ["Unitized High-Rise Facades", "Stick Curtain Wall Systems", "Structural Glass Atriums", "Canopy Support Mullions"],
+    fabrications: ["CNC End Coping", "Continuous Drainage Slotting", "Pressure Plate Punching", "Thermal Barrier Assembly"],
+    verifiedChips: ["AAMA 2605 Compliant", "Multi-Chamber Mullion", "6005A-T6 Structural"],
+    primaryImage: '/media/catalog/17_curtain_wall_profiles.webp',
     galleryImages: [
-      '/images/products/architectural-systems/thermal-break/hero.webp',
-      '/images/products/architectural-systems/thermal-break/cross-section.webp',
-      '/images/products/architectural-systems/thermal-break/application.webp'
+      '/media/catalog/17_curtain_wall_profiles.webp',
+      '/media/catalog/17_curtain_wall_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-17-01',
+        productId: 'prod-17',
+        assetKey: 'curtain_wall_profiles',
+        url: '/media/catalog/17_curtain_wall_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Curtain Wall Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Insulation System', value: 'Polyamide Thermal Barrier Cavity', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6063, 6005A, 6061", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "PVDF Fluoropolymer (2/3 Coat), AAMA 2605 Powder Coating, Hard Anodized", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Precision knurled tooth geometry ensures maximum shear strength after crimping.'],
-    qcStandards: ['EN 14024 transverse tensile and longitudinal shear tests'],
-    packaging: 'Protective plastic film on finished exposed surfaces.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Extrusion length straightness (camber and bow) is strictly controlled to ASTM B221 precision limits."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
-
-  // 5. Heat Sink / Thermal (3 products)
   {
     id: 'prod-18',
-    slug: 'led-heatsink',
-    name: 'LED Heat Sink Profiles',
-    category: 'heat-sink-thermal',
-    categoryName: 'Heat Sink / Thermal',
-    shortDescription: 'Radial and linear heat sinks optimized for high-power LED grow lights and industrial luminaires.',
-    longDescription:
-      'High thermal efficiency aluminium extrusion profiles engineered for LED lighting thermal management. Dense fin spacing and curved aerofoil fin geometry maximize natural convection and radiative cooling.',
-    profileGeometry: 'Fin Array',
-    alloys: ['6063 High Thermal', '6060'],
-    tempers: ['T5'],
-    surfaceFinishes: ['Black Anodized (Maximizes thermal radiation)', 'Clear Anodized'],
-    applications: ['High-Bay Industrial Lighting', 'Horticultural LED Grow Lights', 'Street Lighting'],
-    fabrications: ['Precision Cut', 'Thermal Interface Milling', 'Tapped Mounting Holes'],
-    verifiedChips: ['High Fin Ratio', 'Black Anodized Radiation', '6063 Thermal'],
-    primaryImage: '/images/products/heat-sink-thermal/led-heatsink/hero.webp',
+    slug: 'window_door_profiles',
+    aliases: ["window-door-profiles", "window-door"],
+    name: "Window & Door Profiles",
+    category: 'architectural-systems',
+    categoryName: 'Architectural Systems',
+    shortDescription: "Multi-chamber thermally broken profile sections for energy-efficient windows and doors.",
+    longDescription: "Architectural window and door frame suites engineered with knurled crimping channels for polyamide (PA66) thermal barrier strip insertion, maximizing acoustic and thermal performance.",
+    profileGeometry: 'Complex Multi-Void',
+    alloys: ["6063"],
+    tempers: ["T5"],
+    surfaceFinishes: ["AAMA 2604 Powder Coating", "Clear / Bronze Anodizing", "Woodgrain Sublimation"],
+    applications: ["Commercial Casement Windows", "Heavy Sliding Patio Doors", "Pivot Entrance Doors", "Storefront Systems"],
+    fabrications: ["45\u00b0 Double Miter Sawing", "Polyamide Strip Insertion & Rolling", "Drain Hole Routing", "Hardware Milling"],
+    verifiedChips: ["Thermal Break Ready", "AAMA 2604 Coating", "Multi-Chamber Acoustic"],
+    primaryImage: '/media/catalog/18_window_door_profiles.webp',
     galleryImages: [
-      '/images/products/heat-sink-thermal/led-heatsink/hero.webp',
-      '/images/products/heat-sink-thermal/led-heatsink/cross-section.webp',
-      '/images/products/heat-sink-thermal/led-heatsink/application.webp'
+      '/media/catalog/18_window_door_profiles.webp',
+      '/media/catalog/18_window_door_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-18-01',
+        productId: 'prod-18',
+        assetKey: 'window_door_profiles',
+        url: '/media/catalog/18_window_door_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Window & Door Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Alloy', value: '6063 (High Thermal Conductivity ~209 W/m·K)', verified: true },
-      { label: 'Finish', value: 'Black Anodize for Enhanced Emissivity', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6063", verified: false },
+      { label: 'Standard Tempers', value: "T5", verified: false },
+      { label: 'Surface Finishes', value: "AAMA 2604 Powder Coating, Clear / Bronze Anodizing, Woodgrain Sublimation", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Black anodizing increases surface thermal emissivity from ~0.05 to over 0.85.'],
-    qcStandards: ['Base plate flatness inspection (< 0.1 mm)'],
-    packaging: 'Cardboard dividers preventing fin distortion during transit.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Polyamide rolling groove knurling is monitored to achieve pull-apart shear strengths per EN 14024."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-19',
-    slug: 'inverter-heatsink',
-    name: 'Inverter Heat Sink Profiles',
-    category: 'heat-sink-thermal',
-    categoryName: 'Heat Sink / Thermal',
-    shortDescription: 'Heavy wide-base heat sink extrusions for solar string inverters and motor drive electronics.',
-    longDescription:
-      'Large-cross-section heat sink extrusions with thick base plates and deep cooling fins designed for solar string inverters, variable frequency drives (VFD), and industrial motor speed controllers.',
-    profileGeometry: 'Fin Array',
-    alloys: ['6063-T5', '6060'],
-    tempers: ['T5'],
-    surfaceFinishes: ['Clear Anodized', 'Mill Finish with CNC Milled Base'],
-    applications: ['Solar PV Inverters', 'Wind Power Converters', 'Variable Frequency Drives (VFD)'],
-    fabrications: ['IGBT Pocket CNC Milling', 'Threaded Blind Holes', 'Gasket Groove Routing'],
-    verifiedChips: ['Thick Base Plate', 'Solar Inverter', 'CNC Machined Base'],
-    primaryImage: '/images/products/heat-sink-thermal/inverter-heatsink/hero.webp',
+    slug: 'handrail_profiles',
+    aliases: ["handrail-profiles", "structural-railings"],
+    name: "Handrail Profiles",
+    category: 'architectural-systems',
+    categoryName: 'Architectural Systems',
+    shortDescription: "Ergonomic circular and ovate architectural handrails for commercial staircases and balconies.",
+    longDescription: "Smooth extruded circular and oval handrail profiles with continuous bottom channels for concealed glass or baluster mounting brackets. Free of sharp parting lines.",
+    profileGeometry: 'Hollow',
+    alloys: ["6063", "6061"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Satin Anodized (15\u201320\u00b5m)", "Architectural Powder Coated"],
+    applications: ["Commercial Staircases", "Balcony Railings", "Public Transit Barrier Rails", "Hospital Wall Protection"],
+    fabrications: ["Precision Length Cut", "End Cap Welding / Plugging", "Curved Bending", "Hardware Fastening"],
+    verifiedChips: ["Ergonomic Grip", "Satin Smooth Finish", "ADA Compliant Diameter"],
+    primaryImage: '/media/catalog/19_handrail_profiles.webp',
     galleryImages: [
-      '/images/products/heat-sink-thermal/inverter-heatsink/hero.webp',
-      '/images/products/heat-sink-thermal/inverter-heatsink/cross-section.webp',
-      '/images/products/heat-sink-thermal/inverter-heatsink/application.webp'
+      '/media/catalog/19_handrail_profiles.webp',
+      '/media/catalog/19_handrail_profiles.webp'
     ],
-    isStandard: false,
+    media: [
+      {
+        id: 'med-prod-19-01',
+        productId: 'prod-19',
+        assetKey: 'handrail_profiles',
+        url: '/media/catalog/19_handrail_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Handrail Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
+    ],
+    isStandard: true,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Base Thickness', value: 'Engineered for thermal heat spreading', verified: true },
-      { label: 'Base Flatness', value: 'High precision fly-cut available', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6063, 6061", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Satin Anodized (15\u201320\u00b5m), Architectural Powder Coated", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Base fly-cutting eliminates air gaps beneath power semiconductor modules (IGBTs).'],
-    qcStandards: ['Flatness and surface roughness (Ra < 1.6µm) testing'],
-    packaging: 'Solid wooden crates with desiccant and foam protection.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Outer surface is subjected to high-grade die polishing to eliminate visible die lines before anodizing."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-20',
-    slug: 'power-electronics',
-    name: 'Power Electronics Heat Sink Profiles',
-    category: 'heat-sink-thermal',
-    categoryName: 'Heat Sink / Thermal',
-    shortDescription: 'High-density fin profiles with integrated fluid cooling channels or heat pipe cavities.',
-    longDescription:
-      'High-performance thermal solutions for mission-critical power conversion, telecom base stations, and EV battery chargers. Capable of incorporating hollow coolant channels or embedded heat-pipe recesses.',
-    profileGeometry: 'Fin Array',
-    alloys: ['6063-T5'],
-    tempers: ['T5'],
-    surfaceFinishes: ['Chromate / Trivalent Conversion', 'Anodized'],
-    applications: ['EV Fast Chargers', 'Telecom Power Modules', 'Railway Traction Electronics'],
-    fabrications: ['5-Axis Precision Milling', 'Pressure Tested Coolant Ports'],
-    verifiedChips: ['Liquid Coolant Ready', 'Power Conversion', 'EV Charging'],
-    primaryImage: '/images/products/heat-sink-thermal/power-electronics/hero.webp',
+    slug: 'railing_balustrade_profiles',
+    aliases: ["railing-balustrade-profiles", "louvers-sunshade"],
+    name: "Railing & Balustrade Profiles",
+    category: 'architectural-systems',
+    categoryName: 'Architectural Systems',
+    shortDescription: "Heavy-duty structural base shoe channels and post extrusions for frameless glass balustrades.",
+    longDescription: "Heavy structural floor-mount base shoe profiles engineered to clamp 12mm to 21.5mm laminated glass panels under rigorous building code crowd loading standards.",
+    profileGeometry: 'Semi-Hollow',
+    alloys: ["6063", "6005A"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Polished Anodized", "Matte Architectural Powder Coat"],
+    applications: ["Frameless Glass Balustrades", "Rooftop Terrace Railings", "Pool Safety Fencing", "Atrium Guardrails"],
+    fabrications: ["Heavy Precision Sawing", "Anchor Hole Drilling & Counterboring", "Drainage Slots", "Surface Treatment"],
+    verifiedChips: ["Heavy Base Shoe", "Laminated Glass Ready", "Crowd Load Certified"],
+    primaryImage: '/media/catalog/20_railing_balustrade_profiles.webp',
     galleryImages: [
-      '/images/products/heat-sink-thermal/power-electronics/hero.webp',
-      '/images/products/heat-sink-thermal/power-electronics/cross-section.webp',
-      '/images/products/heat-sink-thermal/power-electronics/application.webp'
+      '/media/catalog/20_railing_balustrade_profiles.webp',
+      '/media/catalog/20_railing_balustrade_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-20-01',
+        productId: 'prod-20',
+        assetKey: 'railing_balustrade_profiles',
+        url: '/media/catalog/20_railing_balustrade_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Railing & Balustrade Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Application', value: 'High Heat Flux Power Electronics', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6063, 6005A", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Polished Anodized, Matte Architectural Powder Coat", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Multi-channel hollow cooling profiles require nitrogen cooling during extrusion.'],
-    qcStandards: ['Helium leak testing for liquid-cooled chambers'],
-    packaging: 'Custom foam cradles inside heavy-duty cartons.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Thick base sections require controlled water spray quench to prevent internal residual stress distortion."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
-
-  // 6. OEM Components (4 products)
   {
     id: 'prod-21',
-    slug: 'cnc-components',
-    name: 'CNC Machined Extrusion Components',
-    category: 'oem-components',
-    categoryName: 'OEM Components',
-    shortDescription: 'Precision 3, 4, and 5-axis milled parts derived from extruded aluminium bar stock and profiles.',
-    longDescription:
-      'Finished engineering components produced by combining profile extrusion with secondary precision CNC machining. Eliminates waste and reduces machining cycle times compared to carving parts out of solid billet blocks.',
-    profileGeometry: 'CNC Component',
-    alloys: ['6061-T6', '6082-T6', '7075-T6'],
-    tempers: ['T6'],
-    surfaceFinishes: ['Hard Anodized (Type III)', 'Clear Anodized', 'Chromate Conversion'],
-    applications: ['Aerospace Brackets', 'Robotic Arm End-Effectors', 'Automotive Chassis Mounts'],
-    fabrications: ['5-Axis CNC Milling', 'Boring', 'Thread Milling', 'Engraving'],
-    verifiedChips: ['5-Axis CNC', '6061-T6 / 7075', 'CMM Inspection'],
-    primaryImage: '/images/products/oem-components/cnc-components/hero.webp',
+    slug: 'enclosure_profiles',
+    aliases: ["enclosure-profiles", "power-electronics"],
+    name: "Enclosure Profiles",
+    category: 'architectural-systems',
+    categoryName: 'Architectural Systems',
+    shortDescription: "Modular interlocking enclosure extrusions with integrated PCB slots and sealing gasket grooves.",
+    longDescription: "Engineered electronics and outdoor equipment enclosure profiles featuring slide-in PCB card guides, rubber gasket seal channels (IP65/IP66), and tongue-and-groove side interlocks.",
+    profileGeometry: 'Complex Multi-Void',
+    alloys: ["6063"],
+    tempers: ["T5"],
+    surfaceFinishes: ["Clear Anodized", "Black Anodized", "Weatherproof Powder Coat"],
+    applications: ["Outdoor Telecom Enclosures", "Industrial Instrumentation", "Power Inverter Cabinets", "Controller Housings"],
+    fabrications: ["CNC End Milling", "Connector Port Piercing", "Gasket Channel Routing", "Tapping"],
+    verifiedChips: ["Integrated PCB Guides", "Gasket Groove (IP65)", "Interlocking Shell"],
+    primaryImage: '/media/catalog/21_enclosure_profiles.webp',
     galleryImages: [
-      '/images/products/oem-components/cnc-components/hero.webp',
-      '/images/products/oem-components/cnc-components/cross-section.webp',
-      '/images/products/oem-components/cnc-components/application.webp'
+      '/media/catalog/21_enclosure_profiles.webp',
+      '/media/catalog/21_enclosure_profiles.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-21-01',
+        productId: 'prod-21',
+        assetKey: 'enclosure_profiles',
+        url: '/media/catalog/21_enclosure_profiles.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Enclosure Profiles 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Process', value: 'Extrusion + Multi-Axis CNC Milling', verified: true },
-      { label: 'Machining Tolerance', value: 'Validated per engineering drawing', verified: false },
-      { label: 'Drawing Required', value: 'Yes (3D STEP & 2D PDF)', verified: true }
+      { label: 'Available Alloys', value: "6063", verified: false },
+      { label: 'Standard Tempers', value: "T5", verified: false },
+      { label: 'Surface Finishes', value: "Clear Anodized, Black Anodized, Weatherproof Powder Coat", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Near-net shape extrusion minimizes material removal and machine run time.'],
-    qcStandards: ['CMM coordinate measuring report and full dimensional inspection certificate'],
-    packaging: 'Individual anti-static bubble wrap in compartmentalized export cartons.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["PCB card guide tolerances must be held within +0.15/-0.05mm to ensure smooth slide insertion."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-22',
-    slug: 'cut-drill-tap',
-    name: 'Cut / Drill / Tap Components',
+    slug: 'cnc_machined_components',
+    aliases: ["cnc-machined-components", "cnc-components"],
+    name: "CNC Machined Components",
     category: 'oem-components',
     categoryName: 'OEM Components',
-    shortDescription: 'High-volume production parts with precision cut-to-length, automated drilling, and threaded holes.',
-    longDescription:
-      'High-speed automated secondary processing of extruded aluminium profiles: Precision mitre cutting (±0.2mm), multi-spindle drilling, punch slotting, and automatic thread tapping ready for final assembly.',
+    shortDescription: "Turnkey multi-axis CNC milled and turned components manufactured to client STEP/CAD nominals.",
+    longDescription: "Complex precision aluminium components produced from extruded profile blanks or forged billets. Equipped with 3-axis and 4-axis long-bed CNC centers for aerospace, robotics, and automation parts.",
     profileGeometry: 'CNC Component',
-    alloys: ['6063-T5', '6061-T6'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Clear Anodized', 'Black Anodized', 'Mill Finish'],
-    applications: ['Solar Frame Members', 'Furniture Rails', 'Appliance Handles', 'Ladder Rungs'],
-    fabrications: ['Precision Cut-to-Length', 'Multi-Spindle Drilling', 'Roll Tapping'],
-    verifiedChips: ['High Volume', 'Threaded M4–M16', 'Ready-to-Assemble'],
-    primaryImage: '/images/products/oem-components/cut-drill-tap/hero.webp',
+    alloys: ["6061", "6082", "7075"],
+    tempers: ["T6", "T651"],
+    surfaceFinishes: ["Bead Blasted + Anodized", "Hard Anodized (Type III)", "Chemical Conversion"],
+    applications: ["Robotic Joint Actuators", "Engine Mounts", "Hydraulic Manifold Blocks", "Precision Sensor Housings"],
+    fabrications: ["4-Axis CNC Milling", "CNC Turning", "Micro-Tapping", "Ultrasonic Cleaning", "CMM Inspection"],
+    verifiedChips: ["Tight Tolerance \u00b10.02mm", "CMM Inspected", "Traceable Heat Lot"],
+    primaryImage: '/media/catalog/22_cnc_machined_components.webp',
     galleryImages: [
-      '/images/products/oem-components/cut-drill-tap/hero.webp',
-      '/images/products/oem-components/cut-drill-tap/cross-section.webp',
-      '/images/products/oem-components/cut-drill-tap/application.webp'
+      '/media/catalog/22_cnc_machined_components.webp',
+      '/media/catalog/22_cnc_machined_components.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-22-01',
+        productId: 'prod-22',
+        assetKey: 'cnc_machined_components',
+        url: '/media/catalog/22_cnc_machined_components.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "CNC Machined Components 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Operation', value: 'High Speed Cut, Punch & Tap', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6061, 6082, 7075", verified: false },
+      { label: 'Standard Tempers', value: "T6, T651", verified: false },
+      { label: 'Surface Finishes', value: "Bead Blasted + Anodized, Hard Anodized (Type III), Chemical Conversion", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Roll tapping produces stronger threads in aluminium than cut tapping.'],
-    qcStandards: ['Go / No-Go thread plug gauge verification'],
-    packaging: 'Bulk carton packaging on heat-treated pallets.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Design with standard cutter radii on pocket corners to maximize CNC machining feed rates."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-23',
-    slug: 'surface-finished-oem',
-    name: 'Surface-Finished OEM Parts',
+    slug: 'custom_aluminium_parts',
+    aliases: ["custom-aluminium-parts", "cut-drill-tap", "surface-finished-oem"],
+    name: "Custom Aluminium Parts",
     category: 'oem-components',
     categoryName: 'OEM Components',
-    shortDescription: 'Cosmetically critical components with micro-sandblasting, decorative anodizing, or custom powder coating.',
-    longDescription:
-      'Finished consumer and architectural components featuring Class I architectural anodizing, micro-bead blasting for uniform matte satin texture, and custom RAL color powder coating with verified weather resistance.',
+    shortDescription: "Custom fabricated aluminium parts combining extrusion blanking, stamping, bending, and finishing.",
+    longDescription: "Customized OEM parts integrating profile extrusion with secondary stamping, hydraulic press braking, precision drilling, and custom packaging for international Tier-1 assemblies.",
     profileGeometry: 'CNC Component',
-    alloys: ['6063-T5', '6061-T6'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Glass Bead Sandblasting', 'Type II Decorative Anodize', 'Qualicoat Powder Coating'],
-    applications: ['Audio Faceplates', 'Consumer Electronics Housings', 'Luxury Trim', 'Medical Equipment'],
-    fabrications: ['Bead Blasting', 'Chemical Etching', 'Laser Engraving'],
-    verifiedChips: ['Cosmetic Class A', 'Micro-Sandblasted', 'Laser Marked'],
-    primaryImage: '/images/products/oem-components/surface-finished-oem/hero.webp',
+    alloys: ["6061", "6063", "5052"],
+    tempers: ["T6", "H32"],
+    surfaceFinishes: ["Anodized", "Electroless Nickel Plating", "Passivated"],
+    applications: ["Automotive Heat Shields", "Suspension Brackets", "Machinery Linkages", "Electronics Heatsink Assemblies"],
+    fabrications: ["Stamping & Blanking", "CNC Bending", "Tapping", "Surface Finishing", "Custom Kitting"],
+    verifiedChips: ["Multi-Process OEM", "Custom Tooling", "Export Ready Kitting"],
+    primaryImage: '/media/catalog/23_custom_aluminium_parts.webp',
     galleryImages: [
-      '/images/products/oem-components/surface-finished-oem/hero.webp',
-      '/images/products/oem-components/surface-finished-oem/cross-section.webp',
-      '/images/products/oem-components/surface-finished-oem/application.webp'
+      '/media/catalog/23_custom_aluminium_parts.webp',
+      '/media/catalog/23_custom_aluminium_parts.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-23-01',
+        productId: 'prod-23',
+        assetKey: 'custom_aluminium_parts',
+        url: '/media/catalog/23_custom_aluminium_parts.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Custom Aluminium Parts 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Surface Grade', value: 'Cosmetic Class A / Architectural', verified: true },
-      { label: 'Coating Standard', value: 'Qualicoat / Qualanod specification', verified: true },
-      { label: 'Drawing Required', value: 'Yes', verified: true }
+      { label: 'Available Alloys', value: "6061, 6063, 5052", verified: false },
+      { label: 'Standard Tempers', value: "T6, H32", verified: false },
+      { label: 'Surface Finishes', value: "Anodized, Electroless Nickel Plating, Passivated", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Pre-treatment with automated glass bead blasting eliminates extrusion die lines.'],
-    qcStandards: ['Spectrophotometer color delta-E testing and thickness gauge verification'],
-    packaging: 'Individual foam sleeves inside heavy double-wall export boxes.'
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Combine extrusion features with secondary fabrication to minimize overall part cost."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
   },
   {
     id: 'prod-24',
-    slug: 'assembled-subcomponents',
-    name: 'Assembled Aluminium Sub-components',
+    slug: 'industrial_assemblies',
+    aliases: ["industrial-assemblies", "assembled-subcomponents"],
+    name: "Industrial Assemblies",
     category: 'oem-components',
     categoryName: 'OEM Components',
-    shortDescription: 'Integrated sub-assemblies complete with pressed fasteners, rubber gaskets, and mounting hardware.',
-    longDescription:
-      'Turnkey finished modules incorporating extruded profiles, CNC machined brackets, PEM press-fit studs, silicone sealing gaskets, and stainless steel hardware. Delivered directly to overseas factories ready for final product integration.',
+    shortDescription: "Complete sub-assemblies including hardware insertion, modular framing, and export crating.",
+    longDescription: "Turnkey factory sub-assembly services for global equipment manufacturers. Profiles are cut, machined, tapped, equipped with bearings, brackets, fasteners, and packaged for rapid on-site installation.",
     profileGeometry: 'CNC Component',
-    alloys: ['6061-T6', '6063-T5'],
-    tempers: ['T5', 'T6'],
-    surfaceFinishes: ['Anodized Assembly', 'Powder Coated'],
-    applications: ['Solar Inverter Sub-Frames', 'Telecom Cabinet Assemblies', 'Industrial Robot End-Arms'],
-    fabrications: ['PEM Stud Pressing', 'Hardware Assembly', 'Gasket Insertion', 'Kitting'],
-    verifiedChips: ['Turnkey Sub-Assembly', 'Fastener Insertion', 'Direct Line Feed'],
-    primaryImage: '/images/products/oem-components/assembled-subcomponents/hero.webp',
+    alloys: ["6063", "6061"],
+    tempers: ["T5", "T6"],
+    surfaceFinishes: ["Anodized", "Powder Coated"],
+    applications: ["Conveyor Modules", "Inspection Workstations", "Cleanroom Modular Trolleys", "Linear Gantry Modules"],
+    fabrications: ["Full Sub-Assembly", "Fastener Insertion", "Sub-System Functional Check", "Custom Export Crating"],
+    verifiedChips: ["Turnkey Assembly", "Integrated Fasteners", "Factory Tested"],
+    primaryImage: '/media/catalog/24_industrial_assemblies.webp',
     galleryImages: [
-      '/images/products/oem-components/assembled-subcomponents/hero.webp',
-      '/images/products/oem-components/assembled-subcomponents/cross-section.webp',
-      '/images/products/oem-components/assembled-subcomponents/application.webp'
+      '/media/catalog/24_industrial_assemblies.webp',
+      '/media/catalog/24_industrial_assemblies.webp'
+    ],
+    media: [
+      {
+        id: 'med-prod-24-01',
+        productId: 'prod-24',
+        assetKey: 'industrial_assemblies',
+        url: '/media/catalog/24_industrial_assemblies.webp',
+        mediaType: 'image/webp',
+        sourceType: 'APPROVED_CUSTOM_RENDER',
+        license: 'LELOI Proprietary Visual Asset V1',
+        altText: "Industrial Assemblies 4:3 industrial aluminium extrusion studio render",
+        isPrimary: true,
+        approvalStatus: 'APPROVED'
+      }
     ],
     isStandard: false,
     isCustom: true,
     requiresDrawing: true,
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'UNVERIFIED',
+    technicalClaimStatus: 'UNVERIFIED',
     specs: [
-      { label: 'Delivery Form', value: 'Complete Finished Sub-Assembly', verified: true },
-      { label: 'Fasteners', value: 'Pre-assembled PEM studs / inserts', verified: true },
-      { label: 'Drawing Required', value: 'Yes (Assembly CAD Model)', verified: true }
+      { label: 'Available Alloys', value: "6063, 6061", verified: false },
+      { label: 'Standard Tempers', value: "T5, T6", verified: false },
+      { label: 'Surface Finishes', value: "Anodized, Powder Coated", verified: false },
+      { label: 'Extrusion Tolerance Standard', value: 'Per client CAD / ASTM B221 / EN 755', verified: false },
+      { label: 'B2B Minimum Order (Trial Batch)', value: '500–1,000 kg (Full container scaling)', verified: false }
     ],
-    mediaProvenance: { type: 'CUSTOM_RENDER', license: 'LELOI METAL Internal Studio CAD', author: 'LELOI Applications Engineering' },
-    dfmNotes: ['Reduces customer labor and logistics overhead by sourcing integrated sub-assemblies directly from Vietnam.'],
-    qcStandards: ['Full assembly fit and pull-out torque verification'],
-    packaging: 'Custom returnable dunnage or reinforced timber packaging.'
-  }
+    mediaProvenance: {
+      type: 'APPROVED_CUSTOM_RENDER',
+      license: 'LELOI Proprietary Visual Asset V1',
+      author: 'LELOI METAL Studio'
+    },
+    dfmNotes: ["Modular fastener slots allow tolerance accommodation during mechanical sub-assembly alignment."],
+    qcStandards: ['ASTM B221', 'EN 755', 'ISO 9001:2015'],
+    packaging: 'Fumigated export-grade timber crates with rust-inhibiting moisture barrier.'
+  },
+
 ];
+
+export default PRODUCTS_V2;

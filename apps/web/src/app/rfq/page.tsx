@@ -88,7 +88,7 @@ function RfqFormContent() {
         ...prev,
         product: {
           ...prev.product,
-          profileDescription: `Inquiry for product: ${productParam.replace(/-/g, ' ')}`,
+          profileDescription: `Inquiry for product: ${productParam.replace(/[-_]/g, ' ')}`,
           alloy: alloyParam || prev.product.alloy
         }
       }));

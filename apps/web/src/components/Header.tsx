@@ -56,8 +56,8 @@ export const Header: React.FC = () => {
       {/* Main navigation bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo with Two-L Mark */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <Logo variant="horizontal" iconSize={42} showSlogan={true} />
+        <Link href="/" className="flex items-center mr-8 group shrink-0">
+          <Logo variant="horizontal" width={195} responsiveSlogan={true} />
         </Link>
 
         {/* Desktop Navigation Links */}
