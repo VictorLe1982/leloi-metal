@@ -667,7 +667,7 @@ export default function RfqPage() {
                       value={formData.commercial.specialComplianceNotes}
                       onChange={(e) => updateCommercial('specialComplianceNotes', e.target.value)}
                     />
-                  </div>
+                  </FormGroup>
                 </div>
               </div>
             </div>

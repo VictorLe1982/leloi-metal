@@ -24,7 +24,7 @@ export default function WeightCalculatorPage() {
             Aluminium Profile Weight Calculator
           </h1>
           <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
-            Accurately calculate the theoretical linear weight (\(\text{kg/m}\)), individual piece weight, and total production tonnage for extruded profiles across standard shapes and alloy densities.
+            Accurately calculate the theoretical linear weight (kg/m), individual piece weight, and total production tonnage for extruded profiles across standard shapes and alloy densities.
           </p>
         </div>
 

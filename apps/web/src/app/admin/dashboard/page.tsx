@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Card, Badge, Button } from '@leloi/ui';
+import { AdminNav } from '@/components/AdminNav';
 import {
   FileText,
   Users,
@@ -12,7 +13,9 @@ import {
   TrendingUp,
   AlertTriangle,
   Download,
-  LogOut
+  LogOut,
+  Kanban,
+  Globe2
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -29,39 +32,36 @@ export default function AdminDashboardPage() {
     setUser(JSON.parse(raw));
   }, [router]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('leloi_token');
-    localStorage.removeItem('leloi_user');
-    router.push('/admin/login');
-  };
-
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8] p-6 lg:p-10 space-y-8">
-      {/* Top Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#E2E8F0]">
-        <div>
-          <div className="text-xs uppercase font-heading font-semibold text-[#2F7BFF] tracking-wider">
-            LELOI METAL BACK-OFFICE OPERATIONS
+    <div className="min-h-screen bg-[#F1F4F8]">
+      <AdminNav />
+      <div className="p-6 lg:p-10 space-y-8 max-w-7xl mx-auto">
+        {/* Top Header */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#E2E8F0]">
+          <div>
+            <div className="text-xs uppercase font-heading font-semibold text-[#2F7BFF] tracking-wider">
+              LELOI METAL BACK-OFFICE OPERATIONS
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">
+              Executive Sales & CRM Dashboard
+            </h1>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">
-            Sales & RFQ Control Center
-          </h1>
-        </div>
 
-        <div className="flex items-center gap-4">
-          <div className="text-right text-xs">
-            <div className="font-semibold text-[#0A2D5B]">{user.email}</div>
-            <span className="text-[11px] font-mono bg-blue-100 text-[#0A2D5B] px-2 py-0.5 rounded font-bold">
-              {user.role}
-            </span>
+          <div className="flex items-center gap-3">
+            <Link href="/admin/crm/pipeline">
+              <Button variant="cta" size="sm" leftIcon={<Kanban className="w-3.5 h-3.5" />}>
+                Buyer Pipeline
+              </Button>
+            </Link>
+            <Link href="/admin/rfqs">
+              <Button variant="outline" size="sm" leftIcon={<FileText className="w-3.5 h-3.5" />}>
+                All RFQs
+              </Button>
+            </Link>
           </div>
-          <Button variant="outline" size="sm" onClick={handleLogout} leftIcon={<LogOut className="w-3.5 h-3.5" />}>
-            Logout
-          </Button>
         </div>
-      </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -198,7 +198,47 @@ export default function AdminDashboardPage() {
               View Audit Gaps Checklist (GAPS.md) →
             </Link>
           </div>
+
+          {/* CRM & Strategy Quick Links */}
+          <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-xs space-y-3">
+            <h2 className="font-heading font-bold text-base text-[#0A2D5B]">Export CRM & Markets</h2>
+            <div className="space-y-2 text-xs">
+              <Link
+                href="/admin/crm/pipeline"
+                className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-[#2F7BFF] transition-colors border border-slate-200"
+              >
+                <div className="flex items-center gap-2 font-semibold">
+                  <Kanban className="w-4 h-4 text-[#2F7BFF]" />
+                  <span>Buyer Pipeline Kanban</span>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+
+              <Link
+                href="/admin/crm/buyers"
+                className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-[#2F7BFF] transition-colors border border-slate-200"
+              >
+                <div className="flex items-center gap-2 font-semibold">
+                  <Users className="w-4 h-4 text-emerald-600" />
+                  <span>Buyer Accounts & 100-pt Score</span>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+
+              <Link
+                href="/admin/markets"
+                className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-[#2F7BFF] transition-colors border border-slate-200"
+              >
+                <div className="flex items-center gap-2 font-semibold">
+                  <Globe2 className="w-4 h-4 text-indigo-600" />
+                  <span>Market Opportunity Ranking</span>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
         </div>
+      </div>
       </div>
     </div>
   );

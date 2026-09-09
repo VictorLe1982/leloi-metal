@@ -3,10 +3,21 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Logo, Button } from '@leloi/ui';
-import { Menu, X, ChevronDown, Calculator, FileUp } from 'lucide-react';
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Calculator,
+  FileUp,
+  Scale,
+  Sparkles,
+  BookOpen,
+  Globe2
+} from 'lucide-react';
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] shadow-xs">
@@ -18,12 +29,23 @@ export const Header: React.FC = () => {
           <span className="text-slate-400">A Division of LELOI EXIM GLOBAL</span>
         </div>
         <div className="hidden md:flex items-center gap-6">
-          <Link href="/tools/aluminium-weight-calculator" className="hover:text-white flex items-center gap-1 transition-colors">
+          <Link
+            href="/tools/aluminium-weight-calculator"
+            className="hover:text-white flex items-center gap-1 transition-colors"
+          >
             <Calculator className="w-3 h-3 text-[#2F7BFF]" />
             Weight Calculator
           </Link>
           <span className="text-slate-600">•</span>
-          <span className="text-slate-300">Vietnam Sourcing & Export Office</span>
+          <Link
+            href="/tools/import-duty-checker"
+            className="hover:text-white flex items-center gap-1 transition-colors"
+          >
+            <Scale className="w-3 h-3 text-[#2F7BFF]" />
+            Duty Checker (HS 7604)
+          </Link>
+          <span className="text-slate-600">•</span>
+          <span className="text-slate-300">Vietnam Sourcing Office</span>
           <span className="text-slate-600">•</span>
           <Link href="/contact" className="hover:text-white transition-colors">
             sales@leloimetal.com
@@ -39,7 +61,7 @@ export const Header: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-8 font-heading text-sm font-medium text-[#172033]">
+        <nav className="hidden lg:flex items-center gap-7 font-heading text-sm font-medium text-[#172033]">
           <Link href="/products" className="hover:text-[#2F7BFF] transition-colors py-2">
             Products
           </Link>
@@ -52,8 +74,58 @@ export const Header: React.FC = () => {
           <Link href="/markets" className="hover:text-[#2F7BFF] transition-colors py-2">
             Export Markets
           </Link>
-          <Link href="/tools/aluminium-weight-calculator" className="hover:text-[#2F7BFF] transition-colors py-2">
-            Tools
+
+          {/* Tools Menu with Dropdown */}
+          <div
+            className="relative py-2"
+            onMouseEnter={() => setToolsDropdownOpen(true)}
+            onMouseLeave={() => setToolsDropdownOpen(false)}
+          >
+            <button className="flex items-center gap-1 hover:text-[#2F7BFF] transition-colors focus:outline-none">
+              <span>Engineering Tools</span>
+              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+            </button>
+
+            {toolsDropdownOpen && (
+              <div className="absolute top-full left-0 w-64 bg-white border border-[#E2E8F0] shadow-xl rounded-xl p-2 z-50 animate-in fade-in slide-in-from-top-1 duration-100">
+                <Link
+                  href="/tools/aluminium-weight-calculator"
+                  className="flex items-start gap-2.5 p-2.5 rounded-lg hover:bg-[#F1F4F8] transition-colors"
+                >
+                  <Calculator className="w-4 h-4 text-[#2F7BFF] shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-xs font-bold text-[#0A2D5B]">Aluminium Weight Calculator</div>
+                    <div className="text-[11px] text-slate-500">Calculate kg/m & order weight</div>
+                  </div>
+                </Link>
+
+                <Link
+                  href="/tools/import-duty-checker"
+                  className="flex items-start gap-2.5 p-2.5 rounded-lg hover:bg-[#F1F4F8] transition-colors"
+                >
+                  <Scale className="w-4 h-4 text-[#2F7BFF] shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-xs font-bold text-[#0A2D5B]">Import Duty Checker</div>
+                    <div className="text-[11px] text-slate-500">HS 7604 tariffs & FTA rates</div>
+                  </div>
+                </Link>
+
+                <Link
+                  href="/tools/alloy-selector"
+                  className="flex items-start gap-2.5 p-2.5 rounded-lg hover:bg-[#F1F4F8] transition-colors"
+                >
+                  <Sparkles className="w-4 h-4 text-[#2F7BFF] shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-xs font-bold text-[#0A2D5B]">Alloy & Temper Selector</div>
+                    <div className="text-[11px] text-slate-500">6063, 6061, 6005A, 6082</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <Link href="/insights" className="hover:text-[#2F7BFF] transition-colors py-2">
+            Insights
           </Link>
           <Link href="/about" className="hover:text-[#2F7BFF] transition-colors py-2">
             About
@@ -92,7 +164,7 @@ export const Header: React.FC = () => {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-[#E2E8F0] bg-white px-4 pt-3 pb-6 space-y-3 shadow-xl animate-in slide-in-from-top-2 duration-150">
-          <div className="flex flex-col space-y-2 font-heading font-medium text-sm text-[#172033]">
+          <div className="flex flex-col space-y-1.5 font-heading font-medium text-sm text-[#172033]">
             <Link
               href="/products"
               onClick={() => setMobileMenuOpen(false)}
@@ -126,7 +198,28 @@ export const Header: React.FC = () => {
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded hover:bg-[#F1F4F8] text-[#2F7BFF]"
             >
-              Aluminium Weight Calculator
+              Weight Calculator
+            </Link>
+            <Link
+              href="/tools/import-duty-checker"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-3 py-2 rounded hover:bg-[#F1F4F8] text-[#2F7BFF]"
+            >
+              Import Duty Checker (HS 7604)
+            </Link>
+            <Link
+              href="/tools/alloy-selector"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-3 py-2 rounded hover:bg-[#F1F4F8] text-[#2F7BFF]"
+            >
+              Alloy & Temper Selector
+            </Link>
+            <Link
+              href="/insights"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-3 py-2 rounded hover:bg-[#F1F4F8]"
+            >
+              Technical Insights
             </Link>
             <Link
               href="/about"

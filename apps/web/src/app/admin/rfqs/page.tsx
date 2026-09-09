@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Card, Badge, Button, Modal } from '@leloi/ui';
+import { AdminNav } from '@/components/AdminNav';
 import {
   FileText,
   Download,
@@ -102,20 +103,20 @@ export default function AdminRfqsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8] p-6 lg:p-10 space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
-        <div className="flex items-center gap-3">
-          <Link href="/admin/dashboard">
-            <Button variant="outline" size="sm" leftIcon={<ArrowLeft className="w-4 h-4" />}>
-              Dashboard
-            </Button>
-          </Link>
-          <h1 className="text-2xl font-bold font-heading text-[#0A2D5B]">
-            Manage Qualified RFQs & CAD Drawings
-          </h1>
+    <div className="min-h-screen bg-[#F1F4F8]">
+      <AdminNav />
+      <div className="p-6 lg:p-10 space-y-6 max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-[#2F7BFF]">
+              RFQ & FILE DISCOVERY DESK
+            </div>
+            <h1 className="text-2xl font-bold font-heading text-[#0A2D5B]">
+              Manage Qualified RFQs & CAD Drawings
+            </h1>
+          </div>
         </div>
-      </div>
 
       {downloadAuditNotif && (
         <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-xs flex items-center gap-2 animate-in fade-in">
@@ -268,6 +269,7 @@ export default function AdminRfqsPage() {
           </div>
         </Modal>
       )}
+      </div>
     </div>
   );
 }

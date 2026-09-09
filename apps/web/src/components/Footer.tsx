@@ -145,7 +145,7 @@ export const Footer: React.FC = () => {
           {/* Col 4: Corporate & Tools */}
           <div className="space-y-3 font-heading">
             <h4 className="text-xs uppercase tracking-wider text-white font-semibold">
-              Tools & Corporate
+              Tools & Intelligence
             </h4>
             <ul className="space-y-2 text-sm text-slate-400 font-normal">
               <li>
@@ -154,18 +154,28 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/tools/import-duty-checker" className="hover:text-[#2F7BFF] transition-colors font-medium">
+                  Import Duty Checker (HS 7604)
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools/alloy-selector" className="hover:text-[#2F7BFF] transition-colors font-medium">
+                  Alloy & Temper Selector
+                </Link>
+              </li>
+              <li>
+                <Link href="/markets" className="hover:text-white transition-colors">
+                  Export Markets Intelligence
+                </Link>
+              </li>
+              <li>
+                <Link href="/insights" className="hover:text-white transition-colors">
+                  Engineering Insights & Guides
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="hover:text-white transition-colors">
                   About LELOI METAL
-                </Link>
-              </li>
-              <li>
-                <Link href="/factory" className="hover:text-white transition-colors">
-                  Factory & Facilities
-                </Link>
-              </li>
-              <li>
-                <Link href="/sustainability" className="hover:text-white transition-colors">
-                  Sustainability & CBAM
                 </Link>
               </li>
               <li>
