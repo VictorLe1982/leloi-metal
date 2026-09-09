@@ -1,0 +1,588 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  EXPORT_DIRECTOR
+  SALES
+  TECHNICAL_ENGINEER
+  CONTENT_EDITOR
+  COMPLIANCE_REVIEWER
+  FINANCE
+  CUSTOMER
+}
+
+enum BuyerType {
+  DIST
+  OEM
+  FAB
+  SOL
+  AUT
+  THERM
+  CON
+}
+
+enum PublicationStatus {
+  UNVERIFIED
+  REVIEW_REQUIRED
+  VERIFIED
+  EXPIRED
+}
+
+enum LeadStatus {
+  NEW
+  QUALIFIED
+  MQL
+  SQL
+  DISQUALIFIED
+  CUSTOMER
+}
+
+enum RfqStatus {
+  DRAFT
+  SUBMITTED
+  QUALIFYING
+  ENGINEERING_REVIEW
+  NEED_INFO
+  COSTING
+  QUOTED
+  SAMPLE
+  WON
+  LOST
+  ARCHIVED
+}
+
+enum RfqScanStatus {
+  PENDING
+  SCANNING
+  CLEAN
+  INFECTED
+  ERROR
+}
+
+enum QuoteStatus {
+  DRAFT
+  INTERNAL_REVIEW
+  APPROVED
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum TradeMeasureType {
+  AD
+  CVD
+  SAFEGUARD
+  SECTION232
+  CBAM
+  OTHER
+}
+
+enum ContentType {
+  ARTICLE
+  MARKET
+  PRODUCT
+  CAPABILITY
+  INDUSTRY
+  GUIDE
+  FAQ
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum FreshnessClass {
+  CLASS_A_30D
+  CLASS_B_180D
+  CLASS_C_365D
+}
+
+// ==============================================================================
+// 1. IDENTITY & RBAC
+// ==============================================================================
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String    @map("password_hash")
+  firstName     String    @map("first_name")
+  lastName      String    @map("last_name")
+  role          Role      @default(SALES)
+  mfaEnabled    Boolean   @default(false) @map("mfa_enabled")
+  isActive      Boolean   @default(true) @map("is_active")
+  lastLoginAt   DateTime? @map("last_login_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  leads         Lead[]
+  rfqs          Rfq[]
+  activities    Activity[]
+  tasks         Task[]
+  auditLogs     AuditLog[]
+
+  @@map("users")
+}
+
+// ==============================================================================
+// 2. CRM & BUYER INTELLIGENCE
+// ==============================================================================
+
+model Company {
+  id             String        @id @default(uuid())
+  name           String
+  legalName      String?       @map("legal_name")
+  countryCode    String        @map("country_code") @db.Char(2)
+  city           String?
+  website        String?
+  linkedinUrl    String?       @map("linkedin_url")
+  industry       String?
+  companyType    String?       @map("company_type")
+  employeeRange  String?       @map("employee_range")
+  revenueRange   String?       @map("revenue_range")
+  description    String?
+  source         String?
+  status         String        @default("ACTIVE")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  contacts       Contact[]
+  buyerProfiles  BuyerProfile[]
+  leads          Lead[]
+  rfqs           Rfq[]
+
+  @@map("companies")
+}
+
+model Contact {
+  id                 String    @id @default(uuid())
+  companyId          String    @map("company_id")
+  company            Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  firstName          String    @map("first_name")
+  lastName           String    @map("last_name")
+  jobTitle           String?   @map("job_title")
+  department         String?
+  email              String
+  phone              String?
+  linkedinUrl        String?   @map("linkedin_url")
+  languageCode       String?   @default("en") @map("language_code")
+  emailVerified      Boolean   @default(false) @map("email_verified")
+  verificationSource String?   @map("verification_source")
+  lastVerifiedAt     DateTime? @map("last_verified_at")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+
+  leads              Lead[]
+  rfqs               Rfq[]
+
+  @@index([email])
+  @@map("contacts")
+}
+
+model BuyerProfile {
+  id                       String     @id @default(uuid())
+  companyId                String     @map("company_id")
+  company                  Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  buyerType                BuyerType  @map("buyer_type")
+  productsInterest         Json       @default("[]") @map("products_interest")
+  currentSupplierNotes     String?    @map("current_supplier_notes")
+  chinaExposure            Int?       @map("china_exposure") // 1-100% or scale
+  estimatedAnnualVolumeTons Decimal?  @map("estimated_annual_volume_tons") @db.Decimal(12, 2)
+  qualificationScore       Decimal?   @map("qualification_score") @db.Decimal(5, 2)
+  scoreBreakdown           Json?      @map("score_breakdown")
+  status                   String     @default("TARGET")
+  ownerUserId              String?    @map("owner_user_id")
+  createdAt                DateTime   @default(now()) @map("created_at")
+  updatedAt                DateTime   @updatedAt @map("updated_at")
+
+  @@map("buyer_profiles")
+}
+
+model Lead {
+  id              String      @id @default(uuid())
+  companyId       String?     @map("company_id")
+  company         Company?    @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  contactId       String?     @map("contact_id")
+  contact         Contact?    @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  source          String      @default("WEBSITE")
+  landingPage     String?     @map("landing_page")
+  utmSource       String?     @map("utm_source")
+  utmMedium       String?     @map("utm_medium")
+  utmCampaign     String?     @map("utm_campaign")
+  productInterest String?     @map("product_interest")
+  countryCode     String?     @map("country_code") @db.Char(2)
+  leadScore       Decimal?    @map("lead_score") @db.Decimal(5, 2)
+  status          LeadStatus  @default(NEW)
+  ownerUserId     String?     @map("owner_user_id")
+  ownerUser       User?       @relation(fields: [ownerUserId], references: [id], onDelete: SetNull)
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  rfqs            Rfq[]
+
+  @@map("leads")
+}
+
+// ==============================================================================
+// 3. PRODUCTS, CAPABILITIES & CMS
+// ==============================================================================
+
+model ProductCategory {
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  name        String
+  description String
+  sortOrder   Int       @default(0) @map("sort_order")
+  imageUrl    String?   @map("image_url")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  products    Product[]
+
+  @@map("product_categories")
+}
+
+model Product {
+  id                String            @id @default(uuid())
+  categoryId        String            @map("category_id")
+  category          ProductCategory   @relation(fields: [categoryId], references: [id])
+  slug              String            @unique
+  name              String
+  summary           String
+  description       String?
+  alloys            Json              @default("[]") // e.g. ["6063", "6061", "6005A"]
+  tempers           Json              @default("[]") // e.g. ["T5", "T6"]
+  weightPerMeter    Decimal?          @map("weight_per_meter") @db.Decimal(10, 3)
+  ccdMm             Decimal?          @map("ccd_mm") @db.Decimal(10, 2)
+  minWallMm         Decimal?          @map("min_wall_mm") @db.Decimal(10, 2)
+  maxLengthMm       Decimal?          @map("max_length_mm") @db.Decimal(10, 2)
+  surfaceFinishes   Json              @default("[]") @map("surface_finishes")
+  applications      Json              @default("[]")
+  hsCodes           Json              @default("[]") @map("hs_codes")
+  moqKg             Decimal?          @map("moq_kg") @db.Decimal(10, 2)
+  isPublished       Boolean           @default(false) @map("is_published")
+  publicationStatus PublicationStatus @default(UNVERIFIED) @map("publication_status")
+  verifiedAt        DateTime?         @map("verified_at")
+  verifiedBy        String?           @map("verified_by")
+  galleryUrls       Json              @default("[]") @map("gallery_urls")
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+
+  @@map("products")
+}
+
+model FactoryCapability {
+  id                    String            @id @default(uuid())
+  slug                  String            @unique
+  process               String            // e.g. "Extrusion", "CNC Machining", "Anodizing"
+  machineName           String            @map("machine_name")
+  machineModel          String?           @map("machine_model")
+  machineCapacity       String?           @map("machine_capacity") // e.g. "1800T Press"
+  maxDimension          Json?             @map("max_dimension")
+  tolerance             Json?
+  annualCapacityTons    Decimal?          @map("annual_capacity_tons") @db.Decimal(12, 2)
+  availableCapacityTons Decimal?          @map("available_capacity_tons") @db.Decimal(12, 2)
+  certifications        Json              @default("[]")
+  verified              Boolean           @default(false)
+  verificationStatus    PublicationStatus @default(UNVERIFIED) @map("verification_status")
+  verifiedAt            DateTime?         @map("verified_at")
+  verifiedBy            String?           @map("verified_by")
+  notes                 String?
+  createdAt             DateTime          @default(now()) @map("created_at")
+  updatedAt             DateTime          @updatedAt @map("updated_at")
+
+  @@map("factory_capabilities")
+}
+
+// ==============================================================================
+// 4. SECURE RFQ & FILE WORKFLOW
+// ==============================================================================
+
+model Rfq {
+  id                    String      @id @default(uuid())
+  rfqNumber             String      @unique @map("rfq_number")
+  leadId                String?     @map("lead_id")
+  lead                  Lead?       @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  companyId             String      @map("company_id")
+  company               Company     @relation(fields: [companyId], references: [id])
+  contactId             String      @map("contact_id")
+  contact               Contact     @relation(fields: [contactId], references: [id])
+  productCategory       String      @map("product_category")
+  application           String
+  alloy                 String
+  temper                String
+  annualVolume          Decimal?    @map("annual_volume") @db.Decimal(12, 2)
+  orderQuantity         Decimal?    @map("order_quantity") @db.Decimal(12, 2)
+  lengthMm              Decimal?    @map("length_mm") @db.Decimal(10, 2)
+  surfaceFinish         String      @map("surface_finish")
+  processRequirements   Json        @default("[]") @map("process_requirements")
+  toleranceRequirements Json?       @map("tolerance_requirements")
+  packingRequirements   String?     @map("packing_requirements")
+  incoterm              String      @default("FOB")
+  destinationCountry    String      @map("destination_country") @db.Char(2)
+  destinationLocation   String?     @map("destination_location")
+  targetPrice           Decimal?    @map("target_price") @db.Decimal(10, 2)
+  currency              String?     @default("USD") @db.Char(3)
+  targetDeliveryDate    DateTime?   @map("target_delivery_date")
+  status                RfqStatus   @default(SUBMITTED)
+  priority              String?     @default("MEDIUM")
+  ownerUserId           String?     @map("owner_user_id")
+  ownerUser             User?       @relation(fields: [ownerUserId], references: [id], onDelete: SetNull)
+  submittedAt           DateTime    @default(now()) @map("submitted_at")
+  createdAt             DateTime    @default(now()) @map("created_at")
+  updatedAt             DateTime    @updatedAt @map("updated_at")
+
+  files                 RfqFile[]
+  quotes                Quote[]
+
+  @@map("rfqs")
+}
+
+model RfqFile {
+  id               String        @id @default(uuid())
+  rfqId            String        @map("rfq_id")
+  rfq              Rfq           @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  originalFileName String        @map("original_file_name")
+  storageKey       String        @unique @map("storage_key")
+  mimeType         String        @map("mime_type")
+  fileSize         BigInt        @map("file_size")
+  sha256           String
+  fileCategory     String?       @map("file_category") // 2D_DRAWING, 3D_STEP, SPEC, ARCHIVE
+  version          Int           @default(1)
+  scanStatus       RfqScanStatus @default(PENDING) @map("scan_status")
+  uploadedAt       DateTime      @default(now()) @map("uploaded_at")
+
+  @@map("rfq_files")
+}
+
+// ==============================================================================
+// 5. QUOTATIONS
+// ==============================================================================
+
+model Quote {
+  id               String      @id @default(uuid())
+  rfqId            String      @map("rfq_id")
+  rfq              Rfq         @relation(fields: [rfqId], references: [id])
+  quoteNumber      String      @unique @map("quote_number")
+  revision         Int         @default(1)
+  currency         String      @default("USD") @db.Char(3)
+  incoterm         String      @default("FOB")
+  validUntil       DateTime?   @map("valid_until")
+  billetReference  Decimal?    @map("billet_reference") @db.Decimal(10, 2)
+  conversionCost   Decimal?    @map("conversion_cost") @db.Decimal(10, 2)
+  dieCost          Decimal?    @map("die_cost") @db.Decimal(10, 2)
+  machiningCost    Decimal?    @map("machining_cost") @db.Decimal(10, 2)
+  surfaceCost      Decimal?    @map("surface_cost") @db.Decimal(10, 2)
+  packingCost      Decimal?    @map("packing_cost") @db.Decimal(10, 2)
+  freightCost      Decimal?    @map("freight_cost") @db.Decimal(10, 2)
+  financeRiskCost  Decimal?    @map("finance_risk_cost") @db.Decimal(10, 2)
+  marginPercent    Decimal?    @map("margin_percent") @db.Decimal(5, 2)
+  fobTotal         Decimal?    @map("fob_total") @db.Decimal(12, 2)
+  cifTotal         Decimal?    @map("cif_total") @db.Decimal(12, 2)
+  status           QuoteStatus @default(DRAFT)
+  approvedBy       String?     @map("approved_by")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  lines            QuoteLine[]
+
+  @@map("quotes")
+}
+
+model QuoteLine {
+  id          String   @id @default(uuid())
+  quoteId     String   @map("quote_id")
+  quote       Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Decimal  @db.Decimal(10, 2)
+  unit        String   @default("kg")
+  unitPrice   Decimal  @map("unit_price") @db.Decimal(10, 4)
+  totalPrice  Decimal  @map("total_price") @db.Decimal(12, 2)
+
+  @@map("quote_lines")
+}
+
+// ==============================================================================
+// 6. MARKET INTELLIGENCE & TARIFFS
+// ==============================================================================
+
+model Market {
+  id               String       @id @default(uuid())
+  countryCode      String       @unique @map("country_code") @db.Char(2)
+  name             String
+  region           String
+  marketScore      Decimal?     @map("market_score") @db.Decimal(5, 2)
+  scoreBreakdown   Json?        @map("score_breakdown")
+  paymentRiskScore Decimal?     @map("payment_risk_score") @db.Decimal(5, 2)
+  logisticsScore   Decimal?     @map("logistics_score") @db.Decimal(5, 2)
+  productFit       Json         @default("[]") @map("product_fit")
+  status           String       @default("RESEARCH_REQUIRED")
+  lastReviewedAt   DateTime?    @map("last_reviewed_at")
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedBy       String?      @map("verified_by")
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  stats            MarketStat[]
+
+  @@map("markets")
+}
+
+model MarketStat {
+  id                 String    @id @default(uuid())
+  marketId           String    @map("market_id")
+  market             Market    @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  hsCode             String    @map("hs_code")
+  dataYear           Int       @map("data_year")
+  importValueUsd     Decimal?  @map("import_value_usd") @db.Decimal(14, 2)
+  importVolumeKg     Decimal?  @map("import_volume_kg") @db.Decimal(14, 2)
+  avgPriceUsdPerKg   Decimal?  @map("avg_price_usd_per_kg") @db.Decimal(10, 2)
+  chinaSharePercent  Decimal?  @map("china_share_percent") @db.Decimal(5, 2)
+  vietnamSharePercent Decimal? @map("vietnam_share_percent") @db.Decimal(5, 2)
+  sourceName         String    @map("source_name")
+  sourceUrl          String    @map("source_url")
+  sourceAccessedAt   DateTime  @default(now()) @map("source_accessed_at")
+  createdAt          DateTime  @default(now()) @map("created_at")
+
+  @@map("market_stats")
+}
+
+model TariffRate {
+  id                 String            @id @default(uuid())
+  destinationCountry String            @map("destination_country") @db.Char(2)
+  originCountry      String            @default("VN") @map("origin_country") @db.Char(2)
+  hsCode             String            @map("hs_code")
+  mfnRate            Decimal?          @map("mfn_rate") @db.Decimal(6, 3)
+  preferentialRate   Decimal?          @map("preferential_rate") @db.Decimal(6, 3)
+  rateUnit           String?           @default("%") @map("rate_unit")
+  ftaName            String?           @map("fta_name") // CPTPP, EVFTA, VKFTA...
+  effectiveFrom      DateTime?         @map("effective_from")
+  effectiveTo        DateTime?         @map("effective_to")
+  sourceUrl          String            @map("source_url")
+  verifiedAt         DateTime?         @map("verified_at")
+  verifiedBy         String?           @map("verified_by")
+  verificationStatus PublicationStatus @default(UNVERIFIED) @map("verification_status")
+  notes              String?
+  createdAt          DateTime          @default(now()) @map("created_at")
+
+  @@map("tariff_rates")
+}
+
+model TradeMeasure {
+  id                 String           @id @default(uuid())
+  destinationCountry String           @map("destination_country") @db.Char(2)
+  originCountry      String           @map("origin_country") @db.Char(2)
+  hsCode             String           @map("hs_code")
+  measureType        TradeMeasureType @map("measure_type")
+  measureName        String           @map("measure_name")
+  rateMin            Decimal?         @map("rate_min") @db.Decimal(6, 3)
+  rateMax            Decimal?         @map("rate_max") @db.Decimal(6, 3)
+  scopeNotes         String?          @map("scope_notes")
+  effectiveFrom      DateTime?        @map("effective_from")
+  effectiveTo        DateTime?        @map("effective_to")
+  sourceUrl          String           @map("source_url")
+  verifiedAt         DateTime?        @map("verified_at")
+  createdAt          DateTime         @default(now()) @map("created_at")
+
+  @@map("trade_measures")
+}
+
+model ContentItem {
+  id             String         @id @default(uuid())
+  type           ContentType
+  slug           String         @unique
+  title          String
+  summary        String
+  body           Json           // Structured content or markdown blocks
+  primaryKeyword String         @map("primary_keyword")
+  searchIntent   String?        @map("search_intent")
+  targetCountry  String?        @map("target_country") @db.Char(2)
+  targetIndustry String?        @map("target_industry")
+  targetProduct  String?        @map("target_product")
+  hsCodes        Json           @default("[]") @map("hs_codes")
+  authorId       String?        @map("author_id")
+  reviewerId     String?        @map("reviewer_id")
+  freshnessClass FreshnessClass @default(CLASS_C_365D) @map("freshness_class")
+  status         ContentStatus  @default(DRAFT)
+  publishedAt    DateTime?      @map("published_at")
+  lastUpdatedAt  DateTime       @default(now()) @updatedAt @map("last_updated_at")
+  createdAt      DateTime       @default(now()) @map("created_at")
+
+  sources        ContentSource[]
+
+  @@map("content_items")
+}
+
+model ContentSource {
+  id              String      @id @default(uuid())
+  contentId       String      @map("content_id")
+  contentItem     ContentItem @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  sourceName      String      @map("source_name")
+  sourceUrl       String      @map("source_url")
+  publicationDate DateTime?   @map("publication_date")
+  accessedAt      DateTime    @default(now()) @map("accessed_at")
+  claimNotes      String?     @map("claim_notes")
+
+  @@map("content_sources")
+}
+
+// ==============================================================================
+// 7. ACTIVITIES, TASKS & IMMUTABLE AUDIT LOG
+// ==============================================================================
+
+model Activity {
+  id           String   @id @default(uuid())
+  entityType   String   @map("entity_type")
+  entityId     String   @map("entity_id")
+  activityType String   @map("activity_type")
+  actorUserId  String?  @map("actor_user_id")
+  actorUser    User?    @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+  metadata     Json?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("activities")
+}
+
+model Task {
+  id             String    @id @default(uuid())
+  entityType     String    @map("entity_type")
+  entityId       String    @map("entity_id")
+  title          String
+  description    String?
+  dueDate        DateTime? @map("due_date")
+  status         String    @default("PENDING")
+  assignedUserId String?   @map("assigned_user_id")
+  assignedUser   User?     @relation(fields: [assignedUserId], references: [id], onDelete: SetNull)
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  @@map("tasks")
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  entityType  String   @map("entity_type")
+  entityId    String   @map("entity_id")
+  action      String   // CREATE, UPDATE, DELETE, FILE_DOWNLOAD, VERIFY
+  actorUserId String?  @map("actor_user_id")
+  actorUser   User?    @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+  ipAddress   String?  @map("ip_address")
+  userAgent   String?  @map("user_agent")
+  oldValues   Json?    @map("old_values")
+  newValues   Json?    @map("new_values")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("audit_logs")
+}

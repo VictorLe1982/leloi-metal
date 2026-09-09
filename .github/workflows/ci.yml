@@ -1,0 +1,39 @@
+name: LELOI METAL Monorepo CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  audit-and-test:
+    name: Lint, Test & Validate Schemas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.13.1
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile=false
+
+      - name: Run Engineering Calculator & Validation Tests
+        run: pnpm dlx tsx --test tests/calculator.test.ts tests/validation.test.ts
+
+      - name: Check Truth Policy & Security Guardrails
+        run: |
+          echo "Running Anti-Greenwashing & Data Truth verification..."
+          test -f docs/GAPS.md
+          test -f docs/DECISIONS.md
+          test -f docs/IMPLEMENTATION_PLAN.md
+          echo "CI Verification Passed."

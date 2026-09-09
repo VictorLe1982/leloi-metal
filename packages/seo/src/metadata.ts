@@ -1,0 +1,70 @@
+export interface MetadataBuilderOptions {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  noIndex?: boolean;
+}
+
+export const SITE_DEFAULTS = {
+  name: 'LELOI METAL',
+  tagline: 'Aluminium for a Better World',
+  domain: 'leloimetal.com',
+  baseUrl: 'https://leloimetal.com',
+  defaultOgImage: 'https://leloimetal.com/og-default.png',
+  defaultDescription:
+    'Precision aluminium extrusion, CNC machining, surface finishing and OEM manufacturing from Vietnam for global industries. Engineering support from drawing to finished components.'
+};
+
+export function buildSeoMetadata({
+  title,
+  description,
+  canonicalPath = '',
+  ogType = 'website',
+  ogImage = SITE_DEFAULTS.defaultOgImage,
+  noIndex = false
+}: MetadataBuilderOptions) {
+  const fullTitle = title.includes(SITE_DEFAULTS.name)
+    ? title
+    : `${title} | ${SITE_DEFAULTS.name}`;
+
+  const canonicalUrl = `${SITE_DEFAULTS.baseUrl}${canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`}`;
+
+  return {
+    title: fullTitle,
+    description: description || SITE_DEFAULTS.defaultDescription,
+    alternates: {
+      canonical: canonicalUrl
+    },
+    robots: {
+      index: !noIndex,
+      follow: !noIndex,
+      googleBot: {
+        index: !noIndex,
+        follow: !noIndex
+      }
+    },
+    openGraph: {
+      title: fullTitle,
+      description: description || SITE_DEFAULTS.defaultDescription,
+      url: canonicalUrl,
+      siteName: SITE_DEFAULTS.name,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${SITE_DEFAULTS.name} - ${title}`
+        }
+      ],
+      type: ogType
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: fullTitle,
+      description: description || SITE_DEFAULTS.defaultDescription,
+      images: [ogImage]
+    }
+  };
+}

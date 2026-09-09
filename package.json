@@ -1,0 +1,27 @@
+{
+  "name": "leloi-metal-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LELOI METAL B2B Aluminium Export Platform Monorepo",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rimraf node_modules",
+    "db:generate": "turbo run db:generate",
+    "db:push": "pnpm --filter @leloi/database db:push",
+    "db:seed": "pnpm --filter @leloi/database db:seed",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.5.2",
+    "turbo": "^2.4.4",
+    "typescript": "^5.7.3"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}
