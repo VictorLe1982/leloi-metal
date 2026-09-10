@@ -51,7 +51,7 @@ test('Verify Homepage Product Solution cards are wrapped in valid Links', () => 
   );
 });
 
-test('Verify Header Desktop Navigation has simplified 6 items and Mega Menu', () => {
+test('Verify Header Desktop Navigation has simplified 6 items and canonical divisions', () => {
   const headerFile = path.resolve(process.cwd(), 'apps/web/src/components/Header.tsx');
   const content = fs.readFileSync(headerFile, 'utf-8');
 
@@ -67,10 +67,9 @@ test('Verify Header Desktop Navigation has simplified 6 items and Mega Menu', ()
   assert.ok(content.includes('href="/insights"'), 'Header must have /insights');
   assert.ok(content.includes('href="/about"'), 'Header must have /about');
 
-  // Must include Mega Menu powered by PRODUCT_TAXONOMY
-  assert.ok(content.includes('PRODUCT_TAXONOMY'), 'Mega menu must use PRODUCT_TAXONOMY');
-  assert.ok(content.includes('sub.fullSlug'), 'Mega menu must link to subcategory fullSlug');
-  assert.ok(content.includes('href="/capabilities/powder-coating"'), 'Mega menu must have powder-coating');
+  // Must use canonical getProductDivisions service
+  assert.ok(content.includes('getProductDivisions'), 'Header must use getProductDivisions');
+  assert.ok(content.includes('Browse Full Product Catalog'), 'Header dropdown must have Browse Full Product Catalog');
 });
 
 test('Verify Footer uses BrandLogo white variant and canonical links', () => {
@@ -80,8 +79,8 @@ test('Verify Footer uses BrandLogo white variant and canonical links', () => {
   assert.ok(content.includes('BrandLogo'), 'Footer must use BrandLogo component');
   assert.ok(content.includes('variant="white"'), 'Footer must use white logo variant');
 
-  // Canonical product solution links powered by PRODUCT_TAXONOMY
-  assert.ok(content.includes('PRODUCT_TAXONOMY'), 'Footer must use PRODUCT_TAXONOMY for canonical links');
+  // Canonical product solution links powered by getProductDivisions
+  assert.ok(content.includes('getProductDivisions'), 'Footer must use getProductDivisions for canonical links');
   assert.ok(content.includes('href="/capabilities/powder-coating"'), 'Footer must link to powder-coating');
 
   // Must not have dead hash links
@@ -97,9 +96,9 @@ test('Verify Architectural Systems Hub and Powder Coating pages exist', () => {
 
   const archContent = fs.readFileSync(archPage, 'utf-8');
   assert.ok(archContent.includes('AkzoNobel'), 'Architectural page must reference AkzoNobel');
-  assert.ok(archContent.includes('10-Year Warranty'), 'Architectural page must reference 10-Year Warranty');
+  assert.ok(archContent.includes('10 year') || archContent.includes('10-Yr') || archContent.includes('10 years'), 'Architectural page must reference 10-year warranty');
 
   const powderContent = fs.readFileSync(powderPage, 'utf-8');
   assert.ok(powderContent.includes('AkzoNobel'), 'Powder coating page must reference AkzoNobel');
-  assert.ok(powderContent.includes('10-Year'), 'Powder coating page must reference 10-Year Warranty');
+  assert.ok(powderContent.includes('10 Years') || powderContent.includes('10 years'), 'Powder coating page must reference 10-year warranty');
 });

@@ -247,8 +247,8 @@ export default function ProductsCatalogPage() {
                 className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
               >
                 <option value="all">All Surface Finishes</option>
-                <option value="ANODIZED">Anodized (15–25µm Marine Grade)</option>
-                <option value="POWDER_COATED">AkzoNobel Interpon D Powder Coating</option>
+                <option value="ANODIZED">Architectural Anodized</option>
+                <option value="POWDER_COATED">AkzoNobel Powder Coating</option>
                 <option value="MILL_FINISH">Mill Finish (As Extruded)</option>
                 <option value="WOOD_GRAIN">Sublimation Wood Grain Transfer</option>
               </select>
@@ -570,8 +570,8 @@ export default function ProductsCatalogPage() {
                   className="w-full p-2 text-xs border rounded-lg"
                 >
                   <option value="all">All Finishes</option>
-                  <option value="ANODIZED">Anodized (15–25µm)</option>
-                  <option value="POWDER_COATED">AkzoNobel Interpon D</option>
+                  <option value="ANODIZED">Anodized</option>
+                  <option value="POWDER_COATED">AkzoNobel Powder Coating</option>
                   <option value="MILL_FINISH">Mill Finish</option>
                 </select>
               </div>

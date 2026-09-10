@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { CANONICAL_FAMILIES } from '@leloi/types';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://leloimetal.com';
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/products/architectural',
     '/products/thermal-management',
     '/products/oem-components',
+    ...CANONICAL_FAMILIES.map((f) => `/products/${f.divisionSlug}/${f.slug}`),
     '/capabilities',
     '/capabilities/powder-coating',
     '/capabilities/aluminium-extrusion',

@@ -52,7 +52,10 @@ export async function generateMetadata({
   return {
     title: division.seo.title,
     description: division.seo.description,
-    keywords: division.seo.keywords
+    keywords: division.seo.keywords,
+    alternates: {
+      canonical: `https://leloimetal.com/products/${division.slug}`
+    }
   };
 }
 

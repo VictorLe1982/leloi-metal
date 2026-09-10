@@ -51,7 +51,7 @@ export const CANONICAL_DIVISIONS: ProductDivision[] = [
     order: 2,
     highlights: [
       'Polyamide PA66 GF25 thermal break technology with Uw down to 1.1 W/m²K',
-      'AkzoNobel Interpon D architectural powder coating (AAMA 2604 / 2605, up to 30-year warranty)',
+      'AkzoNobel Powder Coating (warranties up to 10 years subject to approved system and conditions)',
       'Tested to ASTM E283 (air), ASTM E331 (water), and ASTM E330 (structural wind load)'
     ],
     applications: ['High-Rise Curtain Walls', 'Luxury Residential Windows', 'Bespoke Facade Cladding', 'Commercial Entrances'],
@@ -260,7 +260,7 @@ export const CANONICAL_FAMILIES: ProductFamily[] = [
     groupKey: 'D',
     seo: {
       title: 'Aluminium Wall Cladding Profiles | Exterior Panels | LELOI METAL',
-      description: 'Interlocking aluminium siding and rainscreen cladding profiles. Durable exterior architectural finishes with AkzoNobel Interpon D.',
+      description: 'Interlocking aluminium siding and rainscreen cladding profiles. Durable exterior architectural finishes with AkzoNobel Powder Coating.',
       keywords: ['aluminium cladding', 'wall panel extrusions', 'exterior soffit profiles', 'rainscreen profiles']
     }
   },
@@ -1154,8 +1154,8 @@ export const CANONICAL_FAMILIES: ProductFamily[] = [
     divisionSlug: 'oem-components',
     name: 'AkzoNobel Powder Coated Assemblies',
     slug: 'powder-coated-components',
-    summary: 'Turnkey coated components using AkzoNobel Interpon D architectural powders with 10–30 year performance warranties.',
-    description: 'Automated horizontal and vertical powder coating lines with multi-stage chrome-free pre-treatment meeting Qualicoat Class 1 and Class 2 specs.',
+    summary: 'Turnkey coated components using AkzoNobel powder coatings with warranties up to 10 years subject to approved conditions.',
+    description: 'Electrostatic powder coating lines for architectural and industrial components with durable protective finish.',
     coverImage: '/media/catalog/24_industrial_assemblies.webp',
     technicalApplications: ['Exterior Architectural Hardware', 'Telecom Cabinets', 'Outdoor Louver Assemblies'],
     supportedFinishes: ['POWDER_COATED'],
@@ -1165,8 +1165,8 @@ export const CANONICAL_FAMILIES: ProductFamily[] = [
     order: 7,
     seo: {
       title: 'AkzoNobel Powder Coated Aluminium Components | LELOI METAL',
-      description: 'Certified AkzoNobel Interpon D powder coated aluminium components with Qualicoat Class 2 and AAMA 2604/2605 compliance.',
-      keywords: ['AkzoNobel powder coating', 'coated aluminium assemblies', 'Interpon D powder coated']
+      description: 'AkzoNobel powder coated aluminium components engineered for exterior weathering durability.',
+      keywords: ['AkzoNobel powder coating', 'coated aluminium assemblies', 'powder coated aluminium']
     }
   },
   {
@@ -1721,13 +1721,13 @@ export const CANONICAL_FINISHES: ProductFinish[] = [
   },
   {
     id: 'POWDER_COATED',
-    name: 'AkzoNobel Interpon D Architectural Powder Coating',
+    name: 'AkzoNobel Powder Coating',
     code: 'PC',
-    description: 'Super-durable architectural thermoset powder coating engineered to withstand extreme weathering, humidity, and UV exposure.',
-    technology: 'Automated electrostatic powder spray line with multi-stage chrome-free chemical pre-treatment. Film thickness 60–80 µm.',
-    standards: ['Qualicoat Class 1 & Class 2', 'AAMA 2604', 'AAMA 2605', 'GSB International'],
-    warrantyYears: 30,
-    colorOptions: ['RAL Classic Palettes', 'AkzoNobel Interpon D Textures', 'Metallic Mica Finishes', 'Custom Color Matching']
+    description: 'Electrostatic architectural powder coating with warranties up to 10 years subject to approved system, environment and warranty conditions.',
+    technology: 'Automated electrostatic powder spray application.',
+    standards: ['AkzoNobel Coated Specifications'],
+    warrantyYears: 10,
+    colorOptions: ['RAL Classic Palettes', 'Architectural Textures', 'Metallic Mica Finishes', 'Custom Color Matching']
   },
   {
     id: 'ELECTROPHORESIS',

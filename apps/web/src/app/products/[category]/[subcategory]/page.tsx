@@ -50,7 +50,10 @@ export async function generateMetadata({
     const division = getDivisionBySlug(canonicalFamily.divisionSlug);
     return {
       title: `${canonicalFamily.name} | ${division?.name || 'Aluminium Systems'} | LELOI METAL`,
-      description: `${canonicalFamily.summary} Precision aluminium extrusion manufacturing from Vietnam factory. Certified ISO 9001 and AkzoNobel powder coating.`,
+      description: `${canonicalFamily.summary} Precision aluminium extrusion manufacturing from Vietnam factory. AkzoNobel powder coating and custom fabrication available.`,
+      alternates: {
+        canonical: `https://leloimetal.com/products/${canonicalFamily.divisionSlug}/${canonicalFamily.slug}`
+      },
       keywords: [
         canonicalFamily.name,
         ...(canonicalFamily.technicalApplications || []),
@@ -361,15 +364,15 @@ export default async function SubcategoryPage({
               <ul className="space-y-2.5 text-xs text-slate-700 font-sans">
                 <li className="flex justify-between py-1 border-b border-emerald-100">
                   <span className="text-slate-600">Powder Coating:</span>
-                  <span className="font-semibold text-emerald-900">AkzoNobel Interpon D</span>
+                  <span className="font-semibold text-emerald-900">AkzoNobel Powder Coating</span>
                 </li>
                 <li className="flex justify-between py-1 border-b border-emerald-100">
-                  <span className="text-slate-600">Finish Standards:</span>
-                  <span className="font-semibold text-emerald-900">AAMA 2604 / AAMA 2605</span>
+                  <span className="text-slate-600">Warranty Proposition:</span>
+                  <span className="font-semibold text-emerald-900">Up to 10 Years (Subject to terms)</span>
                 </li>
                 <li className="flex justify-between py-1 border-b border-emerald-100">
-                  <span className="text-slate-600">Anodizing Range:</span>
-                  <span className="font-semibold text-slate-800">10µm – 25µm Marine Grade</span>
+                  <span className="text-slate-600">Anodizing Options:</span>
+                  <span className="font-semibold text-slate-800">Clear, Bronze & Black</span>
                 </li>
                 <li className="flex justify-between py-1">
                   <span className="text-slate-600">Mill Finish:</span>
@@ -394,19 +397,19 @@ export default async function SubcategoryPage({
               <ul className="space-y-2.5 text-xs text-slate-600 font-sans">
                 <li className="flex justify-between py-1 border-b border-slate-100">
                   <span className="text-slate-500">Cut-to-Length:</span>
-                  <span className="font-semibold text-[#172033]">±0.2mm High-Precision</span>
+                  <span className="font-semibold text-[#172033]">Precision Cutting Available</span>
                 </li>
                 <li className="flex justify-between py-1 border-b border-slate-100">
                   <span className="text-slate-500">CNC Machining:</span>
-                  <span className="font-semibold text-[#172033]">3-Axis, 4-Axis & 5-Axis</span>
+                  <span className="font-semibold text-[#172033]">Milling, Drilling & Tapping</span>
                 </li>
                 <li className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Punching / Tapping:</span>
-                  <span className="font-semibold text-[#172033]">M3 to M16 threads</span>
+                  <span className="text-slate-500">Punching / Stamping:</span>
+                  <span className="font-semibold text-[#172033]">Per Engineering Drawing</span>
                 </li>
                 <li className="flex justify-between py-1">
                   <span className="text-slate-500">Export Packaging:</span>
-                  <span className="font-semibold text-[#172033]">PE Film / Seaworthy Crates</span>
+                  <span className="font-semibold text-[#172033]">Protective Film & Seaworthy Crates</span>
                 </li>
               </ul>
             </Card>

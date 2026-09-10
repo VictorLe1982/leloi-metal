@@ -21,16 +21,14 @@ import {
 import { Button, Badge, Card } from '@leloi/ui';
 
 export const metadata: Metadata = {
-  title: 'AkzoNobel 10-Year Warranty Powder Coating | LELOI METAL',
+  title: 'AkzoNobel Powder Coating & Advanced Surface Finishing | LELOI METAL',
   description:
-    'Industrial electrostatic powder coating and Qualicoat-certified surface finishing for architectural and industrial aluminium extrusions with certified AkzoNobel 10-Year Warranty.',
+    'Industrial electrostatic powder coating surface finishing for architectural and industrial aluminium extrusions with AkzoNobel powder coating.',
   keywords: [
     'powder coating aluminium',
-    'AkzoNobel Interpon D',
-    '10 year warranty aluminium coating',
-    'AAMA 2604 aluminium',
-    'AAMA 2605 aluminium powder coat',
-    'architectural powder coating Vietnam',
+    'AkzoNobel powder coating',
+    'architectural powder coating',
+    'aluminium surface finishing Vietnam',
     'LELOI METAL finishing'
   ]
 };
@@ -45,7 +43,7 @@ export default function PowderCoatingPage() {
     {
       step: '02',
       title: 'Chemical Conversion Coating',
-      desc: 'Qualicoat-approved trivalent chrome or zirconium conversion coating creating a microscopic passivated bond layer for maximum adhesion.'
+      desc: 'Passivated conversion coating creating a microscopic bond layer for maximum powder adhesion and corrosion resistance.'
     },
     {
       step: '03',
@@ -55,7 +53,7 @@ export default function PowderCoatingPage() {
     {
       step: '04',
       title: 'Electrostatic Powder Spray',
-      desc: 'Automated reciprocal spray guns applying AkzoNobel Interpon D architectural thermoset powder with uniform 60–80µm dry film thickness (DFT).'
+      desc: 'Automated reciprocal spray guns applying AkzoNobel architectural thermoset powder with uniform dry film thickness.'
     },
     {
       step: '05',
@@ -86,7 +84,7 @@ export default function PowderCoatingPage() {
     },
     {
       standard: 'AAMA 2605 / Qualicoat Class 2',
-      performance: 'Superior Ultra-Durable (AkzoNobel D2525)',
+      performance: 'Superior Ultra-Durable Architectural Coating',
       exteriorExposure: '10 Years South Florida',
       saltSpray: '4,000+ Hours (ASTM B117)',
       typicalUse: 'High-rise facades, monumental architecture, coastal & marine'
@@ -102,13 +100,13 @@ export default function PowderCoatingPage() {
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="text-[11px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              Official 10-Year Warranty Partner
+              Approved Coating Proposition
             </span>
             <span className="text-[11px] font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full border border-blue-500/30">
-              AkzoNobel Interpon D Approved
+              AkzoNobel Powder Coating
             </span>
             <span className="text-[11px] font-bold uppercase tracking-wider bg-slate-500/20 text-slate-300 px-3 py-1 rounded-full border border-white/20">
-              Qualicoat & AAMA 2604 / 2605
+              Warranties Up to 10 Years Available
             </span>
           </div>
 
@@ -116,7 +114,7 @@ export default function PowderCoatingPage() {
             Certified AkzoNobel Powder Coating & Advanced Surface Finishing
           </h1>
           <p className="text-slate-300 text-base sm:text-lg max-w-2xl mt-4 leading-relaxed font-sans">
-            Precision electrostatic powder coating engineered for extreme UV exposure, coastal humidity, and architectural longevity. Backed by an enforceable <strong>10-Year Performance Warranty</strong> directly from LELOI METAL and AkzoNobel.
+            Precision electrostatic powder coating engineered for extreme UV exposure, coastal humidity, and architectural longevity. Backed by warranties <strong>up to 10 years</strong> subject to approved system, environment and warranty conditions.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4 items-center">
@@ -151,38 +149,38 @@ export default function PowderCoatingPage() {
                 Guaranteed Project Durability
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">
-                The AkzoNobel 10-Year Architectural Warranty
+                The AkzoNobel Powder Coating Warranty Proposition
               </h2>
               <p className="text-sm text-slate-600 mt-3 leading-relaxed">
-                LELOI METAL applies genuine <strong>AkzoNobel Interpon D architectural powder series</strong> formulated with super-durable polyester and fluoropolymer technologies. Each production batch undergoes verified multi-stage pre-treatment and cross-hatch testing to issue a <strong>formal 10-Year Certificate of Warranty</strong> covering:
+                LELOI METAL applies genuine <strong>AkzoNobel architectural powder coatings</strong> formulated with durable polyester resin technologies. Backed by warranties <strong>up to 10 years</strong> subject to approved system, environmental exposure, and warranty conditions covering:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-sm text-[#0A2D5B] block">Anti-Chalking Guarantee</strong>
-                    <span className="text-xs text-slate-500">ASTM D4214 chalking rating ≥ 8 throughout the 10-year period.</span>
+                    <span className="text-xs text-slate-500">Subject to approved system and environmental parameters.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-sm text-[#0A2D5B] block">Anti-Fading & Color Retention</strong>
-                    <span className="text-xs text-slate-500">Color shift \(\Delta E \leq 5.0\) (Hunter Units) under outdoor Florida UV exposure.</span>
+                    <strong className="text-sm text-[#0A2D5B] block">Color Retention & UV Resistance</strong>
+                    <span className="text-xs text-slate-500">Engineered for long-term color integrity under outdoor exposure.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-sm text-[#0A2D5B] block">Zero Peeling, Cracking or Blistering</strong>
-                    <span className="text-xs text-slate-500">100% adhesion integrity under ASTM D3359 Cross-Hatch Tape Testing.</span>
+                    <strong className="text-sm text-[#0A2D5B] block">Adhesion Integrity</strong>
+                    <span className="text-xs text-slate-500">Superior film adhesion to prevent peeling, flaking, or blistering.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-sm text-[#0A2D5B] block">Marine & Coastal Resistance</strong>
-                    <span className="text-xs text-slate-500">Salt-spray corrosion resistance tested up to 3,000–4,000+ hours (ASTM B117).</span>
+                    <strong className="text-sm text-[#0A2D5B] block">Corrosion Protection</strong>
+                    <span className="text-xs text-slate-500">Barrier protection against moisture, humidity, and atmospheric pollutants.</span>
                   </div>
                 </div>
               </div>
@@ -194,27 +192,27 @@ export default function PowderCoatingPage() {
                   Quality Milestone
                 </div>
                 <div className="text-3xl font-extrabold font-heading text-white mt-1">
-                  10 YEARS
+                  UP TO 10 YEARS
                 </div>
                 <div className="text-xs text-slate-300 mt-1">
-                  Enforceable Mill Performance Warranty
+                  Subject to approved system & conditions
                 </div>
                 <div className="border-t border-white/15 my-4 pt-4 space-y-2 text-xs text-slate-200">
                   <div className="flex justify-between">
                     <span className="text-slate-400">Coating Partner:</span>
-                    <span className="font-semibold">AkzoNobel Interpon D</span>
+                    <span className="font-semibold">AkzoNobel</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Standard Spec:</span>
-                    <span className="font-semibold">AAMA 2604 / 2605</span>
+                    <span className="text-slate-400">Application:</span>
+                    <span className="font-semibold">Architectural & Industrial</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Film Thickness:</span>
-                    <span className="font-semibold">60 – 80 µm (DFT)</span>
+                    <span className="text-slate-400">Warranty Scope:</span>
+                    <span className="font-semibold">Up to 10 Years Subject to Terms</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-400">Gloss Levels:</span>
-                    <span className="font-semibold">Matt (30%), Satin, Gloss</span>
+                    <span className="font-semibold">Matt, Satin, Gloss</span>
                   </div>
                 </div>
               </div>
@@ -280,7 +278,7 @@ export default function PowderCoatingPage() {
             Coating Standards & Architectural Specifications
           </h2>
           <p className="text-sm text-slate-600 mt-1">
-            LELOI METAL certifies every batch according to international AAMA standards and Qualicoat specifications.
+            LELOI METAL processes architectural coatings according to customer project specifications and international finishing guidelines.
           </p>
         </div>
 

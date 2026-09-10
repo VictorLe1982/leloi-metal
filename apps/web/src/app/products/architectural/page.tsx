@@ -200,7 +200,7 @@ export default function ArchitecturalProductsPage() {
                 Long-Term Weathering Protection
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold font-heading text-white mt-2">
-                Surface Finishing: AkzoNobel 10-Yr Coating & Hard Anodizing
+                Surface Finishing: AkzoNobel Powder Coating & Architectural Anodizing
               </h2>
               <p className="text-slate-300 text-sm mt-3 leading-relaxed">
                 Architectural installations face intense UV sunlight, industrial airborne chemicals, and coastal salt-spray. LELOI METAL offers certified finishing options tailored to harsh outdoor environments:
@@ -213,7 +213,7 @@ export default function ArchitecturalProductsPage() {
                     <span>AkzoNobel Powder Coating</span>
                   </div>
                   <p className="text-xs text-slate-300">
-                    Interpon D series with <strong>10-Year Performance Warranty</strong>. Film thickness 60–80µm. Certified AAMA 2604 / 2605.
+                    AkzoNobel architectural coating with <strong>warranties up to 10 years</strong> subject to approved system and environmental conditions.
                   </p>
                 </div>
 
@@ -223,7 +223,7 @@ export default function ArchitecturalProductsPage() {
                     <span>Architectural Anodizing</span>
                   </div>
                   <p className="text-xs text-slate-300">
-                    Full-immersion electrolytic anodizing 15–25µm in Clear, Champagne, Bronze, and Jet Black. Outstanding surface hardness.
+                    Electrolytic architectural anodizing in Clear, Champagne, Bronze, and Jet Black. Outstanding surface protection.
                   </p>
                 </div>
               </div>

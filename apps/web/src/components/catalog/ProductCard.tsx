@@ -28,7 +28,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const detailUrl = targetUrl || product.canonicalUrl || (product.divisionSlug ? `/products/${product.divisionSlug}/${product.slug}` : `/products/${product.category || 'custom-extrusions'}/${product.slug}`);
   const rfqUrl = `/rfq?division=${product.divisionSlug || product.category || 'custom-extrusions'}&family=${product.slug}&source=catalog`;
   const imageSrc = product.primaryImage || product.coverImage;
-  const verifiedChips: string[] = product.verifiedChips || product.alloys || ['6063-T6', 'ISO 9001'];
+  const verifiedChips: string[] = product.verifiedChips || (product.alloys && product.alloys.length ? product.alloys : ['Extruded Aluminium']);
   return (
     <div className="group flex flex-col justify-between h-full bg-white rounded-2xl border border-[#E2E8F0] hover:border-[#2F7BFF]/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 overflow-hidden">
       {/* Upper section: Image & Badges */}

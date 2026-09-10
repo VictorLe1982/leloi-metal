@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { BrandLogo } from '@leloi/ui';
 import { ShieldCheck, Mail, MapPin, Phone, ArrowRight, ExternalLink } from 'lucide-react';
-import { PRODUCT_TAXONOMY } from '@leloi/types';
+import { getProductDivisions } from '@leloi/types';
 
 export const Footer: React.FC = () => {
   return (
@@ -71,15 +71,13 @@ export const Footer: React.FC = () => {
               Product Solutions
             </h4>
             <ul className="space-y-2 text-sm text-slate-400 font-normal">
-              {PRODUCT_TAXONOMY.map((cat) => (
-                <li key={cat.slug}>
+              {getProductDivisions().map((div) => (
+                <li key={div.slug}>
                   <Link
-                    href={`/products/${cat.slug}`}
-                    className={`hover:text-white transition-colors ${
-                      cat.code === 'BUILDING' ? 'text-slate-200 font-medium' : ''
-                    }`}
+                    href={`/products/${div.slug}`}
+                    className="hover:text-white transition-colors"
                   >
-                    {cat.navLabel}
+                    {div.name}
                   </Link>
                 </li>
               ))}

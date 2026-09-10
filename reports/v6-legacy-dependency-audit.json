@@ -1,0 +1,254 @@
+[
+  {
+    "file": "packages/types/src/products-catalog-v2.ts",
+    "line": 83,
+    "content": "export const LEGACY_CATEGORIES_V2: CategoryCatalogItem[] = [",
+    "identifier": "CATEGORIES_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/types/src/products-catalog-v2.ts",
+    "line": 83,
+    "content": "export const LEGACY_CATEGORIES_V2: CategoryCatalogItem[] = [",
+    "identifier": "LEGACY_CATEGORIES_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/types/src/products-catalog-v2.ts",
+    "line": 210,
+    "content": "export const CATEGORIES_V2 = LEGACY_CATEGORIES_V2;",
+    "identifier": "CATEGORIES_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/types/src/products-catalog-v2.ts",
+    "line": 210,
+    "content": "export const CATEGORIES_V2 = LEGACY_CATEGORIES_V2;",
+    "identifier": "LEGACY_CATEGORIES_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/types/src/products-catalog-v2.ts",
+    "line": 215,
+    "content": "export const LEGACY_PRODUCTS_V2: ProductCatalogItem[] = [",
+    "identifier": "PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/types/src/products-catalog-v2.ts",
+    "line": 215,
+    "content": "export const LEGACY_PRODUCTS_V2: ProductCatalogItem[] = [",
+    "identifier": "LEGACY_PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/types/src/products-catalog-v2.ts",
+    "line": 1565,
+    "content": "export const PRODUCTS_V2 = LEGACY_PRODUCTS_V2;",
+    "identifier": "PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/types/src/products-catalog-v2.ts",
+    "line": 1565,
+    "content": "export const PRODUCTS_V2 = LEGACY_PRODUCTS_V2;",
+    "identifier": "LEGACY_PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/types/src/products-catalog-v2.ts",
+    "line": 1567,
+    "content": "export default PRODUCTS_V2;",
+    "identifier": "PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/database/src/data/products-catalog-v2.ts",
+    "line": 83,
+    "content": "export const LEGACY_CATEGORIES_V2: CategoryCatalogItem[] = [",
+    "identifier": "CATEGORIES_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/database/src/data/products-catalog-v2.ts",
+    "line": 83,
+    "content": "export const LEGACY_CATEGORIES_V2: CategoryCatalogItem[] = [",
+    "identifier": "LEGACY_CATEGORIES_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/database/src/data/products-catalog-v2.ts",
+    "line": 210,
+    "content": "export const CATEGORIES_V2 = LEGACY_CATEGORIES_V2;",
+    "identifier": "CATEGORIES_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/database/src/data/products-catalog-v2.ts",
+    "line": 210,
+    "content": "export const CATEGORIES_V2 = LEGACY_CATEGORIES_V2;",
+    "identifier": "LEGACY_CATEGORIES_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/database/src/data/products-catalog-v2.ts",
+    "line": 215,
+    "content": "export const LEGACY_PRODUCTS_V2: ProductCatalogItem[] = [",
+    "identifier": "PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/database/src/data/products-catalog-v2.ts",
+    "line": 215,
+    "content": "export const LEGACY_PRODUCTS_V2: ProductCatalogItem[] = [",
+    "identifier": "LEGACY_PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/database/src/data/products-catalog-v2.ts",
+    "line": 1565,
+    "content": "export const PRODUCTS_V2 = LEGACY_PRODUCTS_V2;",
+    "identifier": "PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/database/src/data/products-catalog-v2.ts",
+    "line": 1565,
+    "content": "export const PRODUCTS_V2 = LEGACY_PRODUCTS_V2;",
+    "identifier": "LEGACY_PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "packages/database/src/data/products-catalog-v2.ts",
+    "line": 1567,
+    "content": "export default PRODUCTS_V2;",
+    "identifier": "PRODUCTS_V2",
+    "classification": "MIGRATION_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 240,
+    "content": "// Test L: No canonical page imports LEGACY_PRODUCTS_V2 or PRODUCTS_V2",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 240,
+    "content": "// Test L: No canonical page imports LEGACY_PRODUCTS_V2 or PRODUCTS_V2",
+    "identifier": "LEGACY_PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 241,
+    "content": "test('Test L: Header, Products page, Category page do not import PRODUCTS_V2 or LEGACY_PRODUCTS_V2', () => {",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 241,
+    "content": "test('Test L: Header, Products page, Category page do not import PRODUCTS_V2 or LEGACY_PRODUCTS_V2', () => {",
+    "identifier": "LEGACY_PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 253,
+    "content": "!content.includes('PRODUCTS_V2'),",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 254,
+    "content": "`File ${relPath} still imports or references PRODUCTS_V2!`",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 257,
+    "content": "!content.includes('LEGACY_PRODUCTS_V2'),",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 257,
+    "content": "!content.includes('LEGACY_PRODUCTS_V2'),",
+    "identifier": "LEGACY_PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 258,
+    "content": "`File ${relPath} still imports or references LEGACY_PRODUCTS_V2!`",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "tests/product-architecture-v6.test.ts",
+    "line": 258,
+    "content": "`File ${relPath} still imports or references LEGACY_PRODUCTS_V2!`",
+    "identifier": "LEGACY_PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "scripts/audit-legacy-dependencies.ts",
+    "line": 12,
+    "content": "const TARGETS = ['PRODUCTS_V2', 'CATEGORIES_V2', 'LEGACY_PRODUCTS_V2', 'LEGACY_CATEGORIES_V2'];",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "scripts/audit-legacy-dependencies.ts",
+    "line": 12,
+    "content": "const TARGETS = ['PRODUCTS_V2', 'CATEGORIES_V2', 'LEGACY_PRODUCTS_V2', 'LEGACY_CATEGORIES_V2'];",
+    "identifier": "CATEGORIES_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "scripts/audit-legacy-dependencies.ts",
+    "line": 12,
+    "content": "const TARGETS = ['PRODUCTS_V2', 'CATEGORIES_V2', 'LEGACY_PRODUCTS_V2', 'LEGACY_CATEGORIES_V2'];",
+    "identifier": "LEGACY_PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "scripts/audit-legacy-dependencies.ts",
+    "line": 12,
+    "content": "const TARGETS = ['PRODUCTS_V2', 'CATEGORIES_V2', 'LEGACY_PRODUCTS_V2', 'LEGACY_CATEGORIES_V2'];",
+    "identifier": "LEGACY_CATEGORIES_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "scripts/audit-product-links.ts",
+    "line": 5,
+    "content": "import { PRODUCTS_V2 } from '../packages/types/src/products-catalog-v2';",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "scripts/audit-product-links.ts",
+    "line": 79,
+    "content": "for (const p of PRODUCTS_V2) {",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "scripts/audit-product-media.ts",
+    "line": 3,
+    "content": "import { PRODUCTS_V2 } from '../packages/types/src/products-catalog-v2';",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  },
+  {
+    "file": "scripts/audit-product-media.ts",
+    "line": 28,
+    "content": "for (const product of PRODUCTS_V2) {",
+    "identifier": "PRODUCTS_V2",
+    "classification": "TEST_ONLY"
+  }
+]

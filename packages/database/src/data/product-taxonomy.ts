@@ -7,7 +7,7 @@
 
 export interface ProductFinishRelationship {
   finishType: 'MILL_FINISH' | 'ANODIZED' | 'POWDER_COATED';
-  brand?: string; // e.g. 'AkzoNobel Interpon D'
+  brand?: string; // e.g. 'AkzoNobel Powder Coating'
   warrantyYears?: number; // e.g. 10
   warrantyDisclaimer?: string;
   standards?: string[]; // e.g. ['AAMA 2604', 'AAMA 2605', 'Qualicoat Class 2']
@@ -577,7 +577,7 @@ export const PRODUCT_TAXONOMY: ProductTopCategory[] = [
     seoDescription: 'Architectural aluminium systems for residential, commercial, hospitality and resort projects from Vietnam: Windows, doors, curtain walls, louvers, wall cladding, linear ceilings, pergolas, canopies and balustrades.',
     applications: ['Residential Villas', 'Commercial Facades', 'Hospitality & Resorts', 'Educational Facilities', 'Airports & Transit Hubs'],
     keyAdvantages: [
-      'Certified AkzoNobel 10-Year Warranty Powder Coating (Interpon D)',
+      'AkzoNobel Powder Coating (Warranty up to 10 years subject to terms)',
       'High-performance polyamide PA66 thermal-break barrier systems',
       'Engineered for extreme wind load deflection compliant with ASTM E330 / BS 6375',
       'Comprehensive 11-vertical building portfolio from facade to outdoor living'
@@ -585,7 +585,7 @@ export const PRODUCT_TAXONOMY: ProductTopCategory[] = [
     faqs: [
       {
         q: 'What architectural powder coating warranties do you offer?',
-        a: 'We offer official AkzoNobel Interpon D architectural warranties for up to 10 years covering color retention, chalking resistance, and film integrity under AAMA 2604 / AAMA 2605 specifications.'
+        a: 'We offer AkzoNobel Powder Coating with warranties up to 10 years subject to approved system, project environment and warranty conditions.'
       },
       {
         q: 'Do you supply complete thermal-break window and door systems?',

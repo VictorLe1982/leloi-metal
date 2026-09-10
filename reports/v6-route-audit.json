@@ -1,0 +1,1199 @@
+[
+  {
+    "route": "/products/custom-extrusions",
+    "entity_type": "ProductDivision",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural",
+    "entity_type": "ProductDivision",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles",
+    "entity_type": "ProductDivision",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar",
+    "entity_type": "ProductDivision",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management",
+    "entity_type": "ProductDivision",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components",
+    "entity_type": "ProductDivision",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/windows-doors",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/windows-doors",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/curtain-wall-facade",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/curtain-wall-facade",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/louvers-sunshade",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/louvers-sunshade",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/wall-cladding",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/wall-cladding",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/ceiling-systems",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/ceiling-systems",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/canopies",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/canopies",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/pergola",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/pergola",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/bungalow-resort",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/bungalow-resort",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/railing-balustrade",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/railing-balustrade",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/decorative-aluminium",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/decorative-aluminium",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural/thermal-break",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural/thermal-break",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/t-slot-framing",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/t-slot-framing",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/machine-frames",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/machine-frames",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/automation-profiles",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/automation-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/conveyor-profiles",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/conveyor-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/safety-guarding",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/safety-guarding",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/workstation-systems",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/workstation-systems",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/cleanroom-systems",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/cleanroom-systems",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/linear-motion",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/linear-motion",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/equipment-frames",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/equipment-frames",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles/custom-industrial-extrusions",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles/custom-industrial-extrusions",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/solar-module-frames",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/solar-module-frames",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/solar-mounting-rails",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/solar-mounting-rails",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/rooftop-systems",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/rooftop-systems",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/ground-mount-systems",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/ground-mount-systems",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/solar-clamps",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/solar-clamps",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/solar-carport",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/solar-carport",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/solar-canopies",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/solar-canopies",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/bipv-profiles",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/bipv-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/solar-structural-profiles",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/solar-structural-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar/inverter-enclosures",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar/inverter-enclosures",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management/led-heat-sinks",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management/led-heat-sinks",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management/lighting-heat-sinks",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management/lighting-heat-sinks",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management/inverter-heat-sinks",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management/inverter-heat-sinks",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management/power-electronics-cooling",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management/power-electronics-cooling",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management/ev-charger-heat-sinks",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management/ev-charger-heat-sinks",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management/battery-thermal",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management/battery-thermal",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management/telecom-cooling",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management/telecom-cooling",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management/industrial-heat-sinks",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management/industrial-heat-sinks",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/cnc-machined-components",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/cnc-machined-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/precision-cut-components",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/precision-cut-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/drilled-components",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/drilled-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/tapped-components",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/tapped-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/milled-components",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/milled-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/surface-finished-components",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/surface-finished-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/powder-coated-components",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/powder-coated-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/anodized-components",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/anodized-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/assembled-subcomponents",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/assembled-subcomponents",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components/custom-oem-parts",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components/custom-oem-parts",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/solid-extrusions",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/solid-extrusions",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/hollow-extrusions",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/hollow-extrusions",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/semi-hollow-extrusions",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/semi-hollow-extrusions",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/complex-extrusions",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/complex-extrusions",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/round-profiles",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/round-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/square-rectangular-profiles",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/square-rectangular-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/angles",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/angles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/channels",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/channels",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/structural-profiles",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/structural-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/decorative-profiles",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/decorative-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-extrusions/made-to-drawing",
+    "entity_type": "ProductFamily",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions/made-to-drawing",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural?system=sys-arch-win-65",
+    "entity_type": "ProductSystem",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural?system=sys-arch-curt-150",
+    "entity_type": "ProductSystem",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-profiles?system=sys-ind-tslot-4040",
+    "entity_type": "ProductSystem",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar?system=sys-sol-rail-r1",
+    "entity_type": "ProductSystem",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/solar",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/thermal-management?system=sys-thm-comb-200",
+    "entity_type": "ProductSystem",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/thermal-management",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-components?system=sys-oem-bracket-cnc",
+    "entity_type": "ProductSystem",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/oem-components",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/products",
+    "entity_type": "CatalogRoot",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/rfq",
+    "entity_type": "RFQ",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/rfq",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/capabilities/powder-coating",
+    "entity_type": "CatalogRoot",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/capabilities/powder-coating",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
+    "route": "/product/square_rectangular_hollow_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/square-rectangular-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/square-rectangular-hollow-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/square-rectangular-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/round_tubes",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/round-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/round-tubes",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/round-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solid_bars",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/solid-extrusions",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solid-bars",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/solid-extrusions",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/angle_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/angles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/angle-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/angles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/u_channel_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/channels",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/u-channel-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/channels",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/t_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/structural-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/t-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/structural-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/i_beam_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/structural-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/i-beam-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/structural-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/h_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/structural-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/h-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions/structural-profiles",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/t_slot_modular_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/industrial-profiles/t-slot-framing",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/t-slot-modular-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/industrial-profiles/t-slot-framing",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/t_slot_framing",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/industrial-profiles/t-slot-framing",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/t-slot-framing",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/industrial-profiles/t-slot-framing",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/v_slot_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/industrial-profiles/linear-motion",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/v-slot-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/industrial-profiles/linear-motion",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/enclosure_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/industrial-profiles/safety-guarding",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/enclosure-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/industrial-profiles/safety-guarding",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solar_panel_frame_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/solar/solar-module-frames",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solar-panel-frame-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/solar/solar-module-frames",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solar_mounting_rails",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/solar/solar-mounting-rails",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solar-mounting-rails",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/solar/solar-mounting-rails",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solar_mid_clamps",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/solar/solar-clamps",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solar-mid-clamps",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/solar/solar-clamps",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solar_end_clamps",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/solar/solar-clamps",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/solar-end-clamps",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/solar/solar-clamps",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/heat_sink_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/thermal-management/industrial-heat-sinks",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/heat-sink-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/thermal-management/industrial-heat-sinks",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/led_lighting_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/thermal-management/led-heat-sinks",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/led-lighting-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/thermal-management/led-heat-sinks",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/curtain_wall_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/architectural/curtain-wall-facade",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/curtain-wall-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/architectural/curtain-wall-facade",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/window_door_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/architectural/windows-doors",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/window-door-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/architectural/windows-doors",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/handrail_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/architectural/railing-balustrade",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/handrail-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/architectural/railing-balustrade",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/railing_balustrade_profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/architectural/railing-balustrade",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/railing-balustrade-profiles",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/architectural/railing-balustrade",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/cnc_machined_components",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/oem-components/cnc-machined-components",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/cnc-machined-components",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/oem-components/cnc-machined-components",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/custom_aluminium_parts",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/oem-components/custom-oem-parts",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/custom-aluminium-parts",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/oem-components/custom-oem-parts",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/industrial_assemblies",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/oem-components/assembled-subcomponents",
+    "result": "PASS"
+  },
+  {
+    "route": "/product/industrial-assemblies",
+    "entity_type": "LegacyProductRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com[object Object]",
+    "indexable": false,
+    "redirect_target": "/products/oem-components/assembled-subcomponents",
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural-systems",
+    "entity_type": "LegacyCategoryRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com/products/architectural",
+    "indexable": false,
+    "redirect_target": "/products/architectural",
+    "result": "PASS"
+  },
+  {
+    "route": "/products/architectural-aluminium",
+    "entity_type": "LegacyCategoryRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com/products/architectural",
+    "indexable": false,
+    "redirect_target": "/products/architectural",
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar-profiles",
+    "entity_type": "LegacyCategoryRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com/products/solar",
+    "indexable": false,
+    "redirect_target": "/products/solar",
+    "result": "PASS"
+  },
+  {
+    "route": "/products/solar-aluminium",
+    "entity_type": "LegacyCategoryRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com/products/solar",
+    "indexable": false,
+    "redirect_target": "/products/solar",
+    "result": "PASS"
+  },
+  {
+    "route": "/products/heat-sink-thermal",
+    "entity_type": "LegacyCategoryRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com/products/thermal-management",
+    "indexable": false,
+    "redirect_target": "/products/thermal-management",
+    "result": "PASS"
+  },
+  {
+    "route": "/products/oem-parts",
+    "entity_type": "LegacyCategoryRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com/products/oem-components",
+    "indexable": false,
+    "redirect_target": "/products/oem-components",
+    "result": "PASS"
+  },
+  {
+    "route": "/products/custom-aluminium-extrusions",
+    "entity_type": "LegacyCategoryRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com/products/custom-extrusions",
+    "indexable": false,
+    "redirect_target": "/products/custom-extrusions",
+    "result": "PASS"
+  },
+  {
+    "route": "/products/industrial-aluminium-profiles",
+    "entity_type": "LegacyCategoryRedirect",
+    "HTTP_status": 308,
+    "canonical_url": "https://leloimetal.com/products/industrial-profiles",
+    "indexable": false,
+    "redirect_target": "/products/industrial-profiles",
+    "result": "PASS"
+  }
+]

@@ -108,6 +108,17 @@ export const LEGACY_PRODUCT_ROUTE_MAP: Record<string, LegacyRouteResolution> = {
     family: 't-slot-framing',
     redirectUrl: '/products/industrial-profiles/t-slot-framing'
   },
+  t_slot_framing: {
+    division: 'industrial-profiles',
+    family: 't-slot-framing',
+    system: 'metric-t-slot-4040-standard',
+    redirectUrl: '/products/industrial-profiles/t-slot-framing'
+  },
+  't-slot-framing': {
+    division: 'industrial-profiles',
+    family: 't-slot-framing',
+    redirectUrl: '/products/industrial-profiles/t-slot-framing'
+  },
   v_slot_profiles: {
     division: 'industrial-profiles',
     family: 'linear-motion',
