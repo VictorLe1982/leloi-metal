@@ -16,8 +16,10 @@ import {
   Flame,
   ShieldCheck,
   ArrowRight,
-  FileText
+  FileText,
+  Settings2
 } from 'lucide-react';
+import { PRODUCT_TAXONOMY } from '@leloi/types';
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -112,278 +114,62 @@ export const Header: React.FC = () => {
 
             {/* Mega Menu Dropdown */}
             {megaMenuOpen && (
-              <div className="absolute top-full -left-20 w-[960px] bg-white border border-[#E2E8F0] shadow-2xl rounded-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="grid grid-cols-5 gap-6 pb-6 border-b border-slate-100">
-                  {/* Column 1: Custom Extrusions */}
-                  <div>
-                    <Link
-                      href="/products/custom-extrusions"
-                      onClick={() => setMegaMenuOpen(false)}
-                      className="group flex items-center gap-2 mb-3 font-bold text-sm text-[#0A2D5B] hover:text-[#2F7BFF]"
+              <div className="absolute top-full -left-32 w-[1040px] bg-white border border-[#E2E8F0] shadow-2xl rounded-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="grid grid-cols-6 gap-4 pb-6 border-b border-slate-100">
+                  {PRODUCT_TAXONOMY.map((cat) => (
+                    <div
+                      key={cat.slug}
+                      className={
+                        cat.code === 'BUILDING'
+                          ? 'bg-[#F8FAFC] -my-2 p-2.5 rounded-xl border border-blue-100'
+                          : ''
+                      }
                     >
-                      <Layers className="w-4 h-4 text-[#2F7BFF]" />
-                      <span>Custom Extrusions</span>
-                    </Link>
-                    <ul className="space-y-2 text-xs text-slate-600">
-                      <li>
-                        <Link
-                          href="/products/custom-extrusions"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Solid Profiles
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/custom-extrusions"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Hollow & Semi-Hollow
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/custom-extrusions"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Multi-Void Complex
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/custom-extrusions"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Custom Tooling & Dies
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+                      <Link
+                        href={`/products/${cat.slug}`}
+                        onClick={() => setMegaMenuOpen(false)}
+                        className="group flex items-center gap-1.5 mb-2 font-bold text-xs text-[#0A2D5B] hover:text-[#2F7BFF] transition-colors"
+                      >
+                        {cat.code === 'CUSTOM' && <Layers className="w-3.5 h-3.5 text-[#2F7BFF] shrink-0" />}
+                        {cat.code === 'INDUSTRIAL' && <Cpu className="w-3.5 h-3.5 text-[#2F7BFF] shrink-0" />}
+                        {cat.code === 'ENERGY' && <Sun className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
+                        {cat.code === 'BUILDING' && <Building2 className="w-3.5 h-3.5 text-[#2F7BFF] shrink-0" />}
+                        {cat.code === 'THERMAL' && <Flame className="w-3.5 h-3.5 text-orange-500 shrink-0" />}
+                        {cat.code === 'OEM' && <Settings2 className="w-3.5 h-3.5 text-[#2F7BFF] shrink-0" />}
+                        <span className="truncate">{cat.navLabel}</span>
+                      </Link>
 
-                  {/* Column 2: Industrial Profiles */}
-                  <div>
-                    <Link
-                      href="/products/industrial-profiles"
-                      onClick={() => setMegaMenuOpen(false)}
-                      className="group flex items-center gap-2 mb-3 font-bold text-sm text-[#0A2D5B] hover:text-[#2F7BFF]"
-                    >
-                      <Cpu className="w-4 h-4 text-[#2F7BFF]" />
-                      <span>Industrial Profiles</span>
-                    </Link>
-                    <ul className="space-y-2 text-xs text-slate-600">
-                      <li>
-                        <Link
-                          href="/products/industrial-profiles"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          T-Slot Framing Systems
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/industrial-profiles"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Conveyor & Automation
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/industrial-profiles"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Machine Guarding
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/industrial-profiles"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Cleanroom Structures
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+                      {cat.code === 'BUILDING' && (
+                        <div className="text-[10px] text-blue-700 font-semibold uppercase tracking-wider mb-1.5">
+                          Res & Commercial
+                        </div>
+                      )}
 
-                  {/* Column 3: Solar Aluminium */}
-                  <div>
-                    <Link
-                      href="/products/solar"
-                      onClick={() => setMegaMenuOpen(false)}
-                      className="group flex items-center gap-2 mb-3 font-bold text-sm text-[#0A2D5B] hover:text-[#2F7BFF]"
-                    >
-                      <Sun className="w-4 h-4 text-amber-500" />
-                      <span>Solar Aluminium</span>
-                    </Link>
-                    <ul className="space-y-2 text-xs text-slate-600">
-                      <li>
-                        <Link
-                          href="/products/solar"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Module Frames (Anodized)
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/solar"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Ground & Roof Rails
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/solar"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Mid & End Clamps
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/solar"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Solar Carport Structures
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Column 4: Architectural Systems (PROMINENT EXPANSION) */}
-                  <div className="bg-[#F8FAFC] -my-3 p-3 rounded-xl border border-blue-100">
-                    <Link
-                      href="/products/architectural"
-                      onClick={() => setMegaMenuOpen(false)}
-                      className="group flex items-center gap-1.5 mb-2.5 font-bold text-sm text-[#0A2D5B] hover:text-[#2F7BFF]"
-                    >
-                      <Building2 className="w-4 h-4 text-[#2F7BFF]" />
-                      <span>Architectural Systems</span>
-                    </Link>
-                    <div className="text-[10px] text-blue-700 font-semibold uppercase tracking-wider mb-2">
-                      Residential & Commercial
+                      <ul className="space-y-1.5 text-[11px] text-slate-600">
+                        {cat.subcategories.slice(0, 4).map((sub) => (
+                          <li key={sub.slug}>
+                            <Link
+                              href={sub.fullSlug}
+                              onClick={() => setMegaMenuOpen(false)}
+                              className="hover:text-[#2F7BFF] block transition-colors truncate"
+                              title={sub.name}
+                            >
+                              {sub.name}
+                            </Link>
+                          </li>
+                        ))}
+                        <li>
+                          <Link
+                            href={`/products/${cat.slug}`}
+                            onClick={() => setMegaMenuOpen(false)}
+                            className="text-[#2F7BFF] hover:underline font-semibold text-[10px] block pt-1"
+                          >
+                            All ({cat.subcategories.length}) →
+                          </Link>
+                        </li>
+                      </ul>
                     </div>
-                    <ul className="space-y-1.5 text-xs text-slate-700">
-                      <li>
-                        <Link
-                          href="/products/architectural"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block font-medium"
-                        >
-                          • Windows & Doors
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/architectural"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block font-medium"
-                        >
-                          • Curtain Walls & Facades
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/architectural"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block font-medium"
-                        >
-                          • Louvers & Sunshades
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/architectural"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block font-medium"
-                        >
-                          • Cladding & Ceilings
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/architectural"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block font-medium"
-                        >
-                          • Pergolas & Bungalows
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/architectural"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block font-medium"
-                        >
-                          • Thermal-Break Systems
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Column 5: Thermal & OEM */}
-                  <div>
-                    <Link
-                      href="/products/thermal-management"
-                      onClick={() => setMegaMenuOpen(false)}
-                      className="group flex items-center gap-2 mb-3 font-bold text-sm text-[#0A2D5B] hover:text-[#2F7BFF]"
-                    >
-                      <Flame className="w-4 h-4 text-orange-500" />
-                      <span>Thermal & OEM</span>
-                    </Link>
-                    <ul className="space-y-2 text-xs text-slate-600">
-                      <li>
-                        <Link
-                          href="/products/thermal-management"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          High-Aspect Heat Sinks
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/thermal-management"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Inverter & Power Cooling
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/oem-components"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          CNC Machined Parts
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/products/oem-components"
-                          onClick={() => setMegaMenuOpen(false)}
-                          className="hover:text-[#2F7BFF] block transition-colors"
-                        >
-                          Ready-to-Assemble Kits
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+                  ))}
                 </div>
 
                 {/* Bottom Mega Menu Bar */}
@@ -476,49 +262,21 @@ export const Header: React.FC = () => {
             >
               All Products Catalog
             </Link>
-            <div className="pl-4 space-y-1 text-xs text-slate-600 pb-1">
-              <Link
-                href="/products/custom-extrusions"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-1 hover:text-[#2F7BFF]"
-              >
-                Custom Extrusions
-              </Link>
-              <Link
-                href="/products/industrial-profiles"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-1 hover:text-[#2F7BFF]"
-              >
-                Industrial Profiles
-              </Link>
-              <Link
-                href="/products/solar"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-1 hover:text-[#2F7BFF]"
-              >
-                Solar Aluminium
-              </Link>
-              <Link
-                href="/products/architectural"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-1 text-blue-700 font-semibold"
-              >
-                Architectural Systems (Windows, Doors, Facades, Louvers)
-              </Link>
-              <Link
-                href="/products/thermal-management"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-1 hover:text-[#2F7BFF]"
-              >
-                Thermal Management & Heat Sinks
-              </Link>
-              <Link
-                href="/products/oem-components"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-1 hover:text-[#2F7BFF]"
-              >
-                OEM Components & Assembly
-              </Link>
+            <div className="pl-4 space-y-1.5 text-xs text-slate-600 pb-1">
+              {PRODUCT_TAXONOMY.map((cat) => (
+                <Link
+                  key={cat.slug}
+                  href={`/products/${cat.slug}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block py-1 ${
+                    cat.code === 'BUILDING'
+                      ? 'text-blue-700 font-semibold'
+                      : 'hover:text-[#2F7BFF]'
+                  }`}
+                >
+                  {cat.navLabel}
+                </Link>
+              ))}
             </div>
 
             <Link

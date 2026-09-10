@@ -1,0 +1,704 @@
+{
+  "auditDate": "2026-09-10T15:00:46.254Z",
+  "specification": "LELOI METAL PRODUCT TAXONOMY + MEDIA + UI CONSISTENCY FIX V5",
+  "baseUrl": "http://localhost:3000",
+  "serverVerified": true,
+  "summary": {
+    "totalRoutesChecked": 115,
+    "successCount": 115,
+    "failureCount": 0,
+    "healthScorePercentage": 100
+  },
+  "results": [
+    {
+      "url": "/",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/capabilities",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/capabilities/powder-coating",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/industries",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/markets",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/insights",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/about",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/contact",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/rfq",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/tools/aluminium-weight-calculator",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/tools/import-duty-checker",
+      "category": "STATIC_PAGE",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions",
+      "category": "TOP_CATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles",
+      "category": "TOP_CATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar",
+      "category": "TOP_CATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural",
+      "category": "TOP_CATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management",
+      "category": "TOP_CATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components",
+      "category": "TOP_CATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/custom-solid-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/custom-hollow-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/semi-hollow-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/complex-multi-void",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/round-tubes",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/square-rectangular-hollow",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/angle-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/channel-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/t-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/structural-beams-i-h",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/custom-decorative",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/custom-extrusions/made-to-drawing",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/t-slot-20-series",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/t-slot-30-series",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/t-slot-40-series",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/t-slot-45-series",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/t-slot-60-series",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/t-slot-80-series",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/machine-frame-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/automation-frame-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/conveyor-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/robot-guard-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/safety-guard-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/workstation-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/cleanroom-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/linear-motion-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/equipment-frame-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/industrial-enclosure-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/industrial-profiles/custom-machinery-extrusions",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/solar-module-frame-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/solar-mounting-rails",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/rooftop-mounting-rails",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/ground-mount-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/solar-mid-clamp-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/solar-end-clamp-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/solar-carport-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/solar-structural-beams",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/bipv-aluminium-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/solar-canopy-structures",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/solar-inverter-enclosures",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/solar/solar-equipment-housings",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/windows-doors",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/curtain-wall-facade",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/louvers-sunshade",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/wall-cladding",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/ceiling-systems",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/canopies",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/pergola",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/bungalow-resort",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/railing-balustrade",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/decorative-screens",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/architectural/thermal-break",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management/led-heat-sink-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management/lighting-heat-sink-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management/inverter-heat-sink-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management/power-electronics-heat-sinks",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management/ev-charger-heat-sinks",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management/battery-thermal-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management/telecom-heat-sink-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management/industrial-cooling-profiles",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/thermal-management/custom-high-fin-extrusions",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/cnc-machined-components",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/cut-to-length-components",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/drilled-components",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/tapped-components",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/milled-components",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/precision-aluminium-parts",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/surface-finished-oem",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/powder-coated-oem",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/anodized-oem",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/assembled-subcomponents",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/custom-aluminium-parts",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/products/oem-components/private-label-components",
+      "category": "SUBCATEGORY",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/square_rectangular_hollow_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/round_tubes",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/solid_bars",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/angle_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/u_channel_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/t_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/i_beam_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/h_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/t_slot_modular_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/v_slot_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/solar_panel_frame_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/solar_mounting_rails",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/solar_mid_clamps",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/solar_end_clamps",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/heat_sink_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/led_lighting_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/curtain_wall_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/window_door_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/handrail_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/railing_balustrade_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/enclosure_profiles",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/cnc_machined_components",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/custom_aluminium_parts",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "url": "/product/industrial_assemblies",
+      "category": "PRODUCT_DETAIL",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    }
+  ]
+}

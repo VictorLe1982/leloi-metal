@@ -3,7 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button, Card, FormGroup, Input, Select, Textarea } from '@leloi/ui';
-import { BuyerTypeCode } from '@leloi/types';
+import { BuyerTypeCode, PRODUCT_TAXONOMY, getCategoryBySlug } from '@leloi/types';
 import { trackB2BEvent } from '@leloi/analytics';
 import {
   FileUp,
@@ -92,6 +92,18 @@ function RfqFormContent() {
           alloy: alloyParam || prev.product.alloy
         }
       }));
+    }
+    if (categoryParam) {
+      const cat = getCategoryBySlug(categoryParam);
+      if (cat) {
+        setFormData((prev) => ({
+          ...prev,
+          product: {
+            ...prev.product,
+            productCategory: cat.name
+          }
+        }));
+      }
     }
     if (modeParam === 'upload') {
       setCurrentStep(4);
@@ -442,12 +454,11 @@ function RfqFormContent() {
                     value={formData.product.productCategory}
                     onChange={(e) => updateProduct('productCategory', e.target.value)}
                   >
-                    <option value="Custom Aluminium Extrusions">Custom Aluminium Extrusions</option>
-                    <option value="Industrial Aluminium Profiles">Industrial Aluminium Profiles</option>
-                    <option value="Solar Aluminium Profiles">Solar Aluminium Profiles</option>
-                    <option value="Architectural Aluminium Systems">Architectural Aluminium Systems</option>
-                    <option value="Heat Sink / Thermal Profiles">Heat Sink / Thermal Profiles</option>
-                    <option value="OEM Aluminium Components">OEM Aluminium Components</option>
+                    {PRODUCT_TAXONOMY.map((cat) => (
+                      <option key={cat.slug} value={cat.name}>
+                        {cat.name}
+                      </option>
+                    ))}
                   </Select>
                 </FormGroup>
 

@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Card, Badge, Button } from '@leloi/ui';
-import { PRODUCTS_V2, CATEGORIES_V2 } from '@leloi/types';
+import { PRODUCTS_V2, CATEGORIES_V2, PRODUCT_TAXONOMY } from '@leloi/types';
 import { ProductCard } from '@/components/catalog/ProductCard';
 import {
   Search,
@@ -31,7 +31,14 @@ export default function ProductsCatalogPage() {
   // Filter products
   const filteredProducts = useMemo(() => {
     return PRODUCTS_V2.filter((p) => {
-      const matchCategory = selectedCategory === 'all' || p.category === selectedCategory;
+      const matchCategory =
+        selectedCategory === 'all' ||
+        p.category === selectedCategory ||
+        (selectedCategory === 'solar' && p.category === 'solar-profiles') ||
+        (selectedCategory === 'architectural' &&
+          (p.category === 'architectural-systems' || p.category === 'architectural')) ||
+        (selectedCategory === 'thermal-management' &&
+          (p.category === 'heat-sink-thermal' || p.category === 'thermal-management'));
       const matchGeometry = selectedGeometry === 'all' || p.profileGeometry === selectedGeometry;
       const matchAlloy = selectedAlloy === 'all' || p.alloys.some((a) => a.includes(selectedAlloy));
       const matchFinish =
@@ -194,7 +201,7 @@ export default function ProductsCatalogPage() {
                 className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
               >
                 <option value="all">All 6 Categories</option>
-                {CATEGORIES_V2.map((c) => (
+                {PRODUCT_TAXONOMY.map((c) => (
                   <option key={c.slug} value={c.slug}>
                     {c.name}
                   </option>
@@ -537,8 +544,8 @@ export default function ProductsCatalogPage() {
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className="w-full p-2 text-xs border rounded-lg"
                 >
-                  <option value="all">All Categories</option>
-                  {CATEGORIES_V2.map((c) => (
+                  <option value="all">All 6 Categories</option>
+                  {PRODUCT_TAXONOMY.map((c) => (
                     <option key={c.slug} value={c.slug}>
                       {c.name}
                     </option>

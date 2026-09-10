@@ -67,12 +67,9 @@ test('Verify Header Desktop Navigation has simplified 6 items and Mega Menu', ()
   assert.ok(content.includes('href="/insights"'), 'Header must have /insights');
   assert.ok(content.includes('href="/about"'), 'Header must have /about');
 
-  // Must include Mega Menu columns
-  assert.ok(content.includes('href="/products/custom-extrusions"'), 'Mega menu must have custom-extrusions');
-  assert.ok(content.includes('href="/products/industrial-profiles"'), 'Mega menu must have industrial-profiles');
-  assert.ok(content.includes('href="/products/solar"'), 'Mega menu must have solar');
-  assert.ok(content.includes('href="/products/architectural"'), 'Mega menu must have architectural');
-  assert.ok(content.includes('href="/products/thermal-management"'), 'Mega menu must have thermal-management');
+  // Must include Mega Menu powered by PRODUCT_TAXONOMY
+  assert.ok(content.includes('PRODUCT_TAXONOMY'), 'Mega menu must use PRODUCT_TAXONOMY');
+  assert.ok(content.includes('sub.fullSlug'), 'Mega menu must link to subcategory fullSlug');
   assert.ok(content.includes('href="/capabilities/powder-coating"'), 'Mega menu must have powder-coating');
 });
 
@@ -83,23 +80,9 @@ test('Verify Footer uses BrandLogo white variant and canonical links', () => {
   assert.ok(content.includes('BrandLogo'), 'Footer must use BrandLogo component');
   assert.ok(content.includes('variant="white"'), 'Footer must use white logo variant');
 
-  // Canonical product solution links
-  const requiredFooterLinks = [
-    '/products/custom-extrusions',
-    '/products/industrial-profiles',
-    '/products/solar',
-    '/products/architectural',
-    '/products/thermal-management',
-    '/products/oem-components',
-    '/capabilities/powder-coating'
-  ];
-
-  for (const link of requiredFooterLinks) {
-    assert.ok(
-      content.includes(`href="${link}"`),
-      `Footer must include canonical link to ${link}`
-    );
-  }
+  // Canonical product solution links powered by PRODUCT_TAXONOMY
+  assert.ok(content.includes('PRODUCT_TAXONOMY'), 'Footer must use PRODUCT_TAXONOMY for canonical links');
+  assert.ok(content.includes('href="/capabilities/powder-coating"'), 'Footer must link to powder-coating');
 
   // Must not have dead hash links
   assert.ok(!content.includes('href="#"'), 'Footer must not contain dead href="#" links');

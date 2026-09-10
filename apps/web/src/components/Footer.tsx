@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { BrandLogo } from '@leloi/ui';
 import { ShieldCheck, Mail, MapPin, Phone, ArrowRight, ExternalLink } from 'lucide-react';
+import { PRODUCT_TAXONOMY } from '@leloi/types';
 
 export const Footer: React.FC = () => {
   return (
@@ -70,36 +71,18 @@ export const Footer: React.FC = () => {
               Product Solutions
             </h4>
             <ul className="space-y-2 text-sm text-slate-400 font-normal">
-              <li>
-                <Link href="/products/custom-extrusions" className="hover:text-white transition-colors">
-                  Custom Extrusions
-                </Link>
-              </li>
-              <li>
-                <Link href="/products/industrial-profiles" className="hover:text-white transition-colors">
-                  Industrial Profiles
-                </Link>
-              </li>
-              <li>
-                <Link href="/products/solar" className="hover:text-white transition-colors">
-                  Solar Aluminium
-                </Link>
-              </li>
-              <li>
-                <Link href="/products/architectural" className="hover:text-white transition-colors font-medium text-slate-200">
-                  Architectural Systems
-                </Link>
-              </li>
-              <li>
-                <Link href="/products/thermal-management" className="hover:text-white transition-colors">
-                  Thermal Management
-                </Link>
-              </li>
-              <li>
-                <Link href="/products/oem-components" className="hover:text-white transition-colors">
-                  OEM Components
-                </Link>
-              </li>
+              {PRODUCT_TAXONOMY.map((cat) => (
+                <li key={cat.slug}>
+                  <Link
+                    href={`/products/${cat.slug}`}
+                    className={`hover:text-white transition-colors ${
+                      cat.code === 'BUILDING' ? 'text-slate-200 font-medium' : ''
+                    }`}
+                  >
+                    {cat.navLabel}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

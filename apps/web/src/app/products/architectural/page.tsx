@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import { Button, Badge, Card } from '@leloi/ui';
 
+import { TechnicalProfilePlaceholder } from '@/components/catalog/TechnicalProfilePlaceholder';
+
 export const metadata: Metadata = {
   title: 'Architectural Aluminium Systems | Residential & Commercial | LELOI METAL',
   description:
@@ -36,78 +38,97 @@ export const metadata: Metadata = {
 };
 
 export default function ArchitecturalProductsPage() {
-  const architecturalCategories = [
+  const architecturalGroups = [
     {
       id: 'windows-doors',
+      groupKey: 'A',
       title: 'Windows & Door Systems',
-      image: '/images/products/18_window_door_profiles.webp',
+      image: '/media/catalog/18_window_door_profiles.webp',
       desc: 'High-precision casement, sliding, bifold, and tilt-and-turn profiles with multi-point locking channels and EPDM gasket grooves.',
       badges: ['6063-T5', 'Thermal Break', 'High Acoustic Rating'],
-      rfqSlug: 'window-door-profiles'
+      href: '/products/architectural/windows-doors'
     },
     {
-      id: 'curtain-walls',
+      id: 'curtain-wall-facade',
+      groupKey: 'B',
       title: 'Curtain Wall & Facade Systems',
-      image: '/images/products/17_curtain_wall_profiles.webp',
+      image: '/media/catalog/17_curtain_wall_profiles.webp',
       desc: 'Engineered structural mullions and transoms for stick, semi-unitized, and unitized architectural glass facades capable of high wind-load resistance.',
       badges: ['6063-T6', 'Unitized & Stick', 'ASTM E330 Tested'],
-      rfqSlug: 'curtain-wall-profiles'
+      href: '/products/architectural/curtain-wall-facade'
     },
     {
       id: 'louvers-sunshade',
+      groupKey: 'C',
       title: 'Louvers & Sunshades (Brise Soleil)',
-      image: '/images/products/06_t_profiles.webp',
       desc: 'Aerofoil, box louvers, and motorized architectural sun control systems for natural ventilation, glare reduction, and building energy efficiency.',
       badges: ['Aerofoil Fins', 'Motorized Ready', 'AkzoNobel 10-Yr'],
-      rfqSlug: 'custom-aluminium-parts'
+      href: '/products/architectural/louvers-sunshade'
     },
     {
       id: 'wall-cladding',
+      groupKey: 'D',
       title: 'Wall Cladding & Rainscreen Substructures',
-      image: '/images/products/05_u_channel_profiles.webp',
       desc: 'Ventilated facade carrier rails, clip-on brackets, and aluminium panel edge extrusions for modern exterior rainscreen architecture.',
       badges: ['Corrosion Proof', 'Fast Installation', 'AAMA 2604'],
-      rfqSlug: 'square-rectangular-hollow-profiles'
+      href: '/products/architectural/wall-cladding'
     },
     {
-      id: 'linear-ceilings',
+      id: 'ceiling-systems',
+      groupKey: 'E',
       title: 'Linear Aluminium Ceiling Systems',
-      image: '/images/products/01_square_rectangular_hollow_profiles.webp',
       desc: 'Lightweight baffle ceilings, strip panels, and open-cell acoustic carriers designed for airport terminals, commercial atriums, and transit hubs.',
       badges: ['Baffle & Strip', 'Qualicoat Finish', 'Lightweight'],
-      rfqSlug: 'u-channel-profiles'
+      href: '/products/architectural/ceiling-systems'
     },
     {
-      id: 'pergolas-canopies',
-      title: 'Canopies, Carports & Pergolas',
-      image: '/images/products/08_h_profiles.webp',
-      desc: 'Heavy-duty structural rafters, gutter beams, and motorized louver blades for outdoor living spaces, luxury villas, and resort hospitality.',
+      id: 'canopies',
+      groupKey: 'F',
+      title: 'Canopy & Outdoor Systems',
+      desc: 'Heavy-duty structural rafters, gutter beams, and cantilever brackets for building entrance canopies, carports, and terrace awnings.',
       badges: ['6005A-T6', 'Integrated Gutters', 'Marine Grade'],
-      rfqSlug: 'h-profiles'
+      href: '/products/architectural/canopies'
     },
     {
-      id: 'bungalows-resort',
+      id: 'pergola',
+      groupKey: 'G',
+      title: 'Pergola Systems (Bioclimatic)',
+      desc: 'Bioclimatic motorized louvered pergolas, heavy column profiles, and weather-sealed gutter beams for luxury outdoor living and hospitality venues.',
+      badges: ['Bioclimatic Louvers', 'Wind-Tested', 'AkzoNobel 10-Yr'],
+      href: '/products/architectural/pergola'
+    },
+    {
+      id: 'bungalow-resort',
+      groupKey: 'H',
       title: 'Modular Bungalow & Resort Structures',
-      image: '/images/products/24_industrial_assemblies.webp',
       desc: 'Prefabricated high-strength aluminium structural framing for luxury resort glamping suites, eco-lodges, beachfront pavilions, and garden offices.',
       badges: ['Anti-Corrosion', 'Modular Bolt-On', '100% Recyclable'],
-      rfqSlug: 'industrial-assemblies'
+      href: '/products/architectural/bungalow-resort'
     },
     {
-      id: 'railings-balustrades',
+      id: 'railing-balustrade',
+      groupKey: 'I',
       title: 'Glass Railings & Balustrades',
-      image: '/images/products/20_railing_balustrade_profiles.webp',
+      image: '/media/catalog/20_railing_balustrade_profiles.webp',
       desc: 'Continuous dry-glaze base shoes, spigot adapters, and slim-line architectural handrail profiles tested for structural crowd-load compliance.',
       badges: ['Base Shoe', 'Frameless Glass', 'Crowd Load Tested'],
-      rfqSlug: 'railing-balustrade-profiles'
+      href: '/products/architectural/railing-balustrade'
+    },
+    {
+      id: 'decorative-screens',
+      groupKey: 'J',
+      title: 'Decorative Screens & Architectural Enclosures',
+      desc: 'Architectural feature fins, laser-cut screen frames, and custom decorative exterior lattices for modern aesthetic building envelopes.',
+      badges: ['Architectural Fins', 'Laser Cut Ready', 'Custom Dies'],
+      href: '/products/architectural/decorative-screens'
     },
     {
       id: 'thermal-break',
-      title: 'Thermal-Break Insulation Profiles',
-      image: '/images/products/18_window_door_profiles.webp',
-      desc: 'Polyamide PA66 GF25 reinforced thermal insulation barrier profiles that drastically reduce U-values for green buildings and energy code compliance.',
+      groupKey: 'K',
+      title: 'Thermal-Break Systems',
+      desc: 'Polyamide PA66 GF25 reinforced thermal insulation barrier profiles that eliminate thermal bridging and achieve low U-values for green buildings.',
       badges: ['PA66 GF25 Strip', 'Low U-Value', 'LEED / BREEAM'],
-      rfqSlug: 'window-door-profiles'
+      href: '/products/architectural/thermal-break'
     }
   ];
 
@@ -131,10 +152,10 @@ export default function ArchitecturalProductsPage() {
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-bold font-heading text-white tracking-tight max-w-3xl leading-tight">
-            Architectural Aluminium Systems for Modern Construction
+            Architectural Aluminium Systems
           </h1>
           <p className="text-slate-300 text-base sm:text-lg max-w-2xl mt-4 leading-relaxed font-sans">
-            From precision residential window systems to monumental commercial curtain walls, exterior louvers, pergolas, and modular resort structures. Engineered to international building codes with certified <strong>AkzoNobel 10-Year Warranty Powder Coating</strong>.
+            Aluminium solutions for residential, commercial, hospitality and modern building applications. Engineered to international building codes with certified <strong>AkzoNobel 10-Year Warranty Powder Coating</strong>.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4 items-center">
@@ -168,12 +189,12 @@ export default function ArchitecturalProductsPage() {
         </div>
       </section>
 
-      {/* 2. ARCHITECTURAL CATEGORIES GRID */}
+      {/* 2. ARCHITECTURAL 11-SYSTEMS GRID (GROUPS A - K) */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <span className="text-xs font-bold font-heading text-[#2F7BFF] uppercase tracking-widest">
-              Engineered Product Range
+              11 Engineered Systems (Groups A - K)
             </span>
             <h2 className="text-3xl font-bold font-heading text-[#0A2D5B] mt-1">
               Building & Facade Systems Portfolio
@@ -189,21 +210,34 @@ export default function ArchitecturalProductsPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {architecturalCategories.map((cat) => (
+          {architecturalGroups.map((cat) => (
             <Card
               key={cat.id}
               variant="interactive"
               className="flex flex-col justify-between overflow-hidden group hover:border-[#2F7BFF] transition-all"
             >
               <div>
-                <div className="relative w-full h-48 bg-slate-100 rounded-lg overflow-hidden mb-4">
-                  <Image
-                    src={cat.image}
-                    alt={cat.title}
-                    fill
-                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
+                <div className="relative w-full h-48 bg-slate-900 rounded-lg overflow-hidden mb-4">
+                  {cat.image ? (
+                    <Image
+                      src={cat.image}
+                      alt={cat.title}
+                      fill
+                      className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <TechnicalProfilePlaceholder
+                      title={cat.title}
+                      category={`Group ${cat.groupKey}`}
+                      aspectRatio="16/9"
+                    />
+                  )}
+                  <div className="absolute top-2.5 left-2.5">
+                    <span className="text-[10px] font-mono font-bold bg-[#0A2D5B]/90 text-cyan-300 px-2.5 py-1 rounded shadow-xs">
+                      GROUP {cat.groupKey}
+                    </span>
+                  </div>
                 </div>
                 <h3 className="text-lg font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
                   {cat.title}
@@ -222,14 +256,14 @@ export default function ArchitecturalProductsPage() {
 
               <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
                 <Link
-                  href={`/product/${cat.rfqSlug}`}
+                  href={cat.href}
                   className="text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF] flex items-center gap-1"
                 >
-                  <span>Technical Specs</span>
+                  <span>Explore Subcategory</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
-                  href={`/rfq?product=${cat.rfqSlug}&category=architectural`}
+                  href={`/rfq?category=architectural&subcategory=${cat.id}`}
                   className="text-xs font-heading font-bold text-[#2F7BFF] hover:underline"
                 >
                   Request Quote →
@@ -239,6 +273,7 @@ export default function ArchitecturalProductsPage() {
           ))}
         </div>
       </section>
+
 
       {/* 3. SURFACE FINISHING & AKZONOBEL POWDER COATING HIGHLIGHT */}
       <section className="py-16 bg-[#061D3B] text-white border-t border-b border-slate-800 px-4 sm:px-6 lg:px-8">

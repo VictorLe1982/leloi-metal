@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ProductCatalogItem } from '@leloi/types';
 import { ResponsiveProductImage } from './ResponsiveProductImage';
+import { TechnicalProfilePlaceholder } from './TechnicalProfilePlaceholder';
 import { Button } from '@leloi/ui';
 import { ArrowRight, Scale, Check } from 'lucide-react';
 
@@ -36,11 +37,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Upper section: Image & Badges */}
       <div>
         <div className="relative aspect-[4/3] bg-[#F8FAFC] overflow-hidden">
-          <ResponsiveProductImage
-            src={product.primaryImage}
-            alt={`${product.name} 4:3 technical aluminium extrusion render`}
-            priority={priority}
-          />
+          {product.primaryImage ? (
+            <ResponsiveProductImage
+              src={product.primaryImage}
+              alt={`${product.name} 4:3 technical aluminium extrusion render`}
+              priority={priority}
+            />
+          ) : (
+            <TechnicalProfilePlaceholder
+              title={product.name}
+              category={product.categoryName}
+            />
+          )}
           {/* Top badges */}
           <div className="absolute top-3 left-3">
             <span className="text-[10px] font-bold bg-[#0A2D5B]/90 text-white px-2.5 py-1 rounded-md shadow-xs backdrop-blur-xs font-heading uppercase tracking-wider">
@@ -93,16 +101,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="p-5 pt-0">
         <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
           <Link href={`/product/${product.slug}`} className="flex-1">
-            <Button variant="outline" size="sm" className="w-full text-xs justify-center hover:bg-slate-50">
-              View Product
+            <Button variant="outline" size="sm" className="w-full text-xs justify-center hover:bg-slate-50 font-medium">
+              View Details
             </Button>
           </Link>
           <Link
             href={`/rfq?product=${product.slug}&category=${product.category}&source=catalog`}
             className="flex-1"
           >
-            <Button variant="cta" size="sm" className="w-full text-xs justify-center" rightIcon={<ArrowRight className="w-3.5 h-3.5" />}>
-              Request RFQ
+            <Button variant="cta" size="sm" className="w-full text-xs justify-center font-medium" rightIcon={<ArrowRight className="w-3.5 h-3.5" />}>
+              Request Quote
             </Button>
           </Link>
           {onToggleCompare && (

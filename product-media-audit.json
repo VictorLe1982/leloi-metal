@@ -1,0 +1,350 @@
+{
+  "auditDate": "2026-09-10T14:58:45.845Z",
+  "specification": "LELOI METAL PRODUCT TAXONOMY + MEDIA + UI CONSISTENCY FIX V5",
+  "mediaDirectory": "E:\\LELOIGLOBAL_CODEX\\LELOI METAL\\apps\\web\\public\\media\\catalog",
+  "summary": {
+    "totalProductsAudited": 24,
+    "approvedStudioRenders": 24,
+    "missingMediaCount": 0,
+    "responsiveTripleResolutionCoverage": 24,
+    "mediaHealthScorePercentage": 100
+  },
+  "items": [
+    {
+      "productId": "prod-01",
+      "productName": "Square & Rectangular Hollow Profiles",
+      "primaryImage": "/media/catalog/01_square_rectangular_hollow_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 51640,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-02",
+      "productName": "Round Tubes",
+      "primaryImage": "/media/catalog/02_round_tubes.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 32820,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-03",
+      "productName": "Solid Bars",
+      "primaryImage": "/media/catalog/03_solid_bars.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 30196,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-04",
+      "productName": "Angle Profiles",
+      "primaryImage": "/media/catalog/04_angle_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 38346,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-05",
+      "productName": "U-Channel Profiles",
+      "primaryImage": "/media/catalog/05_u_channel_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 25832,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-06",
+      "productName": "T Profiles",
+      "primaryImage": "/media/catalog/06_t_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 31424,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-07",
+      "productName": "I-Beam Profiles",
+      "primaryImage": "/media/catalog/07_i_beam_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 32310,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-08",
+      "productName": "H Profiles",
+      "primaryImage": "/media/catalog/08_h_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 26462,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-09",
+      "productName": "T-Slot Modular Profiles",
+      "primaryImage": "/media/catalog/09_t_slot_modular_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 37754,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-10",
+      "productName": "V-Slot Profiles",
+      "primaryImage": "/media/catalog/10_v_slot_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 41378,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-11",
+      "productName": "Solar Panel Frame Profiles",
+      "primaryImage": "/media/catalog/11_solar_panel_frame_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 25428,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-12",
+      "productName": "Solar Mounting Rails",
+      "primaryImage": "/media/catalog/12_solar_mounting_rails.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 38368,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-13",
+      "productName": "Solar Mid Clamps",
+      "primaryImage": "/media/catalog/13_solar_mid_clamps.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 26342,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-14",
+      "productName": "Solar End Clamps",
+      "primaryImage": "/media/catalog/14_solar_end_clamps.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 27084,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-15",
+      "productName": "Heat Sink Profiles",
+      "primaryImage": "/media/catalog/15_heat_sink_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 39002,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-16",
+      "productName": "LED Lighting Profiles",
+      "primaryImage": "/media/catalog/16_led_lighting_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 29464,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-17",
+      "productName": "Curtain Wall Profiles",
+      "primaryImage": "/media/catalog/17_curtain_wall_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 35230,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-18",
+      "productName": "Window & Door Profiles",
+      "primaryImage": "/media/catalog/18_window_door_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 39384,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-19",
+      "productName": "Handrail Profiles",
+      "primaryImage": "/media/catalog/19_handrail_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 26004,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-20",
+      "productName": "Railing & Balustrade Profiles",
+      "primaryImage": "/media/catalog/20_railing_balustrade_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 27012,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-21",
+      "productName": "Enclosure Profiles",
+      "primaryImage": "/media/catalog/21_enclosure_profiles.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 32178,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-22",
+      "productName": "CNC Machined Components",
+      "primaryImage": "/media/catalog/22_cnc_machined_components.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 34536,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-23",
+      "productName": "Custom Aluminium Parts",
+      "primaryImage": "/media/catalog/23_custom_aluminium_parts.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 28678,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    },
+    {
+      "productId": "prod-24",
+      "productName": "Industrial Assemblies",
+      "primaryImage": "/media/catalog/24_industrial_assemblies.webp",
+      "existsOnDisk": true,
+      "fileSizeBytes": 48882,
+      "responsiveVariants": {
+        "w1200": true,
+        "w768": true,
+        "w480": true
+      },
+      "approvalStatus": "APPROVED",
+      "isPlaceholder": false
+    }
+  ]
+}

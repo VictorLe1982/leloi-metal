@@ -18,8 +18,8 @@ export const FormGroup: React.FC<FormGroupProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`flex flex-col gap-1.5 ${className}`}>
-      <label className="text-xs font-heading font-semibold text-[#172033] tracking-wide uppercase flex items-center gap-1">
+    <div className={`flex flex-col gap-2 ${className}`}>
+      <label className="text-[13px] font-heading font-semibold text-[#172033] tracking-wider uppercase flex items-center gap-1">
         {label}
         {required && <span className="text-red-500">*</span>}
       </label>
@@ -42,7 +42,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         ref={ref}
-        className={`w-full px-3.5 py-2.5 bg-white border text-sm text-[#172033] rounded-md transition-colors placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] focus:border-transparent ${
+        className={`w-full min-h-[48px] px-4 py-3 bg-white border text-base sm:text-sm text-[#172033] rounded-lg transition-colors placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] focus:border-transparent [&::-webkit-inner-spin-button]:ml-2 ${
           error ? 'border-red-500 focus:ring-red-400' : 'border-[#E2E8F0] hover:border-[#9AA3AF]'
         } ${className}`}
         {...props}
@@ -61,7 +61,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <select
         ref={ref}
-        className={`w-full px-3.5 py-2.5 bg-white border text-sm text-[#172033] rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] focus:border-transparent cursor-pointer ${
+        className={`w-full min-h-[48px] px-4 py-3 pr-10 bg-white border text-base sm:text-sm text-[#172033] rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] focus:border-transparent cursor-pointer ${
           error ? 'border-red-500 focus:ring-red-400' : 'border-[#E2E8F0] hover:border-[#9AA3AF]'
         } ${className}`}
         {...props}
@@ -82,7 +82,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <textarea
         ref={ref}
-        className={`w-full px-3.5 py-2.5 bg-white border text-sm text-[#172033] rounded-md transition-colors placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] focus:border-transparent ${
+        className={`w-full p-4 min-h-[120px] bg-white border text-base sm:text-sm text-[#172033] rounded-lg transition-colors placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] focus:border-transparent ${
           error ? 'border-red-500 focus:ring-red-400' : 'border-[#E2E8F0] hover:border-[#9AA3AF]'
         } ${className}`}
         rows={4}
