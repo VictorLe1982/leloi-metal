@@ -6,3 +6,4 @@ export * from './components/Badge';
 export * from './components/FormControls';
 export * from './components/Modal';
 export * from './components/AluminiumWeightCalculator';
+export * from './components/BrandLogo';

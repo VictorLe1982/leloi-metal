@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Logo } from '@leloi/ui';
+import { BrandLogo } from '@leloi/ui';
 import { ShieldCheck, Mail, MapPin, Phone, ArrowRight, ExternalLink } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Col 1: Brand & Parent Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Logo variant="horizontal" theme="dark" width={225} showSlogan={true} />
+            <BrandLogo variant="white" width={225} />
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed mt-4">
               Precision aluminium extrusion, CNC machining, surface treatment and OEM manufacturing from Vietnam for global B2B industries.
             </p>
@@ -71,33 +71,33 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-sm text-slate-400 font-normal">
               <li>
-                <Link href="/products/custom-aluminium-extrusions" className="hover:text-white transition-colors">
+                <Link href="/products/custom-extrusions" className="hover:text-white transition-colors">
                   Custom Extrusions
                 </Link>
               </li>
               <li>
-                <Link href="/products/industrial-aluminium-profiles" className="hover:text-white transition-colors">
-                  Industrial T-Slot Profiles
+                <Link href="/products/industrial-profiles" className="hover:text-white transition-colors">
+                  Industrial Profiles
                 </Link>
               </li>
               <li>
-                <Link href="/products/solar-aluminium-profiles" className="hover:text-white transition-colors">
-                  Solar Frames & Rails
+                <Link href="/products/solar" className="hover:text-white transition-colors">
+                  Solar Aluminium
                 </Link>
               </li>
               <li>
-                <Link href="/products/architectural-aluminium" className="hover:text-white transition-colors">
+                <Link href="/products/architectural" className="hover:text-white transition-colors font-medium text-slate-200">
                   Architectural Systems
                 </Link>
               </li>
               <li>
-                <Link href="/products/heat-sink-profiles" className="hover:text-white transition-colors">
-                  Heat Sink / Thermal
+                <Link href="/products/thermal-management" className="hover:text-white transition-colors">
+                  Thermal Management
                 </Link>
               </li>
               <li>
-                <Link href="/products/oem-aluminium-components" className="hover:text-white transition-colors">
-                  OEM Machined Parts
+                <Link href="/products/oem-components" className="hover:text-white transition-colors">
+                  OEM Components
                 </Link>
               </li>
             </ul>
@@ -125,8 +125,8 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/capabilities/powder-coating" className="hover:text-white transition-colors">
-                  Powder Coating
+                <Link href="/capabilities/powder-coating" className="hover:text-emerald-400 font-medium transition-colors flex items-center gap-1">
+                  <span>Powder Coating (AkzoNobel)</span>
                 </Link>
               </li>
               <li>

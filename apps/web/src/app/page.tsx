@@ -221,148 +221,165 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Card 1: Custom Extrusions */}
-          <Card variant="interactive" className="flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] mb-4">
-                <Layers className="w-6 h-6" />
+          <Link href="/products/custom-extrusions" className="block h-full group">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+              <div>
+                <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] group-hover:bg-[#2F7BFF]/10 group-hover:text-[#2F7BFF] transition-colors mb-4">
+                  <Layers className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                  Custom Aluminium Extrusions
+                </h3>
+                <p className="text-sm text-slate-600 mt-2 leading-relaxed">
+                  Bespoke solid and hollow profiles manufactured to your proprietary die geometry. Available in 6063, 6061 and 6005A with tight dimensional tolerances.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  <Badge variant="alloy">6063-T5/T6</Badge>
+                  <Badge variant="alloy">6061-T6</Badge>
+                  <Badge variant="default">Custom Tooling</Badge>
+                </div>
               </div>
-              <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
-                Custom Aluminium Extrusions
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Bespoke solid and hollow profiles manufactured to your proprietary die geometry. Available in 6063, 6061 and 6005A with tight dimensional tolerances.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <Badge variant="alloy">6063-T5/T6</Badge>
-                <Badge variant="alloy">6061-T6</Badge>
-                <Badge variant="default">Custom Dies</Badge>
+              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+                <span>Explore Extrusion Scope</span>
+                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
               </div>
-            </div>
-            <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B]">
-              <span>Explore Extrusion Scope</span>
-              <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Card>
+            </Card>
+          </Link>
 
           {/* Card 2: Industrial Profiles */}
-          <Card variant="interactive" className="flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] mb-4">
-                <Settings2 className="w-6 h-6" />
+          <Link href="/products/industrial-profiles" className="block h-full group">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+              <div>
+                <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] group-hover:bg-[#2F7BFF]/10 group-hover:text-[#2F7BFF] transition-colors mb-4">
+                  <Settings2 className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                  Industrial Aluminium Profiles
+                </h3>
+                <p className="text-sm text-slate-600 mt-2 leading-relaxed">
+                  Standard and heavy-duty modular T-slot profiles (20, 30, 40, 45, 60, 80 series) for factory automation, robotic machine guards, conveyors and cleanroom workstations.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  <Badge variant="alloy">6063-T5</Badge>
+                  <Badge variant="default">T-Slot Modular</Badge>
+                  <Badge variant="default">Anodized Clear</Badge>
+                </div>
               </div>
-              <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
-                Industrial Aluminium Profiles
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Standard and heavy-duty modular T-slot profiles (20, 30, 40, 45, 60, 80 series) for factory automation, robotic machine guards, conveyors and cleanroom workstations.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <Badge variant="alloy">6063-T5</Badge>
-                <Badge variant="default">T-Slot Modular</Badge>
-                <Badge variant="default">Anodized Clear</Badge>
+              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+                <span>View Industrial Profiles</span>
+                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
               </div>
-            </div>
-            <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B]">
-              <span>View Industrial Profiles</span>
-              <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Card>
+            </Card>
+          </Link>
 
           {/* Card 3: Solar Profiles */}
-          <Card variant="interactive" className="flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] mb-4">
-                <Sun className="w-6 h-6 text-amber-500" />
+          <Link href="/products/solar" className="block h-full group">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+              <div>
+                <div className="w-12 h-12 rounded-lg bg-amber-50 flex items-center justify-center text-amber-500 mb-4">
+                  <Sun className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                  Solar Aluminium Profiles
+                </h3>
+                <p className="text-sm text-slate-600 mt-2 leading-relaxed">
+                  High-volume solar module frames, ground-mount mounting rails, carport support extrusions, mid/end clamps and rooftop ballast profile solutions.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  <Badge variant="alloy">6005A-T6</Badge>
+                  <Badge variant="alloy">6063-T6</Badge>
+                  <Badge variant="default">Anodized 15-25µm</Badge>
+                </div>
               </div>
-              <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
-                Solar Aluminium Profiles
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                High-volume solar module frames, ground-mount mounting rails, carport support extrusions, mid/end clamps and rooftop ballast profile solutions.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <Badge variant="alloy">6005A-T6</Badge>
-                <Badge variant="alloy">6063-T6</Badge>
-                <Badge variant="default">Anodized 15-25µm</Badge>
+              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+                <span>Solar Mounting Solutions</span>
+                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
               </div>
-            </div>
-            <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B]">
-              <span>Solar Mounting Solutions</span>
-              <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Card>
+            </Card>
+          </Link>
 
-          {/* Card 4: Architectural Systems */}
-          <Card variant="interactive" className="flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] mb-4">
-                <Building2 className="w-6 h-6" />
+          {/* Card 4: Architectural Systems (EXPANDED TO CONSTRUCTION SOLUTIONS) */}
+          <Link href="/products/architectural" className="block h-full group">
+            <Card variant="interactive" className="h-full flex flex-col justify-between border-blue-200/80 bg-linear-to-b from-blue-50/30 to-white group-hover:border-[#2F7BFF] group-hover:shadow-lg transition-all">
+              <div>
+                <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center text-[#2F7BFF] mb-4">
+                  <Building2 className="w-6 h-6" />
+                </div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 px-2 py-0.5 rounded">
+                    Residential & Commercial
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                  Architectural Aluminium Systems
+                </h3>
+                <p className="text-sm text-slate-600 mt-2 leading-relaxed">
+                  Integrated building systems: Windows, doors, curtain walls, louvers, wall cladding, linear ceilings, pergolas, canopies, and resort structures with AkzoNobel 10-year warranty powder coating.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  <Badge variant="alloy">6063-T5/T6</Badge>
+                  <Badge variant="default">Thermal Break</Badge>
+                  <Badge variant="verified">AkzoNobel 10-Yr</Badge>
+                </div>
               </div>
-              <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
-                Architectural Aluminium Systems
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Commercial facade curtain wall mullions, thermal-break window/door systems, louvers, railings and structural balustrades compliant with global building standards.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <Badge variant="alloy">6063-T6</Badge>
-                <Badge variant="default">Thermal Break</Badge>
-                <Badge variant="default">AAMA 2604/2605</Badge>
+              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+                <span>Explore Architectural Vertical</span>
+                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
               </div>
-            </div>
-            <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B]">
-              <span>Architectural Systems</span>
-              <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Card>
+            </Card>
+          </Link>
 
           {/* Card 5: Heat Sink Profiles */}
-          <Card variant="interactive" className="flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] mb-4">
-                <Flame className="w-6 h-6 text-orange-500" />
+          <Link href="/products/thermal-management" className="block h-full group">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+              <div>
+                <div className="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500 mb-4">
+                  <Flame className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                  Heat Sink / Thermal Profiles
+                </h3>
+                <p className="text-sm text-slate-600 mt-2 leading-relaxed">
+                  High aspect ratio fin extrusions for inverter cooling, EV battery chargers, high-power LED luminaires, power supply enclosures and industrial electronics.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  <Badge variant="alloy">6063 High Thermal</Badge>
+                  <Badge variant="default">Dense Fin Ratio</Badge>
+                  <Badge variant="default">Black Anodized</Badge>
+                </div>
               </div>
-              <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
-                Heat Sink / Thermal Profiles
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                High aspect ratio fin extrusions for inverter cooling, EV battery chargers, high-power LED luminaires, power supply enclosures and industrial electronics.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <Badge variant="alloy">6063 High Thermal</Badge>
-                <Badge variant="default">Dense Fin Ratio</Badge>
-                <Badge variant="default">Black Anodized</Badge>
+              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+                <span>Thermal Management</span>
+                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
               </div>
-            </div>
-            <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B]">
-              <span>Thermal Management</span>
-              <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Card>
+            </Card>
+          </Link>
 
           {/* Card 6: OEM Machined Components */}
-          <Card variant="interactive" className="flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] mb-4">
-                <Cpu className="w-6 h-6" />
+          <Link href="/products/oem-components" className="block h-full group">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+              <div>
+                <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] group-hover:bg-[#2F7BFF]/10 group-hover:text-[#2F7BFF] transition-colors mb-4">
+                  <Cpu className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                  OEM Aluminium Components
+                </h3>
+                <p className="text-sm text-slate-600 mt-2 leading-relaxed">
+                  Turnkey manufacturing from drawing to finished assembly: Precision cutting, multi-axis CNC milling, drilling, tapping, deburring, surface treatment and custom export packaging.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  <Badge variant="alloy">6061-T6</Badge>
+                  <Badge variant="alloy">6082-T6</Badge>
+                  <Badge variant="default">Full CNC Machining</Badge>
+                </div>
               </div>
-              <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
-                OEM Aluminium Components
-              </h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Turnkey manufacturing from drawing to finished assembly: Precision cutting, multi-axis CNC milling, drilling, tapping, deburring, surface treatment and custom export packaging.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <Badge variant="alloy">6061-T6</Badge>
-                <Badge variant="alloy">6082-T6</Badge>
-                <Badge variant="default">Full CNC Machining</Badge>
+              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+                <span>OEM Component Sourcing</span>
+                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
               </div>
-            </div>
-            <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B]">
-              <span>OEM Component Sourcing</span>
-              <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Card>
+            </Card>
+          </Link>
         </div>
       </section>
 
@@ -406,14 +423,26 @@ export default function HomePage() {
               <div className="text-[11px] text-[#2F7BFF] font-medium mt-3">Tolerances: ISO 2768 Precision Class</div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg border border-[#E2E8F0]">
-              <Layers className="w-8 h-8 text-[#0A2D5B] mb-3" />
-              <h4 className="text-lg font-bold font-heading text-[#0A2D5B]">Surface Finishing</h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                Full-dip automated anodizing (Clear, Black, Bronze 10-25µm) and electrostatic powder coating compliant with AAMA 2604/2605.
-              </p>
-              <div className="text-[11px] text-[#2F7BFF] font-medium mt-3">Qualicoat & Architectural Grade</div>
-            </div>
+            <Link href="/capabilities/powder-coating" className="block group">
+              <div className="bg-white p-6 rounded-lg border border-[#E2E8F0] group-hover:border-[#2F7BFF] transition-all h-full flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <Layers className="w-8 h-8 text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors" />
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">
+                      AkzoNobel 10-Yr
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">Surface Finishing</h4>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                    Full-dip automated anodizing (Clear, Black, Bronze 10-25µm) and electrostatic powder coating with certified AkzoNobel 10-Year Warranty.
+                  </p>
+                </div>
+                <div className="text-[11px] text-[#2F7BFF] font-medium mt-3 flex items-center justify-between">
+                  <span>Qualicoat & AAMA 2604/2605</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
 
             <div className="bg-white p-6 rounded-lg border border-[#E2E8F0]">
               <Settings2 className="w-8 h-8 text-[#0A2D5B] mb-3" />

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Logo, Button } from '@leloi/ui';
+import { BrandLogo, Button } from '@leloi/ui';
 import {
   LayoutDashboard,
   FileSpreadsheet,
@@ -37,7 +37,7 @@ export const AdminNav: React.FC = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
-            <Logo variant="horizontal" theme="dark" width={170} showSlogan={false} />
+            <BrandLogo variant="white" width={170} />
             <span className="text-[10px] bg-blue-500/20 text-blue-300 font-mono px-2 py-0.5 rounded border border-blue-400/30">
               CRM BACK-OFFICE
             </span>

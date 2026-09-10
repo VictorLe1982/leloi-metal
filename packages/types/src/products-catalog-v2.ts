@@ -23,6 +23,17 @@ export interface CatalogMediaItem {
   approvalStatus: 'APPROVED' | 'DRAFT' | 'REVIEW';
 }
 
+export type ProductFinish = 'MILL_FINISH' | 'ANODIZED' | 'POWDER_COATED';
+
+export interface ProductCoatingSystem {
+  finishType: ProductFinish;
+  brand?: 'AkzoNobel' | 'Qualicoat' | string;
+  warrantyYears?: number;
+  indoorOutdoor?: 'INDOOR' | 'OUTDOOR' | 'COASTAL_MARINE';
+  standardCompliance?: string[];
+  verificationStatus: 'VERIFIED' | 'UNVERIFIED';
+}
+
 export interface ProductCatalogItem {
   id: string;
   slug: string;
@@ -36,6 +47,9 @@ export interface ProductCatalogItem {
   alloys: string[];
   tempers: string[];
   surfaceFinishes: string[];
+  coatingSystem?: ProductCoatingSystem;
+  constructionApplications?: string[];
+  industrySectors?: string[];
   applications: string[];
   fabrications: string[];
   verifiedChips: string[];

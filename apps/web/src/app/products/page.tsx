@@ -23,6 +23,7 @@ export default function ProductsCatalogPage() {
   const [selectedGeometry, setSelectedGeometry] = useState<string>('all');
   const [selectedAlloy, setSelectedAlloy] = useState<string>('all');
   const [selectedFinish, setSelectedFinish] = useState<string>('all');
+  const [selectedApp, setSelectedApp] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [mobileFilterOpen, setMobileFilterOpen] = useState<boolean>(false);
   const [compareList, setCompareList] = useState<string[]>([]);
@@ -36,6 +37,10 @@ export default function ProductsCatalogPage() {
       const matchFinish =
         selectedFinish === 'all' ||
         p.surfaceFinishes.some((f) => f.toLowerCase().includes(selectedFinish.toLowerCase()));
+      const matchApp =
+        selectedApp === 'all' ||
+        p.applications.some((app) => app.toLowerCase().includes(selectedApp.toLowerCase())) ||
+        p.name.toLowerCase().includes(selectedApp.toLowerCase());
       const matchSearch =
         searchQuery.trim() === '' ||
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -43,15 +48,16 @@ export default function ProductsCatalogPage() {
         p.applications.some((app) => app.toLowerCase().includes(searchQuery.toLowerCase())) ||
         p.alloys.some((al) => al.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      return matchCategory && matchGeometry && matchAlloy && matchFinish && matchSearch;
+      return matchCategory && matchGeometry && matchAlloy && matchFinish && matchApp && matchSearch;
     });
-  }, [selectedCategory, selectedGeometry, selectedAlloy, selectedFinish, searchQuery]);
+  }, [selectedCategory, selectedGeometry, selectedAlloy, selectedFinish, selectedApp, searchQuery]);
 
   const hasActiveFilters =
     selectedCategory !== 'all' ||
     selectedGeometry !== 'all' ||
     selectedAlloy !== 'all' ||
     selectedFinish !== 'all' ||
+    selectedApp !== 'all' ||
     searchQuery.trim() !== '';
 
   const handleResetFilters = () => {
@@ -59,6 +65,7 @@ export default function ProductsCatalogPage() {
     setSelectedGeometry('all');
     setSelectedAlloy('all');
     setSelectedFinish('all');
+    setSelectedApp('all');
     setSearchQuery('');
   };
 
@@ -246,10 +253,62 @@ export default function ProductsCatalogPage() {
                 className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
               >
                 <option value="all">All Surface Finishes</option>
-                <option value="Anodized">Anodized (Clear / Black / Colors)</option>
-                <option value="Powder">Electrostatic Powder Coating</option>
+                <option value="Anodized">Anodized (15–25µm Clear/Black/Colors)</option>
+                <option value="Powder">AkzoNobel 10-Yr Powder Coating</option>
                 <option value="Mill">Mill Finish (As Extruded)</option>
               </select>
+            </div>
+
+            {/* Construction & Industry Application Filter */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
+                Application & Sector
+              </label>
+              <select
+                value={selectedApp}
+                onChange={(e) => setSelectedApp(e.target.value)}
+                className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
+              >
+                <option value="all">All Applications & Sectors</option>
+                <option value="Window">Windows & Doors</option>
+                <option value="Curtain">Curtain Wall & Facades</option>
+                <option value="Railing">Railings & Balustrades</option>
+                <option value="Solar">Solar Mounting & Racking</option>
+                <option value="Automation">Automation & Machine Frames</option>
+                <option value="Thermal">Heat Sinks & Inverter Cooling</option>
+                <option value="CNC">CNC Machined OEM Parts</option>
+              </select>
+            </div>
+
+            {/* Featured Strategic Vertical Links */}
+            <div className="pt-4 border-t border-slate-100 space-y-2.5">
+              <div className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
+                Strategic Verticals
+              </div>
+              <Link
+                href="/products/architectural"
+                className="block p-2.5 bg-blue-50/70 hover:bg-blue-100/70 border border-blue-200 rounded-xl transition-colors group"
+              >
+                <div className="text-xs font-bold text-[#0A2D5B] group-hover:text-[#2F7BFF] flex items-center justify-between">
+                  <span>Architectural Hub</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#2F7BFF] group-hover:translate-x-1 transition-transform" />
+                </div>
+                <div className="text-[10px] text-slate-600 mt-0.5">
+                  Windows, Facades, Louvers, Cladding & Pergolas
+                </div>
+              </Link>
+              <Link
+                href="/capabilities/powder-coating"
+                className="block p-2.5 bg-emerald-50/70 hover:bg-emerald-100/70 border border-emerald-200 rounded-xl transition-colors group"
+              >
+                <div className="text-xs font-bold text-emerald-900 group-hover:text-emerald-700 flex items-center justify-between">
+                  <span>AkzoNobel Coating</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-emerald-600 group-hover:translate-x-1 transition-transform" />
+                </div>
+                <div className="text-[10px] text-emerald-700 mt-0.5">
+                  10-Year Performance Warranty Specifications
+                </div>
+              </Link>
             </div>
 
             {/* Category Dossiers Links */}
@@ -261,7 +320,7 @@ export default function ProductsCatalogPage() {
                 {CATEGORIES_V2.map((cat) => (
                   <Link
                     key={cat.slug}
-                    href={`/products/${cat.slug}`}
+                    href={cat.slug === 'architectural-systems' ? '/products/architectural' : `/products/${cat.slug}`}
                     className="flex items-center justify-between py-1 px-1.5 rounded hover:bg-slate-50 hover:text-[#2F7BFF] transition-colors"
                   >
                     <span>{cat.name}</span>
@@ -344,6 +403,14 @@ export default function ProductsCatalogPage() {
                   <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
                     Finish: {selectedFinish}
                     <button onClick={() => setSelectedFinish('all')} className="hover:text-red-500 cursor-pointer">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+                {selectedApp !== 'all' && (
+                  <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
+                    Sector: {selectedApp}
+                    <button onClick={() => setSelectedApp('all')} className="hover:text-red-500 cursor-pointer">
                       <X className="w-3 h-3" />
                     </button>
                   </span>
@@ -524,9 +591,28 @@ export default function ProductsCatalogPage() {
                   className="w-full p-2 text-xs border rounded-lg"
                 >
                   <option value="all">All Finishes</option>
-                  <option value="Anodized">Anodized</option>
-                  <option value="Powder">Powder Coated</option>
+                  <option value="Anodized">Anodized (15–25µm)</option>
+                  <option value="Powder">AkzoNobel 10-Yr Powder Coated</option>
                   <option value="Mill">Mill Finish</option>
+                </select>
+              </div>
+
+              {/* Application */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600">Sector & Application</label>
+                <select
+                  value={selectedApp}
+                  onChange={(e) => setSelectedApp(e.target.value)}
+                  className="w-full p-2 text-xs border rounded-lg"
+                >
+                  <option value="all">All Applications</option>
+                  <option value="Window">Windows & Doors</option>
+                  <option value="Curtain">Curtain Wall & Facades</option>
+                  <option value="Railing">Railings & Balustrades</option>
+                  <option value="Solar">Solar Mounting</option>
+                  <option value="Automation">Automation & T-Slot</option>
+                  <option value="Thermal">Heat Sink & Cooling</option>
+                  <option value="CNC">CNC Machined Parts</option>
                 </select>
               </div>
             </div>

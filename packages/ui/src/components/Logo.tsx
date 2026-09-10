@@ -69,8 +69,8 @@ export const Logo: React.FC<LogoProps> = ({
   if (variant === 'stacked') {
     const targetWidth = width || 160;
     const imageSrc = isDark
-      ? '/images/brand/logo-white-transparent.png'
-      : '/images/brand/logo-primary-transparent.png';
+      ? '/brand/leloi-metal/logo-white.png'
+      : '/brand/leloi-metal/logo-primary.png';
     return (
       <div className={`inline-flex flex-col items-center select-none shrink-0 ${className}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -89,11 +89,11 @@ export const Logo: React.FC<LogoProps> = ({
   // Header standard: 185-200px. Footer standard: 210-235px.
   const targetWidth = width || (isDark ? 220 : 195);
   const fullSrc = isDark
-    ? '/images/brand/logo-white-transparent.png'
-    : '/images/brand/logo-primary-transparent.png';
+    ? '/brand/leloi-metal/logo-white.png'
+    : '/brand/leloi-metal/logo-primary.png';
   const noSloganSrc = isDark
-    ? '/images/brand/logo-white-no-slogan.png'
-    : '/images/brand/logo-primary-no-slogan.png';
+    ? '/brand/leloi-metal/logo-white.png'
+    : '/brand/leloi-metal/logo-primary.png';
 
   if (responsiveSlogan) {
     return (
