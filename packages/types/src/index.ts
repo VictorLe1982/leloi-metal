@@ -2,3 +2,7 @@ export * from './enums';
 export * from './domain';
 export * from './products-catalog-v2';
 export * from './product-taxonomy';
+export * from './product-canonical';
+export * from './data/canonical-products-data';
+export * from './legacy-product-route-map';
+export * from './services/product-catalog-service';

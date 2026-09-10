@@ -23,10 +23,10 @@ export interface CatalogMediaItem {
   approvalStatus: 'APPROVED' | 'DRAFT' | 'REVIEW';
 }
 
-export type ProductFinish = 'MILL_FINISH' | 'ANODIZED' | 'POWDER_COATED';
+export type LegacyProductFinish = 'MILL_FINISH' | 'ANODIZED' | 'POWDER_COATED';
 
 export interface ProductCoatingSystem {
-  finishType: ProductFinish;
+  finishType: LegacyProductFinish;
   brand?: 'AkzoNobel' | 'Qualicoat' | string;
   warrantyYears?: number;
   indoorOutdoor?: 'INDOOR' | 'OUTDOOR' | 'COASTAL_MARINE';
@@ -77,7 +77,10 @@ export interface ProductCatalogItem {
   packaging: string;
 }
 
-export const CATEGORIES_V2: CategoryCatalogItem[] = [
+/**
+ * @deprecated Legacy categories array. Use canonical getProductDivisions() from product-catalog-service instead.
+ */
+export const LEGACY_CATEGORIES_V2: CategoryCatalogItem[] = [
   {
     id: 'cat-custom',
     slug: 'custom-extrusions',
@@ -203,8 +206,13 @@ export const CATEGORIES_V2: CategoryCatalogItem[] = [
     ]
   }
 ];
+/** @deprecated Use canonical getProductDivisions() from product-catalog-service instead. */
+export const CATEGORIES_V2 = LEGACY_CATEGORIES_V2;
 
-export const PRODUCTS_V2: ProductCatalogItem[] = [
+/**
+ * @deprecated Legacy 24-product flat dataset. Use canonical product-catalog-service instead.
+ */
+export const LEGACY_PRODUCTS_V2: ProductCatalogItem[] = [
 
   {
     id: 'prod-01',
@@ -1552,5 +1560,8 @@ export const PRODUCTS_V2: ProductCatalogItem[] = [
   },
 
 ];
+
+/** @deprecated Use canonical product-catalog-service instead. */
+export const PRODUCTS_V2 = LEGACY_PRODUCTS_V2;
 
 export default PRODUCTS_V2;

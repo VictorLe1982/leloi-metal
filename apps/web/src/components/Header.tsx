@@ -17,14 +17,16 @@ import {
   ShieldCheck,
   ArrowRight,
   FileText,
-  Settings2
+  Settings2,
+  Boxes
 } from 'lucide-react';
-import { PRODUCT_TAXONOMY } from '@leloi/types';
+import { getProductDivisions } from '@leloi/types';
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const divisions = getProductDivisions();
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -112,90 +114,71 @@ export const Header: React.FC = () => {
               />
             </Link>
 
-            {/* Mega Menu Dropdown */}
+            {/* Products Dropdown: Exactly 6 Core Business Lines */}
             {megaMenuOpen && (
-              <div className="absolute top-full -left-32 w-[1040px] bg-white border border-[#E2E8F0] shadow-2xl rounded-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="grid grid-cols-6 gap-4 pb-6 border-b border-slate-100">
-                  {PRODUCT_TAXONOMY.map((cat) => (
-                    <div
-                      key={cat.slug}
-                      className={
-                        cat.code === 'BUILDING'
-                          ? 'bg-[#F8FAFC] -my-2 p-2.5 rounded-xl border border-blue-100'
-                          : ''
+              <div className="absolute top-full -left-12 w-[620px] bg-white border border-[#E2E8F0] shadow-2xl rounded-2xl p-5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">
+                  Primary Business Lines
+                </div>
+                <div className="grid grid-cols-2 gap-2 pb-4 border-b border-slate-100">
+                  {divisions.map((div) => {
+                    const getIcon = () => {
+                      switch (div.id) {
+                        case 'custom-extrusions':
+                          return <Layers className="w-4 h-4 text-[#2F7BFF]" />;
+                        case 'architectural':
+                          return <Building2 className="w-4 h-4 text-[#2F7BFF]" />;
+                        case 'industrial-profiles':
+                          return <Boxes className="w-4 h-4 text-[#2F7BFF]" />;
+                        case 'solar':
+                          return <Sun className="w-4 h-4 text-amber-500" />;
+                        case 'thermal-management':
+                          return <Cpu className="w-4 h-4 text-orange-500" />;
+                        case 'oem-components':
+                          return <Settings2 className="w-4 h-4 text-[#2F7BFF]" />;
+                        default:
+                          return <Layers className="w-4 h-4 text-[#2F7BFF]" />;
                       }
-                    >
+                    };
+                    return (
                       <Link
-                        href={`/products/${cat.slug}`}
+                        key={div.slug}
+                        href={`/products/${div.slug}`}
                         onClick={() => setMegaMenuOpen(false)}
-                        className="group flex items-center gap-1.5 mb-2 font-bold text-xs text-[#0A2D5B] hover:text-[#2F7BFF] transition-colors"
+                        className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100"
                       >
-                        {cat.code === 'CUSTOM' && <Layers className="w-3.5 h-3.5 text-[#2F7BFF] shrink-0" />}
-                        {cat.code === 'INDUSTRIAL' && <Cpu className="w-3.5 h-3.5 text-[#2F7BFF] shrink-0" />}
-                        {cat.code === 'ENERGY' && <Sun className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
-                        {cat.code === 'BUILDING' && <Building2 className="w-3.5 h-3.5 text-[#2F7BFF] shrink-0" />}
-                        {cat.code === 'THERMAL' && <Flame className="w-3.5 h-3.5 text-orange-500 shrink-0" />}
-                        {cat.code === 'OEM' && <Settings2 className="w-3.5 h-3.5 text-[#2F7BFF] shrink-0" />}
-                        <span className="truncate">{cat.navLabel}</span>
-                      </Link>
-
-                      {cat.code === 'BUILDING' && (
-                        <div className="text-[10px] text-blue-700 font-semibold uppercase tracking-wider mb-1.5">
-                          Res & Commercial
+                        <div className="p-2 rounded-lg bg-slate-100 group-hover:bg-blue-50 transition-colors shrink-0 mt-0.5">
+                          {getIcon()}
                         </div>
-                      )}
-
-                      <ul className="space-y-1.5 text-[11px] text-slate-600">
-                        {cat.subcategories.slice(0, 4).map((sub) => (
-                          <li key={sub.slug}>
-                            <Link
-                              href={sub.fullSlug}
-                              onClick={() => setMegaMenuOpen(false)}
-                              className="hover:text-[#2F7BFF] block transition-colors truncate"
-                              title={sub.name}
-                            >
-                              {sub.name}
-                            </Link>
-                          </li>
-                        ))}
-                        <li>
-                          <Link
-                            href={`/products/${cat.slug}`}
-                            onClick={() => setMegaMenuOpen(false)}
-                            className="text-[#2F7BFF] hover:underline font-semibold text-[10px] block pt-1"
-                          >
-                            All ({cat.subcategories.length}) →
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  ))}
+                        <div className="min-w-0">
+                          <div className="font-bold text-[13px] text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors leading-snug">
+                            {div.name}
+                          </div>
+                          <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5 leading-tight">
+                            {div.summary}
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
 
-                {/* Bottom Mega Menu Bar */}
-                <div className="pt-4 flex items-center justify-between text-xs font-medium">
+                {/* Bottom Bar: [Browse Full Product Catalog] */}
+                <div className="pt-3 px-1 flex items-center justify-between text-xs">
                   <Link
                     href="/products"
                     onClick={() => setMegaMenuOpen(false)}
                     className="text-[#0A2D5B] hover:text-[#2F7BFF] flex items-center gap-1.5 font-bold transition-colors"
                   >
-                    <span>Browse Full Catalog (24+ Solutions)</span>
+                    <span>Browse Full Product Catalog</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                  <Link
-                    href="/capabilities/powder-coating"
-                    onClick={() => setMegaMenuOpen(false)}
-                    className="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-md flex items-center gap-1 hover:bg-emerald-100 transition-colors"
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>AkzoNobel Powder Coating (10-Year Warranty)</span>
                   </Link>
                   <Link
                     href="/rfq"
                     onClick={() => setMegaMenuOpen(false)}
                     className="text-[#2F7BFF] hover:underline flex items-center gap-1 font-bold"
                   >
-                    <span>Custom RFQ / Upload Drawing</span>
+                    <span>Request a Quote / Upload Drawing</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -260,21 +243,17 @@ export const Header: React.FC = () => {
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg hover:bg-[#F1F4F8] font-bold text-[#0A2D5B]"
             >
-              All Products Catalog
+              Product Catalog
             </Link>
             <div className="pl-4 space-y-1.5 text-xs text-slate-600 pb-1">
-              {PRODUCT_TAXONOMY.map((cat) => (
+              {divisions.map((div) => (
                 <Link
-                  key={cat.slug}
-                  href={`/products/${cat.slug}`}
+                  key={div.slug}
+                  href={`/products/${div.slug}`}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block py-1 ${
-                    cat.code === 'BUILDING'
-                      ? 'text-blue-700 font-semibold'
-                      : 'hover:text-[#2F7BFF]'
-                  }`}
+                  className="block py-1 text-slate-700 hover:text-[#2F7BFF] font-medium"
                 >
-                  {cat.navLabel}
+                  {div.name}
                 </Link>
               ))}
             </div>

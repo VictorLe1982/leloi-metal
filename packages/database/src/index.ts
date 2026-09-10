@@ -14,4 +14,6 @@ if (process.env.NODE_ENV !== 'production') {
 export * from '@prisma/client';
 export * from './data/products-catalog-v2';
 export * from './data/product-taxonomy';
+export * from './product-canonical';
+export * from './data/canonical-products-data';
 export default prisma;

@@ -2,8 +2,12 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Card, Badge, Button } from '@leloi/ui';
-import { PRODUCTS_V2, CATEGORIES_V2, PRODUCT_TAXONOMY } from '@leloi/types';
+import { Button } from '@leloi/ui';
+import {
+  getProductDivisions,
+  CANONICAL_FAMILIES,
+  ProductFamily
+} from '@leloi/types';
 import { ProductCard } from '@/components/catalog/ProductCard';
 import {
   Search,
@@ -11,7 +15,6 @@ import {
   ArrowRight,
   FileUp,
   Scale,
-  CheckCircle2,
   SlidersHorizontal,
   RotateCcw,
   X,
@@ -19,8 +22,8 @@ import {
 } from 'lucide-react';
 
 export default function ProductsCatalogPage() {
+  const divisions = getProductDivisions();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedGeometry, setSelectedGeometry] = useState<string>('all');
   const [selectedAlloy, setSelectedAlloy] = useState<string>('all');
   const [selectedFinish, setSelectedFinish] = useState<string>('all');
   const [selectedApp, setSelectedApp] = useState<string>('all');
@@ -28,40 +31,47 @@ export default function ProductsCatalogPage() {
   const [mobileFilterOpen, setMobileFilterOpen] = useState<boolean>(false);
   const [compareList, setCompareList] = useState<string[]>([]);
 
-  // Filter products
-  const filteredProducts = useMemo(() => {
-    return PRODUCTS_V2.filter((p) => {
+  // Filter canonical families
+  const filteredFamilies = useMemo(() => {
+    return CANONICAL_FAMILIES.filter((f) => {
       const matchCategory =
         selectedCategory === 'all' ||
-        p.category === selectedCategory ||
-        (selectedCategory === 'solar' && p.category === 'solar-profiles') ||
-        (selectedCategory === 'architectural' &&
-          (p.category === 'architectural-systems' || p.category === 'architectural')) ||
-        (selectedCategory === 'thermal-management' &&
-          (p.category === 'heat-sink-thermal' || p.category === 'thermal-management'));
-      const matchGeometry = selectedGeometry === 'all' || p.profileGeometry === selectedGeometry;
-      const matchAlloy = selectedAlloy === 'all' || p.alloys.some((a) => a.includes(selectedAlloy));
+        f.divisionId === selectedCategory ||
+        f.divisionSlug === selectedCategory;
+
+      const matchAlloy =
+        selectedAlloy === 'all' ||
+        f.alloys.some((a) => a.includes(selectedAlloy));
+
       const matchFinish =
         selectedFinish === 'all' ||
-        p.surfaceFinishes.some((f) => f.toLowerCase().includes(selectedFinish.toLowerCase()));
+        f.supportedFinishes.some((fin) =>
+          fin.toLowerCase().includes(selectedFinish.toLowerCase())
+        );
+
       const matchApp =
         selectedApp === 'all' ||
-        p.applications.some((app) => app.toLowerCase().includes(selectedApp.toLowerCase())) ||
-        p.name.toLowerCase().includes(selectedApp.toLowerCase());
+        f.technicalApplications.some((app) =>
+          app.toLowerCase().includes(selectedApp.toLowerCase())
+        ) ||
+        f.name.toLowerCase().includes(selectedApp.toLowerCase());
+
       const matchSearch =
         searchQuery.trim() === '' ||
-        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.applications.some((app) => app.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        p.alloys.some((al) => al.toLowerCase().includes(searchQuery.toLowerCase()));
+        f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        f.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        f.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        f.technicalApplications.some((app) =>
+          app.toLowerCase().includes(searchQuery.toLowerCase())
+        ) ||
+        f.alloys.some((al) => al.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      return matchCategory && matchGeometry && matchAlloy && matchFinish && matchApp && matchSearch;
+      return matchCategory && matchAlloy && matchFinish && matchApp && matchSearch;
     });
-  }, [selectedCategory, selectedGeometry, selectedAlloy, selectedFinish, selectedApp, searchQuery]);
+  }, [selectedCategory, selectedAlloy, selectedFinish, selectedApp, searchQuery]);
 
   const hasActiveFilters =
     selectedCategory !== 'all' ||
-    selectedGeometry !== 'all' ||
     selectedAlloy !== 'all' ||
     selectedFinish !== 'all' ||
     selectedApp !== 'all' ||
@@ -69,7 +79,6 @@ export default function ProductsCatalogPage() {
 
   const handleResetFilters = () => {
     setSelectedCategory('all');
-    setSelectedGeometry('all');
     setSelectedAlloy('all');
     setSelectedFinish('all');
     setSelectedApp('all');
@@ -82,7 +91,7 @@ export default function ProductsCatalogPage() {
     );
   };
 
-  const comparedProducts = PRODUCTS_V2.filter((p) => compareList.includes(p.slug));
+  const comparedProducts = CANONICAL_FAMILIES.filter((f) => compareList.includes(f.slug));
 
   return (
     <div className="min-h-screen bg-[#F1F4F8]/60 py-12 px-4 sm:px-6 lg:px-8">
@@ -114,7 +123,7 @@ export default function ProductsCatalogPage() {
           </div>
         </div>
 
-        {/* Horizontal Category Chips */}
+        {/* Horizontal Category Chips (Clean business line tabs without hardcoded counts) */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
           <button
             onClick={() => setSelectedCategory('all')}
@@ -124,22 +133,21 @@ export default function ProductsCatalogPage() {
                 : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
             }`}
           >
-            All Products ({PRODUCTS_V2.length})
+            All Solutions
           </button>
-          {CATEGORIES_V2.map((cat) => {
-            const count = PRODUCTS_V2.filter((p) => p.category === cat.slug).length;
-            const isSelected = selectedCategory === cat.slug;
+          {divisions.map((div) => {
+            const isSelected = selectedCategory === div.slug || selectedCategory === div.id;
             return (
               <button
-                key={cat.slug}
-                onClick={() => setSelectedCategory(cat.slug)}
+                key={div.slug}
+                onClick={() => setSelectedCategory(div.slug)}
                 className={`px-4 py-2 rounded-xl text-xs font-heading font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   isSelected
                     ? 'bg-[#2F7BFF] text-white shadow-xs'
                     : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
                 }`}
               >
-                {cat.name} ({count})
+                {div.navLabel || div.name}
               </button>
             );
           })}
@@ -193,56 +201,35 @@ export default function ProductsCatalogPage() {
             {/* Category Filter */}
             <div className="space-y-1.5">
               <label className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
-                Product Category
+                Business Division
               </label>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
               >
-                <option value="all">All 6 Categories</option>
-                {PRODUCT_TAXONOMY.map((c) => (
-                  <option key={c.slug} value={c.slug}>
-                    {c.name}
+                <option value="all">All 6 Divisions</option>
+                {divisions.map((d) => (
+                  <option key={d.slug} value={d.slug}>
+                    {d.name}
                   </option>
                 ))}
-              </select>
-            </div>
-
-            {/* Profile Geometry */}
-            <div className="space-y-1.5">
-              <label className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
-                Profile Geometry
-              </label>
-              <select
-                value={selectedGeometry}
-                onChange={(e) => setSelectedGeometry(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
-              >
-                <option value="all">All Geometries</option>
-                <option value="Solid">Solid Section</option>
-                <option value="Hollow">Hollow Tube / Box</option>
-                <option value="Semi-Hollow">Semi-Hollow Channel</option>
-                <option value="Complex Multi-Void">Complex Multi-Void</option>
-                <option value="T-Slot Modular">T-Slot / V-Slot Modular</option>
-                <option value="Fin Array">Fin Array (Heat Sink)</option>
-                <option value="CNC Component">CNC Machined Component</option>
               </select>
             </div>
 
             {/* Verified Alloy Selection */}
             <div className="space-y-1.5">
               <label className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
-                Alloy Family
+                Alloy Series
               </label>
               <select
                 value={selectedAlloy}
                 onChange={(e) => setSelectedAlloy(e.target.value)}
                 className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
               >
-                <option value="all">All Alloys</option>
+                <option value="all">All Structural Alloys</option>
                 <option value="6063">6063 (Architectural & Heat Sink)</option>
-                <option value="6061">6061 (Structural & CNC Workhorse)</option>
+                <option value="6061">6061 (Structural & CNC Billet)</option>
                 <option value="6005A">6005A (Solar & Transport Rail)</option>
                 <option value="6082">6082 (European Structural Standard)</option>
                 <option value="7075">7075 (High Strength Aerospace)</option>
@@ -260,13 +247,14 @@ export default function ProductsCatalogPage() {
                 className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
               >
                 <option value="all">All Surface Finishes</option>
-                <option value="Anodized">Anodized (15–25µm Clear/Black/Colors)</option>
-                <option value="Powder">AkzoNobel 10-Yr Powder Coating</option>
-                <option value="Mill">Mill Finish (As Extruded)</option>
+                <option value="ANODIZED">Anodized (15–25µm Marine Grade)</option>
+                <option value="POWDER_COATED">AkzoNobel Interpon D Powder Coating</option>
+                <option value="MILL_FINISH">Mill Finish (As Extruded)</option>
+                <option value="WOOD_GRAIN">Sublimation Wood Grain Transfer</option>
               </select>
             </div>
 
-            {/* Construction & Industry Application Filter */}
+            {/* Application & Sector Filter */}
             <div className="space-y-1.5">
               <label className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
                 Application & Sector
@@ -281,7 +269,7 @@ export default function ProductsCatalogPage() {
                 <option value="Curtain">Curtain Wall & Facades</option>
                 <option value="Railing">Railings & Balustrades</option>
                 <option value="Solar">Solar Mounting & Racking</option>
-                <option value="Automation">Automation & Machine Frames</option>
+                <option value="Automation">Automation & Modular Framing</option>
                 <option value="Thermal">Heat Sinks & Inverter Cooling</option>
                 <option value="CNC">CNC Machined OEM Parts</option>
               </select>
@@ -301,7 +289,7 @@ export default function ProductsCatalogPage() {
                   <ArrowRight className="w-3.5 h-3.5 text-[#2F7BFF] group-hover:translate-x-1 transition-transform" />
                 </div>
                 <div className="text-[10px] text-slate-600 mt-0.5">
-                  Windows, Facades, Louvers, Cladding & Pergolas
+                  11 Engineering Solution Families
                 </div>
               </Link>
               <Link
@@ -313,7 +301,7 @@ export default function ProductsCatalogPage() {
                   <ArrowRight className="w-3.5 h-3.5 text-emerald-600 group-hover:translate-x-1 transition-transform" />
                 </div>
                 <div className="text-[10px] text-emerald-700 mt-0.5">
-                  10-Year Performance Warranty Specifications
+                  Up to 30-Year Performance Warranty
                 </div>
               </Link>
             </div>
@@ -321,16 +309,16 @@ export default function ProductsCatalogPage() {
             {/* Category Dossiers Links */}
             <div className="pt-4 border-t border-slate-100 space-y-2">
               <div className="text-[11px] uppercase font-bold tracking-wider text-slate-500">
-                Category Dossiers
+                Division Dossiers
               </div>
               <div className="space-y-1 text-xs font-medium text-slate-600">
-                {CATEGORIES_V2.map((cat) => (
+                {divisions.map((div) => (
                   <Link
-                    key={cat.slug}
-                    href={cat.slug === 'architectural-systems' ? '/products/architectural' : `/products/${cat.slug}`}
+                    key={div.slug}
+                    href={`/products/${div.slug}`}
                     className="flex items-center justify-between py-1 px-1.5 rounded hover:bg-slate-50 hover:text-[#2F7BFF] transition-colors"
                   >
-                    <span>{cat.name}</span>
+                    <span>{div.name}</span>
                     <ChevronRight className="w-3 h-3 text-slate-400" />
                   </Link>
                 ))}
@@ -341,7 +329,7 @@ export default function ProductsCatalogPage() {
           {/* Mobile Filter Toggle Button */}
           <div className="lg:hidden col-span-1 flex items-center justify-between bg-white p-4 rounded-xl border border-[#E2E8F0]">
             <span className="text-xs font-bold text-[#0A2D5B]">
-              Showing {filteredProducts.length} Products
+              Showing {filteredFamilies.length} Solution Families
             </span>
             <Button
               variant="outline"
@@ -355,11 +343,11 @@ export default function ProductsCatalogPage() {
 
           {/* Product Grid Area */}
           <div className="lg:col-span-9 space-y-6">
-            {/* Header info strip - CODEX V3 COMPLIANT */}
+            {/* Header info strip */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-600 bg-white p-4 rounded-xl border border-[#E2E8F0]">
               <div>
                 <span>
-                  Explore <strong>{filteredProducts.length}</strong> aluminium product families
+                  Explore <strong>{filteredFamilies.length}</strong> aluminium solution families
                 </span>
                 {searchQuery && (
                   <span className="text-slate-400 ml-1">
@@ -373,7 +361,7 @@ export default function ProductsCatalogPage() {
                   href={`/products/${selectedCategory}`}
                   className="text-[#2F7BFF] font-semibold hover:underline flex items-center gap-1"
                 >
-                  View Category Engineering Dossier <ArrowRight className="w-3 h-3" />
+                  View Full Division Dossier <ArrowRight className="w-3 h-3" />
                 </Link>
               )}
             </div>
@@ -384,16 +372,8 @@ export default function ProductsCatalogPage() {
                 <span className="text-slate-500 font-medium">Active Filters:</span>
                 {selectedCategory !== 'all' && (
                   <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
-                    Category: {CATEGORIES_V2.find((c) => c.slug === selectedCategory)?.name}
+                    Division: {divisions.find((d) => d.slug === selectedCategory || d.id === selectedCategory)?.name}
                     <button onClick={() => setSelectedCategory('all')} className="hover:text-red-500 cursor-pointer">
-                      <X className="w-3 h-3" />
-                    </button>
-                  </span>
-                )}
-                {selectedGeometry !== 'all' && (
-                  <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
-                    Geometry: {selectedGeometry}
-                    <button onClick={() => setSelectedGeometry('all')} className="hover:text-red-500 cursor-pointer">
                       <X className="w-3 h-3" />
                     </button>
                   </span>
@@ -439,22 +419,33 @@ export default function ProductsCatalogPage() {
               </div>
             )}
 
-            {/* 3-Column Grid (CODEX V3 Redesigned ProductCard) */}
+            {/* 3-Column Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredProducts.map((prod, idx) => {
-                const isCompared = compareList.includes(prod.slug);
+              {filteredFamilies.map((fam, idx) => {
+                const division = divisions.find((d) => d.id === fam.divisionId || d.slug === fam.divisionSlug);
+                const isCompared = compareList.includes(fam.slug);
 
                 return (
-                  <React.Fragment key={prod.slug}>
+                  <React.Fragment key={fam.id}>
                     <ProductCard
-                      product={prod}
+                      product={{
+                        name: fam.name,
+                        slug: fam.slug,
+                        divisionSlug: fam.divisionSlug,
+                        categoryName: division?.name || 'Aluminium Solution',
+                        profileGeometry: 'Engineered System',
+                        primaryImage: fam.coverImage,
+                        shortDescription: fam.summary,
+                        verifiedChips: fam.alloys
+                      }}
+                      targetUrl={`/products/${fam.divisionSlug}/${fam.slug}`}
                       isCompared={isCompared}
                       onToggleCompare={toggleCompare}
                       priority={idx < 3}
                     />
 
                     {/* Engineering Callout Strip after every 6 products */}
-                    {(idx + 1) % 6 === 0 && idx + 1 < filteredProducts.length && (
+                    {(idx + 1) % 6 === 0 && idx + 1 < filteredFamilies.length && (
                       <div className="col-span-1 md:col-span-2 xl:col-span-3 bg-gradient-to-r from-[#061D3B] to-[#0A2D5B] text-white p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 my-2 border border-slate-700 shadow-md">
                         <div className="space-y-1 text-center sm:text-left">
                           <h4 className="font-heading font-bold text-base text-white">
@@ -476,16 +467,16 @@ export default function ProductsCatalogPage() {
               })}
             </div>
 
-            {filteredProducts.length === 0 && (
+            {filteredFamilies.length === 0 && (
               <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-4">
                 <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
                   <Search className="w-6 h-6" />
                 </div>
                 <h3 className="font-heading font-bold text-lg text-[#0A2D5B]">
-                  No matching aluminium profiles found
+                  No matching aluminium solutions found
                 </h3>
                 <p className="text-xs text-slate-500 max-w-md mx-auto">
-                  Try adjusting your search criteria or resetting filters to view all standard and custom profiles.
+                  Try adjusting your search criteria or resetting filters to view all standard and custom solution families.
                 </p>
                 <Button variant="outline" size="sm" onClick={handleResetFilters}>
                   Reset All Filters
@@ -501,7 +492,7 @@ export default function ProductsCatalogPage() {
             <div className="flex items-center gap-2">
               <Scale className="w-5 h-5 text-[#2F7BFF]" />
               <div className="text-xs">
-                <span className="font-bold">{compareList.length}</span> / 4 profiles selected
+                <span className="font-bold">{compareList.length}</span> / 4 solutions selected
               </div>
             </div>
             <div className="flex items-center gap-1.5">
@@ -529,7 +520,7 @@ export default function ProductsCatalogPage() {
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex justify-end">
           <div className="w-full max-w-xs bg-white h-full p-6 space-y-6 overflow-y-auto animate-in slide-in-from-right duration-200">
             <div className="flex items-center justify-between border-b pb-4">
-              <span className="font-bold text-sm text-[#0A2D5B]">Filter Profiles</span>
+              <span className="font-bold text-sm text-[#0A2D5B]">Filter Solutions</span>
               <button onClick={() => setMobileFilterOpen(false)} className="text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -538,37 +529,18 @@ export default function ProductsCatalogPage() {
             <div className="space-y-4">
               {/* Category */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-600">Category</label>
+                <label className="text-xs font-bold text-slate-600">Business Division</label>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className="w-full p-2 text-xs border rounded-lg"
                 >
-                  <option value="all">All 6 Categories</option>
-                  {PRODUCT_TAXONOMY.map((c) => (
-                    <option key={c.slug} value={c.slug}>
-                      {c.name}
+                  <option value="all">All 6 Divisions</option>
+                  {divisions.map((d) => (
+                    <option key={d.slug} value={d.slug}>
+                      {d.name}
                     </option>
                   ))}
-                </select>
-              </div>
-
-              {/* Geometry */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-600">Profile Geometry</label>
-                <select
-                  value={selectedGeometry}
-                  onChange={(e) => setSelectedGeometry(e.target.value)}
-                  className="w-full p-2 text-xs border rounded-lg"
-                >
-                  <option value="all">All Geometries</option>
-                  <option value="Solid">Solid</option>
-                  <option value="Hollow">Hollow</option>
-                  <option value="Semi-Hollow">Semi-Hollow</option>
-                  <option value="Complex Multi-Void">Complex Multi-Void</option>
-                  <option value="T-Slot Modular">T-Slot / V-Slot</option>
-                  <option value="Fin Array">Fin Array</option>
-                  <option value="CNC Component">CNC Component</option>
                 </select>
               </div>
 
@@ -598,9 +570,9 @@ export default function ProductsCatalogPage() {
                   className="w-full p-2 text-xs border rounded-lg"
                 >
                   <option value="all">All Finishes</option>
-                  <option value="Anodized">Anodized (15–25µm)</option>
-                  <option value="Powder">AkzoNobel 10-Yr Powder Coated</option>
-                  <option value="Mill">Mill Finish</option>
+                  <option value="ANODIZED">Anodized (15–25µm)</option>
+                  <option value="POWDER_COATED">AkzoNobel Interpon D</option>
+                  <option value="MILL_FINISH">Mill Finish</option>
                 </select>
               </div>
 
@@ -631,7 +603,7 @@ export default function ProductsCatalogPage() {
                 className="w-full"
                 onClick={() => setMobileFilterOpen(false)}
               >
-                Apply Filters ({filteredProducts.length})
+                Apply Filters
               </Button>
               <Button
                 variant="outline"

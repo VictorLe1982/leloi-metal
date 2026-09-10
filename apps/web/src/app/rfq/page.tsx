@@ -3,7 +3,15 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button, Card, FormGroup, Input, Select, Textarea } from '@leloi/ui';
-import { BuyerTypeCode, PRODUCT_TAXONOMY, getCategoryBySlug } from '@leloi/types';
+import {
+  BuyerTypeCode,
+  getProductDivisions,
+  getDivisionBySlug,
+  getFamilyBySlug,
+  getFamilyBySlugOnly,
+  getSystemBySlugOnly,
+  resolveLegacyProductSlug
+} from '@leloi/types';
 import { trackB2BEvent } from '@leloi/analytics';
 import {
   FileUp,
@@ -23,6 +31,9 @@ function RfqFormContent() {
   const searchParams = useSearchParams();
   const productParam = searchParams.get('product');
   const categoryParam = searchParams.get('category');
+  const divisionParam = searchParams.get('division');
+  const familyParam = searchParams.get('family');
+  const systemParam = searchParams.get('system');
   const alloyParam = searchParams.get('alloy');
   const modeParam = searchParams.get('mode');
 
@@ -83,32 +94,88 @@ function RfqFormContent() {
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
 
   useEffect(() => {
+    // 1. Resolve legacy product slug (e.g. ?product=window_door_profiles)
     if (productParam) {
-      setFormData((prev) => ({
-        ...prev,
-        product: {
-          ...prev.product,
-          profileDescription: `Inquiry for product: ${productParam.replace(/[-_]/g, ' ')}`,
-          alloy: alloyParam || prev.product.alloy
-        }
-      }));
-    }
-    if (categoryParam) {
-      const cat = getCategoryBySlug(categoryParam);
-      if (cat) {
+      const legacy = resolveLegacyProductSlug(productParam);
+      if (legacy) {
+        const divisionObj = getDivisionBySlug(legacy.division);
+        const familyObj = getFamilyBySlug(legacy.division, legacy.family);
+        const systemObj = legacy.system ? getSystemBySlugOnly(legacy.system) : undefined;
+
         setFormData((prev) => ({
           ...prev,
           product: {
             ...prev.product,
-            productCategory: cat.name
+            productCategory: divisionObj?.name || 'Custom Aluminium Extrusions',
+            application: familyObj?.name || prev.product.application,
+            profileDescription: systemObj
+              ? `Engineered System: ${systemObj.name} (${systemObj.slug})`
+              : `Solution Family: ${familyObj?.name || productParam}`,
+            alloy: alloyParam || familyObj?.alloys[0] || prev.product.alloy
+          }
+        }));
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          product: {
+            ...prev.product,
+            profileDescription: `Inquiry for product: ${productParam.replace(/[-_]/g, ' ')}`,
+            alloy: alloyParam || prev.product.alloy
           }
         }));
       }
     }
+
+    // 2. Canonical division / category param
+    const effectiveDivisionSlug = divisionParam || categoryParam;
+    if (effectiveDivisionSlug) {
+      const divisionObj = getDivisionBySlug(effectiveDivisionSlug);
+      if (divisionObj) {
+        setFormData((prev) => ({
+          ...prev,
+          product: {
+            ...prev.product,
+            productCategory: divisionObj.name
+          }
+        }));
+      }
+    }
+
+    // 3. Canonical family param
+    if (familyParam) {
+      const familyObj = getFamilyBySlugOnly(familyParam);
+      if (familyObj) {
+        setFormData((prev) => ({
+          ...prev,
+          product: {
+            ...prev.product,
+            application: familyObj.name,
+            profileDescription: prev.product.profileDescription || `Solution Family: ${familyObj.name}`,
+            alloy: alloyParam || familyObj.alloys[0] || prev.product.alloy
+          }
+        }));
+      }
+    }
+
+    // 4. Canonical system param
+    if (systemParam) {
+      const systemObj = getSystemBySlugOnly(systemParam);
+      if (systemObj) {
+        setFormData((prev) => ({
+          ...prev,
+          product: {
+            ...prev.product,
+            profileDescription: `Engineered System: ${systemObj.name} (${systemObj.slug})`,
+            alloy: alloyParam || systemObj.alloys[0] || prev.product.alloy
+          }
+        }));
+      }
+    }
+
     if (modeParam === 'upload') {
       setCurrentStep(4);
     }
-  }, [productParam, categoryParam, alloyParam, modeParam]);
+  }, [productParam, categoryParam, divisionParam, familyParam, systemParam, alloyParam, modeParam]);
 
   const updateCompany = (key: string, value: any) =>
     setFormData((prev) => ({ ...prev, company: { ...prev.company, [key]: value } }));
@@ -454,9 +521,9 @@ function RfqFormContent() {
                     value={formData.product.productCategory}
                     onChange={(e) => updateProduct('productCategory', e.target.value)}
                   >
-                    {PRODUCT_TAXONOMY.map((cat) => (
-                      <option key={cat.slug} value={cat.name}>
-                        {cat.name}
+                    {getProductDivisions().map((div) => (
+                      <option key={div.slug} value={div.name}>
+                        {div.name}
                       </option>
                     ))}
                   </Select>

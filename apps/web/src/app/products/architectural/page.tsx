@@ -20,6 +20,7 @@ import {
 import { Button, Badge, Card } from '@leloi/ui';
 
 import { TechnicalProfilePlaceholder } from '@/components/catalog/TechnicalProfilePlaceholder';
+import { getFamiliesByDivision } from '@leloi/types';
 
 export const metadata: Metadata = {
   title: 'Architectural Aluminium Systems | Residential & Commercial | LELOI METAL',
@@ -38,99 +39,7 @@ export const metadata: Metadata = {
 };
 
 export default function ArchitecturalProductsPage() {
-  const architecturalGroups = [
-    {
-      id: 'windows-doors',
-      groupKey: 'A',
-      title: 'Windows & Door Systems',
-      image: '/media/catalog/18_window_door_profiles.webp',
-      desc: 'High-precision casement, sliding, bifold, and tilt-and-turn profiles with multi-point locking channels and EPDM gasket grooves.',
-      badges: ['6063-T5', 'Thermal Break', 'High Acoustic Rating'],
-      href: '/products/architectural/windows-doors'
-    },
-    {
-      id: 'curtain-wall-facade',
-      groupKey: 'B',
-      title: 'Curtain Wall & Facade Systems',
-      image: '/media/catalog/17_curtain_wall_profiles.webp',
-      desc: 'Engineered structural mullions and transoms for stick, semi-unitized, and unitized architectural glass facades capable of high wind-load resistance.',
-      badges: ['6063-T6', 'Unitized & Stick', 'ASTM E330 Tested'],
-      href: '/products/architectural/curtain-wall-facade'
-    },
-    {
-      id: 'louvers-sunshade',
-      groupKey: 'C',
-      title: 'Louvers & Sunshades (Brise Soleil)',
-      desc: 'Aerofoil, box louvers, and motorized architectural sun control systems for natural ventilation, glare reduction, and building energy efficiency.',
-      badges: ['Aerofoil Fins', 'Motorized Ready', 'AkzoNobel 10-Yr'],
-      href: '/products/architectural/louvers-sunshade'
-    },
-    {
-      id: 'wall-cladding',
-      groupKey: 'D',
-      title: 'Wall Cladding & Rainscreen Substructures',
-      desc: 'Ventilated facade carrier rails, clip-on brackets, and aluminium panel edge extrusions for modern exterior rainscreen architecture.',
-      badges: ['Corrosion Proof', 'Fast Installation', 'AAMA 2604'],
-      href: '/products/architectural/wall-cladding'
-    },
-    {
-      id: 'ceiling-systems',
-      groupKey: 'E',
-      title: 'Linear Aluminium Ceiling Systems',
-      desc: 'Lightweight baffle ceilings, strip panels, and open-cell acoustic carriers designed for airport terminals, commercial atriums, and transit hubs.',
-      badges: ['Baffle & Strip', 'Qualicoat Finish', 'Lightweight'],
-      href: '/products/architectural/ceiling-systems'
-    },
-    {
-      id: 'canopies',
-      groupKey: 'F',
-      title: 'Canopy & Outdoor Systems',
-      desc: 'Heavy-duty structural rafters, gutter beams, and cantilever brackets for building entrance canopies, carports, and terrace awnings.',
-      badges: ['6005A-T6', 'Integrated Gutters', 'Marine Grade'],
-      href: '/products/architectural/canopies'
-    },
-    {
-      id: 'pergola',
-      groupKey: 'G',
-      title: 'Pergola Systems (Bioclimatic)',
-      desc: 'Bioclimatic motorized louvered pergolas, heavy column profiles, and weather-sealed gutter beams for luxury outdoor living and hospitality venues.',
-      badges: ['Bioclimatic Louvers', 'Wind-Tested', 'AkzoNobel 10-Yr'],
-      href: '/products/architectural/pergola'
-    },
-    {
-      id: 'bungalow-resort',
-      groupKey: 'H',
-      title: 'Modular Bungalow & Resort Structures',
-      desc: 'Prefabricated high-strength aluminium structural framing for luxury resort glamping suites, eco-lodges, beachfront pavilions, and garden offices.',
-      badges: ['Anti-Corrosion', 'Modular Bolt-On', '100% Recyclable'],
-      href: '/products/architectural/bungalow-resort'
-    },
-    {
-      id: 'railing-balustrade',
-      groupKey: 'I',
-      title: 'Glass Railings & Balustrades',
-      image: '/media/catalog/20_railing_balustrade_profiles.webp',
-      desc: 'Continuous dry-glaze base shoes, spigot adapters, and slim-line architectural handrail profiles tested for structural crowd-load compliance.',
-      badges: ['Base Shoe', 'Frameless Glass', 'Crowd Load Tested'],
-      href: '/products/architectural/railing-balustrade'
-    },
-    {
-      id: 'decorative-screens',
-      groupKey: 'J',
-      title: 'Decorative Screens & Architectural Enclosures',
-      desc: 'Architectural feature fins, laser-cut screen frames, and custom decorative exterior lattices for modern aesthetic building envelopes.',
-      badges: ['Architectural Fins', 'Laser Cut Ready', 'Custom Dies'],
-      href: '/products/architectural/decorative-screens'
-    },
-    {
-      id: 'thermal-break',
-      groupKey: 'K',
-      title: 'Thermal-Break Systems',
-      desc: 'Polyamide PA66 GF25 reinforced thermal insulation barrier profiles that eliminate thermal bridging and achieve low U-values for green buildings.',
-      badges: ['PA66 GF25 Strip', 'Low U-Value', 'LEED / BREEAM'],
-      href: '/products/architectural/thermal-break'
-    }
-  ];
+  const families = getFamiliesByDivision('architectural');
 
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
@@ -204,51 +113,58 @@ export default function ArchitecturalProductsPage() {
             href="/products"
             className="text-xs font-bold text-[#2F7BFF] hover:underline flex items-center gap-1.5"
           >
-            <span>View Full 24-Profile Catalog</span>
+            <span>Browse Full Product Catalog</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {architecturalGroups.map((cat) => (
+          {families.map((fam) => (
             <Card
-              key={cat.id}
+              key={fam.id}
               variant="interactive"
               className="flex flex-col justify-between overflow-hidden group hover:border-[#2F7BFF] transition-all"
             >
               <div>
                 <div className="relative w-full h-48 bg-slate-900 rounded-lg overflow-hidden mb-4">
-                  {cat.image ? (
+                  {fam.coverImage ? (
                     <Image
-                      src={cat.image}
-                      alt={cat.title}
+                      src={fam.coverImage}
+                      alt={fam.name}
                       fill
                       className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   ) : (
                     <TechnicalProfilePlaceholder
-                      title={cat.title}
-                      category={`Group ${cat.groupKey}`}
+                      title={fam.name}
+                      category={`Group ${fam.groupKey || 'A'}`}
                       aspectRatio="16/9"
                     />
                   )}
-                  <div className="absolute top-2.5 left-2.5">
-                    <span className="text-[10px] font-mono font-bold bg-[#0A2D5B]/90 text-cyan-300 px-2.5 py-1 rounded shadow-xs">
-                      GROUP {cat.groupKey}
-                    </span>
-                  </div>
+                  {fam.groupKey && (
+                    <div className="absolute top-2.5 left-2.5">
+                      <span className="text-[10px] font-mono font-bold bg-[#0A2D5B]/90 text-cyan-300 px-2.5 py-1 rounded shadow-xs">
+                        GROUP {fam.groupKey}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <h3 className="text-lg font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
-                  {cat.title}
+                  {fam.name}
                 </h3>
                 <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                  {cat.desc}
+                  {fam.summary}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
-                  {cat.badges.map((b) => (
+                  {fam.alloys.map((b) => (
                     <Badge key={b} variant="default" className="text-[10px]">
                       {b}
+                    </Badge>
+                  ))}
+                  {fam.supportedFinishes.slice(0, 2).map((fin) => (
+                    <Badge key={fin} variant="outline" className="text-[10px]">
+                      {fin.replace('_', ' ')}
                     </Badge>
                   ))}
                 </div>
@@ -256,14 +172,14 @@ export default function ArchitecturalProductsPage() {
 
               <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
                 <Link
-                  href={cat.href}
+                  href={`/products/architectural/${fam.slug}`}
                   className="text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF] flex items-center gap-1"
                 >
-                  <span>Explore Subcategory</span>
+                  <span>Explore Solution</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
-                  href={`/rfq?category=architectural&subcategory=${cat.id}`}
+                  href={`/rfq?division=architectural&family=${fam.slug}`}
                   className="text-xs font-heading font-bold text-[#2F7BFF] hover:underline"
                 >
                   Request Quote →
