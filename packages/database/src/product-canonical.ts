@@ -120,3 +120,84 @@ export interface ProductSystem {
   media?: ProductMedia[];
   seo: ProductSEO;
 }
+
+/**
+ * Technical Claim Verification & Provenance System (V6-B)
+ */
+export type VerificationStatus =
+  | 'VERIFIED'
+  | 'UNVERIFIED'
+  | 'INVALID_VERIFICATION'
+  | 'PENDING_REVIEW';
+
+export interface ClaimSource {
+  id: string;
+  sourceType:
+    | 'FACTORY_SPEC_SHEET'
+    | 'LAB_TEST_REPORT'
+    | 'DRAWING_STANDARD'
+    | 'MATERIAL_CERTIFICATE'
+    | 'EXECUTIVE_ORDER';
+  title: string;
+  fileUrl?: string;
+  reference: string;
+  issueDate: string;
+  expiryDate?: string;
+  notes?: string;
+}
+
+export interface TechnicalClaim {
+  id: string;
+  entityType: 'ProductDivision' | 'ProductFamily' | 'ProductSystem' | 'ProductVariant' | 'ProductFinish';
+  entityId: string;
+  field: string;
+  value: string;
+  unit?: string;
+  verificationStatus: VerificationStatus;
+  sourceId: string | null;
+  verifiedBy?: string;
+  verifiedAt?: string;
+  publicAllowed: boolean;
+}
+
+/**
+ * MANDATORY RULE (V6-B):
+ * A technical claim is PUBLIC only when:
+ * verificationStatus === 'VERIFIED' && publicAllowed === true && Boolean(sourceId)
+ * If verificationStatus === 'VERIFIED' and sourceId is null -> treat as INVALID_VERIFICATION -> do not render publicly.
+ */
+export function isClaimPubliclyAllowed(claim: TechnicalClaim): boolean {
+  if (claim.verificationStatus === 'VERIFIED' && (!claim.sourceId || claim.sourceId.trim() === '')) {
+    return false;
+  }
+  return (
+    claim.verificationStatus === 'VERIFIED' &&
+    claim.publicAllowed === true &&
+    Boolean(claim.sourceId && claim.sourceId.trim() !== '')
+  );
+}
+
+/**
+ * Architectural Media System (V6-B)
+ */
+export type ArchitecturalMediaType =
+  | 'PRODUCT_RENDER'
+  | 'APPLICATION_PHOTO'
+  | 'FACTORY_PHOTO'
+  | 'TECHNICAL_DIAGRAM'
+  | 'FINISH_SAMPLE'
+  | 'PROJECT_PHOTO';
+
+export interface ArchitecturalMediaItem {
+  id: string;
+  entityId: string;
+  type: ArchitecturalMediaType;
+  url: string;
+  alt: string;
+  caption?: string;
+  source: string;
+  license?: string;
+  approvalStatus: 'APPROVED' | 'PENDING' | 'REJECTED';
+  width?: number;
+  height?: number;
+}

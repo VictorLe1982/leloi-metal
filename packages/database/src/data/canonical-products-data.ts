@@ -1525,6 +1525,72 @@ export const CANONICAL_SYSTEMS: ProductSystem[] = [
     }
   },
   {
+    id: 'sys-arch-win-sliding',
+    familyId: 'fam-arch-01',
+    divisionId: 'architectural',
+    name: 'Aluminium Sliding Window System',
+    slug: 'sliding-window',
+    summary: 'Precision architectural sliding window system with 2-track and 3-track configurations, smooth roller guide track, and multi-point locking.',
+    description: 'Precision-engineered architectural aluminium sliding window system designed for residential villas, multi-family developments, and commercial properties. Features high-tensile 6063-T5 profiles, multi-cavity drainage engineering, stainless steel roller tracks, and seamless integration with single, double-glazed (IGU), or laminated glass units.',
+    coverImage: '/images/products/architectural-systems/window-door/hero.webp',
+    technicalSpecs: {
+      'Alloy Specification': '6063-T5 Architectural Alloy',
+      'Manufacturing Standard': 'EN 755-9 / DIN 17615',
+      'Track Configurations': '2-Track (2 or 4 panels) / 3-Track (3 or 6 panels with flyscreen)',
+      'Glazing Compatibility': 'Single (5-8mm), Double IGU (18-24mm), Laminated',
+      'Track Insert': 'Replaceable 304 Stainless Steel Glide Rail',
+      'Surface Finishing': 'AkzoNobel Powder Coating / Architectural Anodized / Mill Finish'
+    },
+    alloys: ['6063-T5', '6063-T6'],
+    tempers: ['T5', 'T6'],
+    surfaceFinishes: ['POWDER_COATED', 'ANODIZED', 'MILL_FINISH'],
+    certifications: ['EN 755-9', 'ISO 9001:2015'],
+    exportMarkets: ['United States', 'Canada', 'Australia', 'European Union'],
+    variants: [
+      {
+        id: 'var-win-slide-01',
+        systemId: 'sys-arch-win-sliding',
+        name: '2-Track Outer Frame Profile',
+        code: 'LM-SW-F2T',
+        profileDimensions: '88 x 45 mm',
+        weightPerMeter: '1.38 kg/m',
+        wallThickness: '1.4 mm'
+      },
+      {
+        id: 'var-win-slide-02',
+        systemId: 'sys-arch-win-sliding',
+        name: '3-Track Outer Frame Profile with Flyscreen Track',
+        code: 'LM-SW-F3T',
+        profileDimensions: '128 x 45 mm',
+        weightPerMeter: '1.82 kg/m',
+        wallThickness: '1.5 mm'
+      },
+      {
+        id: 'var-win-slide-03',
+        systemId: 'sys-arch-win-sliding',
+        name: 'Heavy Glazed Sash Profile',
+        code: 'LM-SW-SASH',
+        profileDimensions: '68 x 38 mm',
+        weightPerMeter: '1.15 kg/m',
+        wallThickness: '1.4 mm'
+      },
+      {
+        id: 'var-win-slide-04',
+        systemId: 'sys-arch-win-sliding',
+        name: 'Reinforced Interlock Meeting Stile',
+        code: 'LM-SW-INTL',
+        profileDimensions: '52 x 40 mm',
+        weightPerMeter: '1.26 kg/m',
+        wallThickness: '1.6 mm'
+      }
+    ],
+    seo: {
+      title: 'Aluminium Sliding Window System | 2-Track & 3-Track Profiles | LELOI METAL',
+      description: 'Engineered aluminium sliding window system with 2-track and 3-track profiles, multi-cavity drainage, and AkzoNobel powder coating.',
+      keywords: ['aluminium sliding window system', 'sliding window extrusion', 'multi-track window profile', 'architectural sliding window']
+    }
+  },
+  {
     id: 'sys-arch-curt-150',
     familyId: 'fam-arch-02',
     divisionId: 'architectural',

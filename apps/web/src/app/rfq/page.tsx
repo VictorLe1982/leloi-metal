@@ -35,6 +35,7 @@ function RfqFormContent() {
   const familyParam = searchParams.get('family');
   const systemParam = searchParams.get('system');
   const alloyParam = searchParams.get('alloy');
+  const finishParam = searchParams.get('finish');
   const modeParam = searchParams.get('mode');
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -66,7 +67,11 @@ function RfqFormContent() {
       lengthMm: 6000,
       annualVolumeKg: 20000,
       orderQuantityKg: 3000,
-      profileDescription: ''
+      profileDescription: '',
+      projectType: 'Luxury Villa / Private Estate',
+      openingType: 'Sliding Windows & Doors',
+      glazingAreaM2: undefined as number | undefined,
+      projectSchedule: 'Q3-Q4 2026'
     },
     process: {
       surfaceFinish: 'Anodized Clear (15µm)',
@@ -138,6 +143,17 @@ function RfqFormContent() {
             productCategory: divisionObj.name
           }
         }));
+      } else if (
+        effectiveDivisionSlug === 'architectural-aluminium' ||
+        effectiveDivisionSlug === 'architectural'
+      ) {
+        setFormData((prev) => ({
+          ...prev,
+          product: {
+            ...prev.product,
+            productCategory: 'Architectural Aluminium'
+          }
+        }));
       }
     }
 
@@ -172,10 +188,21 @@ function RfqFormContent() {
       }
     }
 
+    // 5. Surface finish param (e.g. from color swatch selector)
+    if (finishParam) {
+      setFormData((prev) => ({
+        ...prev,
+        process: {
+          ...prev.process,
+          surfaceFinish: finishParam
+        }
+      }));
+    }
+
     if (modeParam === 'upload') {
       setCurrentStep(4);
     }
-  }, [productParam, categoryParam, divisionParam, familyParam, systemParam, alloyParam, modeParam]);
+  }, [productParam, categoryParam, divisionParam, familyParam, systemParam, alloyParam, finishParam, modeParam]);
 
   const updateCompany = (key: string, value: any) =>
     setFormData((prev) => ({ ...prev, company: { ...prev.company, [key]: value } }));
@@ -504,84 +531,152 @@ function RfqFormContent() {
           )}
 
           {/* STEP 2: PRODUCT */}
-          {currentStep === 2 && (
-            <div className="space-y-6 animate-in fade-in duration-200">
-              <div className="border-b border-[#E2E8F0] pb-4">
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
-                  Step 2: Profile Specifications & Alloy
-                </h3>
-                <p className="text-xs text-slate-500 mt-1">
-                  Specify product line, target alloy grade, temper and order quantities.
-                </p>
+          {currentStep === 2 && (() => {
+            const isArchitectural =
+              formData.product.productCategory.toLowerCase().includes('architectural') ||
+              divisionParam === 'architectural' ||
+              categoryParam === 'architectural-aluminium' ||
+              familyParam === 'windows-doors';
+
+            return (
+              <div className="space-y-6 animate-in fade-in duration-200">
+                <div className="border-b border-[#E2E8F0] pb-4">
+                  <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+                    Step 2: Profile Specifications & Alloy
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1">
+                    {isArchitectural
+                      ? 'Specify your architectural project typology, opening system requirements, and target alloys.'
+                      : 'Specify product line, target alloy grade, temper and order quantities.'}
+                  </p>
+                </div>
+
+                {isArchitectural && (
+                  <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200 text-xs text-[#0A2D5B] flex items-center justify-between">
+                    <span className="font-semibold">
+                      Architectural Project Sourcing Active: Profile geometries, opening schedules & finishes tailored for facade/window fabricators.
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-blue-600 text-white font-mono text-[10px]">
+                      ARCHITECTURAL
+                    </span>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <FormGroup label="Product Category" required>
+                    <Select
+                      value={formData.product.productCategory}
+                      onChange={(e) => updateProduct('productCategory', e.target.value)}
+                    >
+                      {getProductDivisions().map((div) => (
+                        <option key={div.slug} value={div.name}>
+                          {div.name}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormGroup>
+
+                  {isArchitectural ? (
+                    <FormGroup label="Architectural Project Typology" required>
+                      <Select
+                        value={formData.product.projectType || 'Luxury Villa / Private Estate'}
+                        onChange={(e) => updateProduct('projectType', e.target.value)}
+                      >
+                        <option value="Luxury Villa / Private Estate">Luxury Villa / Private Estate</option>
+                        <option value="High-Rise Residential Tower">High-Rise Residential Tower</option>
+                        <option value="Urban Townhouses / Multi-Family">Urban Townhouses / Multi-Family</option>
+                        <option value="Hotel & Hospitality Resort">Hotel & Hospitality Resort</option>
+                        <option value="Commercial Office Complex">Commercial Office Complex</option>
+                        <option value="Civic & Public Architecture">Civic & Public Architecture</option>
+                        <option value="Facade Renovation / Retrofit">Facade Renovation / Retrofit</option>
+                        <option value="Other Project Type">Other Project Typology</option>
+                      </Select>
+                    </FormGroup>
+                  ) : (
+                    <FormGroup label="Application / Industry" required>
+                      <Input
+                        placeholder="e.g. Solar rooftop rail, automation frame..."
+                        value={formData.product.application}
+                        onChange={(e) => updateProduct('application', e.target.value)}
+                      />
+                    </FormGroup>
+                  )}
+
+                  {isArchitectural && (
+                    <FormGroup label="Opening / Fenestration System Required" required>
+                      <Select
+                        value={formData.product.openingType || 'Sliding Windows & Doors'}
+                        onChange={(e) => updateProduct('openingType', e.target.value)}
+                      >
+                        <option value="Sliding Windows (2-Track / 3-Track)">Sliding Windows (2-Track / 3-Track)</option>
+                        <option value="Casement & Awning Windows">Casement & Awning Windows</option>
+                        <option value="Heavy-Duty Patio Sliding Doors">Heavy-Duty Patio Sliding Doors</option>
+                        <option value="Multi-Panel Bi-Fold Doors">Multi-Panel Bi-Fold Doors</option>
+                        <option value="Architectural Hinged Entry Doors">Architectural Hinged Entry Doors</option>
+                        <option value="Minimal Sightline Panoramic Glazing">Minimal Sightline Panoramic Glazing</option>
+                        <option value="Thermal-Break Window & Door Suite">Thermal-Break Window & Door Suite</option>
+                        <option value="Custom Proprietary Die Extrusions">Custom Proprietary Die Extrusions</option>
+                      </Select>
+                    </FormGroup>
+                  )}
+
+                  <FormGroup label="Alloy Grade" required>
+                    <Select
+                      value={formData.product.alloy}
+                      onChange={(e) => updateProduct('alloy', e.target.value)}
+                    >
+                      <option value="6063">6063 (Standard Architectural / Extrusion)</option>
+                      <option value="6061">6061 (High Strength / Structural / Machining)</option>
+                      <option value="6005A">6005A (Medium Strength / Solar / Transport)</option>
+                      <option value="6082">6082 (European Structural Standard)</option>
+                      <option value="Other">Other Alloy (Specify in notes)</option>
+                    </Select>
+                  </FormGroup>
+
+                  <FormGroup label="Temper" required>
+                    <Select
+                      value={formData.product.temper}
+                      onChange={(e) => updateProduct('temper', e.target.value)}
+                    >
+                      <option value="T5">T5 (Air-cooled & artificially aged)</option>
+                      <option value="T6">T6 (Solution heat treated & aged - high strength)</option>
+                      <option value="T66">T66 (Higher mechanical strength standard)</option>
+                      <option value="T4">T4 (Naturally aged)</option>
+                    </Select>
+                  </FormGroup>
+
+                  <FormGroup label="Initial Trial Order Quantity (kg)" required>
+                    <Input
+                      type="number"
+                      placeholder="e.g. 3000"
+                      value={formData.product.orderQuantityKg}
+                      onChange={(e) => updateProduct('orderQuantityKg', Number(e.target.value))}
+                    />
+                  </FormGroup>
+
+                  {isArchitectural ? (
+                    <FormGroup label="Estimated Project Glazing Area (m²)">
+                      <Input
+                        type="number"
+                        placeholder="e.g. 1500"
+                        value={formData.product.glazingAreaM2 || ''}
+                        onChange={(e) => updateProduct('glazingAreaM2', Number(e.target.value))}
+                      />
+                    </FormGroup>
+                  ) : (
+                    <FormGroup label="Estimated Annual Sourcing Volume (kg)">
+                      <Input
+                        type="number"
+                        placeholder="e.g. 50000"
+                        value={formData.product.annualVolumeKg}
+                        onChange={(e) => updateProduct('annualVolumeKg', Number(e.target.value))}
+                      />
+                    </FormGroup>
+                  )}
+                </div>
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <FormGroup label="Product Category" required>
-                  <Select
-                    value={formData.product.productCategory}
-                    onChange={(e) => updateProduct('productCategory', e.target.value)}
-                  >
-                    {getProductDivisions().map((div) => (
-                      <option key={div.slug} value={div.name}>
-                        {div.name}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup label="Application / Industry" required>
-                  <Input
-                    placeholder="e.g. Solar rooftop rail, automation frame..."
-                    value={formData.product.application}
-                    onChange={(e) => updateProduct('application', e.target.value)}
-                  />
-                </FormGroup>
-
-                <FormGroup label="Alloy Grade" required>
-                  <Select
-                    value={formData.product.alloy}
-                    onChange={(e) => updateProduct('alloy', e.target.value)}
-                  >
-                    <option value="6063">6063 (Standard Architectural / Extrusion)</option>
-                    <option value="6061">6061 (High Strength / Structural / Machining)</option>
-                    <option value="6005A">6005A (Medium Strength / Solar / Transport)</option>
-                    <option value="6082">6082 (European Structural Standard)</option>
-                    <option value="Other">Other Alloy (Specify in notes)</option>
-                  </Select>
-                </FormGroup>
-
-                <FormGroup label="Temper" required>
-                  <Select
-                    value={formData.product.temper}
-                    onChange={(e) => updateProduct('temper', e.target.value)}
-                  >
-                    <option value="T5">T5 (Air-cooled & artificially aged)</option>
-                    <option value="T6">T6 (Solution heat treated & aged - high strength)</option>
-                    <option value="T66">T66 (Higher mechanical strength standard)</option>
-                    <option value="T4">T4 (Naturally aged)</option>
-                  </Select>
-                </FormGroup>
-
-                <FormGroup label="Initial Trial Order Quantity (kg)" required>
-                  <Input
-                    type="number"
-                    placeholder="e.g. 3000"
-                    value={formData.product.orderQuantityKg}
-                    onChange={(e) => updateProduct('orderQuantityKg', Number(e.target.value))}
-                  />
-                </FormGroup>
-
-                <FormGroup label="Estimated Annual Sourcing Volume (kg)">
-                  <Input
-                    type="number"
-                    placeholder="e.g. 50000"
-                    value={formData.product.annualVolumeKg}
-                    onChange={(e) => updateProduct('annualVolumeKg', Number(e.target.value))}
-                  />
-                </FormGroup>
-              </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* STEP 3: PROCESS */}
           {currentStep === 3 && (
@@ -601,12 +696,21 @@ function RfqFormContent() {
                     value={formData.process.surfaceFinish}
                     onChange={(e) => updateProcess('surfaceFinish', e.target.value)}
                   >
+                    <option value="AkzoNobel Powder Coated (Architectural Exterior)">
+                      AkzoNobel Powder Coated (Exterior - Warranties up to 10 years*)
+                    </option>
+                    <option value="Anodized Clear (15-20µm Class 1)">
+                      Anodized Clear (15-20µm Class 1 Architectural)
+                    </option>
+                    <option value="Anodized Bronze / Champagne">
+                      Anodized Architectural Bronze / Champagne
+                    </option>
+                    <option value="Anodized Matte Black">Anodized Matte Black</option>
+                    <option value="Wood Grain Effect (Sublimation)">
+                      Wood Grain Effect (Sublimation Texture)
+                    </option>
                     <option value="Mill Finish">Mill Finish (As extruded)</option>
-                    <option value="Anodized Clear (10-15µm)">Anodized Clear (10-15µm Architectural)</option>
-                    <option value="Anodized Clear (20-25µm)">Anodized Clear (20-25µm Marine/Solar Grade)</option>
-                    <option value="Anodized Black">Anodized Matte Black</option>
-                    <option value="Powder Coated AAMA 2604">Powder Coated (AAMA 2604 Exterior)</option>
-                    <option value="Sandblasted Anodized">Sandblasted + Matte Anodized</option>
+                    <option value="Custom RAL Specification">Custom Project RAL / Pantone Matching</option>
                   </Select>
                 </FormGroup>
 

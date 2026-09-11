@@ -603,6 +603,15 @@
     "result": "PASS"
   },
   {
+    "route": "/products/architectural?system=sys-arch-win-sliding",
+    "entity_type": "ProductSystem",
+    "HTTP_status": 200,
+    "canonical_url": "https://leloimetal.com/products/architectural",
+    "indexable": true,
+    "redirect_target": null,
+    "result": "PASS"
+  },
+  {
     "route": "/products/architectural?system=sys-arch-curt-150",
     "entity_type": "ProductSystem",
     "HTTP_status": 200,

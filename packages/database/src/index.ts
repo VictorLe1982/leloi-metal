@@ -16,4 +16,5 @@ export * from './data/products-catalog-v2';
 export * from './data/product-taxonomy';
 export * from './product-canonical';
 export * from './data/canonical-products-data';
+export * from './data/canonical-claims-data';
 export default prisma;
