@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   HelpCircle,
   ChevronDown,
@@ -84,7 +85,7 @@ export const DossierFaqAndCta: React.FC<{
 
           <div className="md:col-span-5 flex flex-col sm:flex-row md:flex-col gap-3">
             <Link href={uploadHref} className="w-full">
-              <Button className="w-full bg-[#2F7BFF] hover:bg-blue-600 text-white font-semibold text-xs py-3 rounded-xl flex items-center justify-center gap-2">
+              <Button className="w-full bg-blue hover:bg-blue-600 text-white font-semibold text-xs py-3 rounded-xl flex items-center justify-center gap-2">
                 <FileUp className="w-4 h-4" />
                 <span>Request CAD / DWG Library</span>
               </Button>
@@ -107,11 +108,11 @@ export const DossierFaqAndCta: React.FC<{
       <section id="faq" className="py-8 scroll-mt-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-              <HelpCircle className="w-3.5 h-3.5 text-[#2F7BFF]" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+              <HelpCircle className="w-3.5 h-3.5 text-blue" />
               <span>Direct Manufacturer Answers</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
               Frequently Asked Questions
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-slate-600">
@@ -131,7 +132,7 @@ export const DossierFaqAndCta: React.FC<{
                     onClick={() => toggleFaq(idx)}
                     className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors"
                   >
-                    <span className="text-sm sm:text-base font-bold font-heading text-[#0A2D5B]">
+                    <span className="text-sm sm:text-base font-bold font-heading text-navy">
                       {faq.q}
                     </span>
                     <ChevronDown
@@ -161,7 +162,17 @@ export const DossierFaqAndCta: React.FC<{
       {/* Section 18: RFQ Integration & Final Action Trigger */}
       <section id="rfq-cta" className="py-12 pb-20 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-3xl bg-gradient-to-br from-[#0A2D5B] via-[#0D3B75] to-slate-900 text-white p-8 sm:p-14 overflow-hidden shadow-xl border border-blue-900/50">
+          <div className="relative rounded-3xl bg-gradient-to-br from-navy via-[#0D3B75] to-slate-900 text-white p-8 sm:p-14 overflow-hidden shadow-xl border border-blue-900/50">
+            {/* Subtle Architectural Ambient Background */}
+            <div className="absolute inset-0 opacity-15 mix-blend-overlay pointer-events-none">
+              <Image
+                src="/media/architectural/hero/architectural-windows-doors-hero-01.webp"
+                alt="Architectural Aluminium Facade"
+                fill
+                className="object-cover"
+              />
+            </div>
+
             {/* Background pattern */}
             <div
               className="absolute inset-0 opacity-10 pointer-events-none"
@@ -189,7 +200,7 @@ export const DossierFaqAndCta: React.FC<{
                 <Link href={rfqHref}>
                   <Button
                     size="lg"
-                    className="bg-[#2F7BFF] hover:bg-blue-600 text-white font-semibold px-7 py-3 rounded-xl shadow-lg shadow-blue-500/25 flex items-center gap-2 transition-transform active:scale-95"
+                    className="bg-blue hover:bg-blue-600 text-white font-semibold px-7 py-3 rounded-xl shadow-lg shadow-blue-500/25 flex items-center gap-2 transition-transform active:scale-95"
                   >
                     <span>Send Project Requirement</span>
                     <ArrowRight className="w-4 h-4" />

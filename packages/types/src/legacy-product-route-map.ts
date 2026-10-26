@@ -319,3 +319,90 @@ export function resolveLegacyCategoryUrl(legacyCategorySlug: string): string {
   }
   return `/products/${legacyCategorySlug}`;
 }
+
+/**
+ * LEGACY V5 TAXONOMY -> CANONICAL V6 FAMILY MAP
+ *
+ * The V5 taxonomy (product-taxonomy.ts) exposed 73 subcategory slugs. 19 of them
+ * match a canonical family slug exactly; the 54 below do not, and used to render
+ * a thin stub page that competed with its canonical twin for the same keywords.
+ *
+ * They are permanently redirected instead. Keyed by legacy subcategory slug
+ * because these slugs are unique across the whole V5 taxonomy.
+ */
+export const LEGACY_FAMILY_ROUTE_MAP: Record<string, { division: string; family: string }> = {
+  // --- Custom Extrusions ---
+  'custom-solid-profiles': { division: 'custom-extrusions', family: 'solid-extrusions' },
+  'custom-hollow-profiles': { division: 'custom-extrusions', family: 'hollow-extrusions' },
+  'semi-hollow-profiles': { division: 'custom-extrusions', family: 'semi-hollow-extrusions' },
+  'complex-multi-void': { division: 'custom-extrusions', family: 'complex-extrusions' },
+  'round-tubes': { division: 'custom-extrusions', family: 'round-profiles' },
+  'square-rectangular-hollow': { division: 'custom-extrusions', family: 'square-rectangular-profiles' },
+  'angle-profiles': { division: 'custom-extrusions', family: 'angles' },
+  'channel-profiles': { division: 'custom-extrusions', family: 'channels' },
+  't-profiles': { division: 'custom-extrusions', family: 'structural-profiles' },
+  'structural-beams-i-h': { division: 'custom-extrusions', family: 'structural-profiles' },
+  'custom-decorative': { division: 'custom-extrusions', family: 'decorative-profiles' },
+
+  // --- Industrial Profiles (the six T-slot series consolidate into one family) ---
+  't-slot-20-series': { division: 'industrial-profiles', family: 't-slot-framing' },
+  't-slot-30-series': { division: 'industrial-profiles', family: 't-slot-framing' },
+  't-slot-40-series': { division: 'industrial-profiles', family: 't-slot-framing' },
+  't-slot-45-series': { division: 'industrial-profiles', family: 't-slot-framing' },
+  't-slot-60-series': { division: 'industrial-profiles', family: 't-slot-framing' },
+  't-slot-80-series': { division: 'industrial-profiles', family: 't-slot-framing' },
+  'machine-frame-profiles': { division: 'industrial-profiles', family: 'machine-frames' },
+  'automation-frame-profiles': { division: 'industrial-profiles', family: 'automation-profiles' },
+  'robot-guard-profiles': { division: 'industrial-profiles', family: 'safety-guarding' },
+  'safety-guard-profiles': { division: 'industrial-profiles', family: 'safety-guarding' },
+  'workstation-profiles': { division: 'industrial-profiles', family: 'workstation-systems' },
+  'cleanroom-profiles': { division: 'industrial-profiles', family: 'cleanroom-systems' },
+  'linear-motion-profiles': { division: 'industrial-profiles', family: 'linear-motion' },
+  'equipment-frame-profiles': { division: 'industrial-profiles', family: 'equipment-frames' },
+  'industrial-enclosure-profiles': { division: 'industrial-profiles', family: 'equipment-frames' },
+  'custom-machinery-extrusions': { division: 'industrial-profiles', family: 'custom-industrial-extrusions' },
+
+  // --- Solar ---
+  'solar-module-frame-profiles': { division: 'solar', family: 'solar-module-frames' },
+  'rooftop-mounting-rails': { division: 'solar', family: 'rooftop-systems' },
+  'ground-mount-profiles': { division: 'solar', family: 'ground-mount-systems' },
+  'solar-mid-clamp-profiles': { division: 'solar', family: 'solar-clamps' },
+  'solar-end-clamp-profiles': { division: 'solar', family: 'solar-clamps' },
+  'solar-carport-profiles': { division: 'solar', family: 'solar-carport' },
+  'solar-structural-beams': { division: 'solar', family: 'solar-structural-profiles' },
+  'bipv-aluminium-profiles': { division: 'solar', family: 'bipv-profiles' },
+  'solar-canopy-structures': { division: 'solar', family: 'solar-canopies' },
+  'solar-inverter-enclosures': { division: 'solar', family: 'inverter-enclosures' },
+  'solar-equipment-housings': { division: 'solar', family: 'inverter-enclosures' },
+
+  // --- Architectural ---
+  'decorative-screens': { division: 'architectural', family: 'decorative-aluminium' },
+
+  // --- Thermal Management ---
+  'led-heat-sink-profiles': { division: 'thermal-management', family: 'led-heat-sinks' },
+  'lighting-heat-sink-profiles': { division: 'thermal-management', family: 'lighting-heat-sinks' },
+  'inverter-heat-sink-profiles': { division: 'thermal-management', family: 'inverter-heat-sinks' },
+  'power-electronics-heat-sinks': { division: 'thermal-management', family: 'power-electronics-cooling' },
+  'battery-thermal-profiles': { division: 'thermal-management', family: 'battery-thermal' },
+  'telecom-heat-sink-profiles': { division: 'thermal-management', family: 'telecom-cooling' },
+  'industrial-cooling-profiles': { division: 'thermal-management', family: 'industrial-heat-sinks' },
+  'custom-high-fin-extrusions': { division: 'thermal-management', family: 'industrial-heat-sinks' },
+
+  // --- OEM Components ---
+  'cut-to-length-components': { division: 'oem-components', family: 'precision-cut-components' },
+  'precision-aluminium-parts': { division: 'oem-components', family: 'custom-oem-parts' },
+  'surface-finished-oem': { division: 'oem-components', family: 'surface-finished-components' },
+  'powder-coated-oem': { division: 'oem-components', family: 'powder-coated-components' },
+  'anodized-oem': { division: 'oem-components', family: 'anodized-components' },
+  'custom-aluminium-parts': { division: 'oem-components', family: 'custom-oem-parts' },
+  'private-label-components': { division: 'oem-components', family: 'custom-oem-parts' }
+};
+
+/**
+ * Resolves a legacy V5 subcategory slug to its canonical family URL.
+ * Returns undefined when the slug is not a legacy orphan.
+ */
+export function resolveLegacyFamilyUrl(legacySubcategorySlug: string): string | undefined {
+  const target = LEGACY_FAMILY_ROUTE_MAP[legacySubcategorySlug];
+  return target ? `/products/${target.division}/${target.family}` : undefined;
+}

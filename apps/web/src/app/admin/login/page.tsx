@@ -3,12 +3,13 @@
 import React, { useState } from 'react';
 import { Button, FormGroup, Input, Logo } from '@leloi/ui';
 import { Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@leloimetal.com');
-  const [password, setPassword] = useState('LeloiMetal@2026Secure!');
+  const searchParams = useSearchParams();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,39 +19,36 @@ export default function AdminLoginPage() {
     setError(null);
 
     try {
-      // In standalone web, store session mock or call API
-      try {
-        const res = await fetch('http://localhost:4000/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        if (res.ok) {
-          const data = await res.json();
-          localStorage.setItem('leloi_token', data.accessToken);
-        }
-      } catch {
-        // Fallback for local demo
-        localStorage.setItem('leloi_token', 'mock-jwt-token-admin');
+      const res = await fetch('/api/admin/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (!res.ok) {
+        const payload = await res.json().catch(() => null);
+        setError(payload?.message || 'Invalid email or password.');
+        return;
       }
 
-      localStorage.setItem('leloi_user', JSON.stringify({ email, role: 'SUPER_ADMIN' }));
-      router.push('/admin/dashboard');
-    } catch (err: any) {
-      setError('Invalid email or password credentials');
+      const nextPath = searchParams.get('next');
+      router.replace(nextPath?.startsWith('/admin') ? nextPath : '/admin/dashboard');
+      router.refresh();
+    } catch {
+      setError('Unable to reach the authentication service. Please contact IT support.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#061D3B] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-navy-dark flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl p-8 sm:p-10 shadow-2xl border border-slate-700 space-y-6">
         <div className="text-center space-y-2">
           <div className="flex justify-center mb-4">
             <Logo variant="horizontal" iconSize={44} showSlogan={false} />
           </div>
-          <h1 className="text-xl font-bold font-heading text-[#0A2D5B]">
+          <h1 className="text-xl font-bold font-heading text-navy">
             Internal Staff & CRM Portal
           </h1>
           <p className="text-xs text-slate-500">
@@ -100,7 +98,7 @@ export default function AdminLoginPage() {
           </div>
         </form>
 
-        <div className="text-center text-[11px] text-slate-400 border-t border-[#E2E8F0] pt-4">
+        <div className="text-center text-[11px] text-slate-400 border-t border-slate-200 pt-4">
           Protected by server-side RBAC and IP audit logging.
         </div>
       </div>

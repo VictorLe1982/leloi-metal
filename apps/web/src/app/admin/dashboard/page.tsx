@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Card, Badge, Button } from '@leloi/ui';
 import { AdminNav } from '@/components/AdminNav';
@@ -17,34 +17,24 @@ import {
   Kanban,
   Globe2
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useAdminSession } from '@/lib/use-admin-session';
 
 export default function AdminDashboardPage() {
-  const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    const raw = localStorage.getItem('leloi_user');
-    if (!raw) {
-      router.push('/admin/login');
-      return;
-    }
-    setUser(JSON.parse(raw));
-  }, [router]);
+  const { user } = useAdminSession();
 
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]">
+    <div className="min-h-screen bg-light-gray">
       <AdminNav />
       <div className="p-6 lg:p-10 space-y-8 max-w-7xl mx-auto">
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#E2E8F0]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
           <div>
-            <div className="text-xs uppercase font-heading font-semibold text-[#2F7BFF] tracking-wider">
+            <div className="text-xs uppercase font-heading font-semibold text-blue tracking-wider">
               LELOI METAL BACK-OFFICE OPERATIONS
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">
+            <h1 className="text-2xl sm:text-3xl font-bold font-heading text-navy">
               Executive Sales & CRM Dashboard
             </h1>
           </div>
@@ -68,9 +58,9 @@ export default function AdminDashboardPage() {
         <Card variant="default" className="p-5">
           <div className="flex items-center justify-between">
             <div className="text-xs font-semibold text-slate-500 uppercase">Total RFQs Received</div>
-            <FileText className="w-5 h-5 text-[#2F7BFF]" />
+            <FileText className="w-5 h-5 text-blue" />
           </div>
-          <div className="text-3xl font-extrabold font-heading text-[#0A2D5B] mt-2">18</div>
+          <div className="text-3xl font-extrabold font-heading text-navy mt-2">18</div>
           <div className="text-xs text-emerald-600 flex items-center gap-1 mt-1 font-medium">
             <TrendingUp className="w-3.5 h-3.5" /> +4 this week
           </div>
@@ -90,7 +80,7 @@ export default function AdminDashboardPage() {
             <div className="text-xs font-semibold text-slate-500 uppercase">Qualified Leads</div>
             <Users className="w-5 h-5 text-emerald-600" />
           </div>
-          <div className="text-3xl font-extrabold font-heading text-[#0A2D5B] mt-2">42</div>
+          <div className="text-3xl font-extrabold font-heading text-navy mt-2">42</div>
           <div className="text-xs text-slate-500 mt-1">From Weight Tool & Web</div>
         </Card>
 
@@ -107,15 +97,15 @@ export default function AdminDashboardPage() {
       {/* Quick Access Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Recent RFQs */}
-        <div className="lg:col-span-8 bg-white rounded-xl border border-[#E2E8F0] shadow-xs overflow-hidden">
-          <div className="p-5 border-b border-[#E2E8F0] flex items-center justify-between">
-            <h2 className="font-heading font-bold text-lg text-[#0A2D5B]">Recent Incoming RFQs</h2>
-            <Link href="/admin/rfqs" className="text-xs font-semibold text-[#2F7BFF] hover:underline flex items-center gap-1">
+        <div className="lg:col-span-8 bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+          <div className="p-5 border-b border-slate-200 flex items-center justify-between">
+            <h2 className="font-heading font-bold text-lg text-navy">Recent Incoming RFQs</h2>
+            <Link href="/admin/rfqs" className="text-xs font-semibold text-blue hover:underline flex items-center gap-1">
               View All RFQs <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="divide-y divide-[#E2E8F0] text-sm">
+          <div className="divide-y divide-slate-200 text-sm">
             {[
               {
                 id: 'RFQ-2026-0004',
@@ -148,7 +138,7 @@ export default function AdminDashboardPage() {
               <div key={rfq.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-slate-50 transition-colors">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-[#0A2D5B]">{rfq.id}</span>
+                    <span className="font-mono font-bold text-navy">{rfq.id}</span>
                     <span className="text-xs font-medium text-slate-500">[{rfq.country}]</span>
                     <span className="text-xs text-slate-400">• {rfq.time}</span>
                   </div>
@@ -173,8 +163,8 @@ export default function AdminDashboardPage() {
 
         {/* Action Panel */}
         <div className="lg:col-span-4 space-y-6">
-          <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-xs space-y-4">
-            <h2 className="font-heading font-bold text-base text-[#0A2D5B]">Factory Audit & Data Safeguard</h2>
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
+            <h2 className="font-heading font-bold text-base text-navy">Factory Audit & Data Safeguard</h2>
             <p className="text-xs text-slate-600 leading-relaxed">
               As per the Master Blueprint, unverified factory claims are strictly hidden from public visitors.
             </p>
@@ -194,21 +184,23 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            <Link href="/docs/GAPS.md" className="block text-center text-xs text-[#2F7BFF] font-semibold hover:underline pt-2">
-              View Audit Gaps Checklist (GAPS.md) →
-            </Link>
+            <div className="text-center text-[11px] text-slate-500 pt-2 leading-relaxed">
+              Unverified capability data is tracked in{' '}
+              <span className="font-mono text-slate-700">docs/GAPS.md</span> in the engineering
+              repository. Submit evidence via the capability CMS to request verification.
+            </div>
           </div>
 
           {/* CRM & Strategy Quick Links */}
-          <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-xs space-y-3">
-            <h2 className="font-heading font-bold text-base text-[#0A2D5B]">Export CRM & Markets</h2>
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-3">
+            <h2 className="font-heading font-bold text-base text-navy">Export CRM & Markets</h2>
             <div className="space-y-2 text-xs">
               <Link
                 href="/admin/crm/pipeline"
-                className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-[#2F7BFF] transition-colors border border-slate-200"
+                className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-blue transition-colors border border-slate-200"
               >
                 <div className="flex items-center gap-2 font-semibold">
-                  <Kanban className="w-4 h-4 text-[#2F7BFF]" />
+                  <Kanban className="w-4 h-4 text-blue" />
                   <span>Buyer Pipeline Kanban</span>
                 </div>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -216,7 +208,7 @@ export default function AdminDashboardPage() {
 
               <Link
                 href="/admin/crm/buyers"
-                className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-[#2F7BFF] transition-colors border border-slate-200"
+                className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-blue transition-colors border border-slate-200"
               >
                 <div className="flex items-center gap-2 font-semibold">
                   <Users className="w-4 h-4 text-emerald-600" />
@@ -227,7 +219,7 @@ export default function AdminDashboardPage() {
 
               <Link
                 href="/admin/markets"
-                className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-[#2F7BFF] transition-colors border border-slate-200"
+                className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 hover:text-blue transition-colors border border-slate-200"
               >
                 <div className="flex items-center gap-2 font-semibold">
                   <Globe2 className="w-4 h-4 text-indigo-600" />

@@ -24,7 +24,7 @@ export const TechnicalProfilePlaceholder: React.FC<TechnicalProfilePlaceholderPr
 
   return (
     <div
-      className={`relative w-full ${aspectClass} bg-[#061D3B] flex items-center justify-center overflow-hidden select-none ${className}`}
+      className={`relative w-full ${aspectClass} bg-navy-dark flex items-center justify-center overflow-hidden select-none ${className}`}
       aria-label={`${title} Technical Blueprint`}
     >
       {/* Background Engineering Grid (Blueprint Style) */}

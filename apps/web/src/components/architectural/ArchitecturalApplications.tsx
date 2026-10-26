@@ -16,7 +16,7 @@ const APPLICATIONS: ApplicationItem[] = [
     icon: Home,
     category: 'Luxury Residential',
     title: 'Private Villas & Estates',
-    imageSrc: '/images/products/architectural-systems/window-door/application.webp',
+    imageSrc: '/media/architectural/gallery/architectural-windows-doors-hero-01.webp',
     description:
       'Expansive panoramic sliding doors and thermal-break casements engineered for seamless indoor-outdoor living, thermal efficiency, and minimal sightlines.',
     keyFeatures: ['Slim multi-track sliding', 'Floor-to-ceiling glass', 'Thermal-break comfort']
@@ -25,7 +25,7 @@ const APPLICATIONS: ApplicationItem[] = [
     icon: Building2,
     category: 'Urban Living',
     title: 'Townhouses & Row Houses',
-    imageSrc: '/images/products/architectural-systems/curtain-wall/application.webp',
+    imageSrc: '/media/architectural/gallery/architectural-casement-window-gallery-01.webp',
     description:
       'Standardized precision aluminium window and terrace door systems designed for streamlined installation schedules and reliable acoustic insulation.',
     keyFeatures: ['Modular profile sizes', 'Integrated flyscreens', 'Multi-point security locks']
@@ -34,7 +34,7 @@ const APPLICATIONS: ApplicationItem[] = [
     icon: Building,
     category: 'High-Density Residential',
     title: 'High-Rise Condominiums',
-    imageSrc: '/images/products/architectural-systems/category-hero/hero.webp',
+    imageSrc: '/media/architectural/gallery/architectural-curtain-wall-card-01.webp',
     description:
       'Heavy structural profiles engineered to withstand severe upper-story wind loading, cyclic pressure, and heavy monsoon rainfall without water infiltration.',
     keyFeatures: ['Wind load structural interlocks', 'Cascading water drainage', 'Acoustic seal gaskets']
@@ -43,16 +43,20 @@ const APPLICATIONS: ApplicationItem[] = [
     icon: Hotel,
     category: 'Hospitality',
     title: 'Hotels & Coastal Resorts',
-    imageSrc: '/images/products/architectural-systems/louvers/application.webp',
+    imageSrc: '/media/architectural/gallery/architectural-bungalow-gallery-01.webp',
     description:
       'Marine-grade surface finishes with AkzoNobel powder coating designed to resist salt-fog corrosion while delivering smooth, quiet guest room balcony sliding.',
-    keyFeatures: ['Corrosion-resistant coating', 'Whisper-quiet sliding rollers', '10-Year coating warranties*']
+    keyFeatures: [
+      'Corrosion-resistant coating',
+      'Whisper-quiet sliding rollers',
+      'Coating warranties up to 10 years, subject to conditions'
+    ]
   },
   {
     icon: Building2,
     category: 'Corporate & Mixed-Use',
     title: 'Commercial Office Complexes',
-    imageSrc: '/images/products/architectural-systems/curtain-wall/hero.webp',
+    imageSrc: '/media/architectural/gallery/architectural-cladding-card-01.webp',
     description:
       'High-traffic entrance systems and storefront glazing profiles compatible with automated door operators, access control, and facade curtain wall interfaces.',
     keyFeatures: ['Heavy-duty hinge barrels', 'Automatic operator prep', 'Curtain wall transom integration']
@@ -61,7 +65,7 @@ const APPLICATIONS: ApplicationItem[] = [
     icon: Landmark,
     category: 'Institutional',
     title: 'Civic & Educational Facilities',
-    imageSrc: '/images/products/architectural-systems/thermal-break/application.webp',
+    imageSrc: '/media/architectural/gallery/architectural-sliding-door-gallery-01.webp',
     description:
       'Robust, low-maintenance extrusions built for heavy public circulation, school campuses, and municipal infrastructure demanding decades of service life.',
     keyFeatures: ['Impact-resistant wall thickness', 'Tamper-resistant fittings', 'Durable powder coating']
@@ -73,11 +77,11 @@ export const ArchitecturalApplications: React.FC = () => {
     <section id="applications" className="py-16 sm:py-20 bg-slate-50 border-t border-slate-200 scroll-mt-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-            <Building2 className="w-3.5 h-3.5 text-[#2F7BFF]" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+            <Building2 className="w-3.5 h-3.5 text-blue" />
             <span>Built Environment</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
             Architectural Applications & Project Types
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -103,7 +107,7 @@ export const ArchitecturalApplications: React.FC = () => {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute top-3 left-3">
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#0A2D5B]/90 text-white backdrop-blur-xs flex items-center gap-1.5">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-navy/90 text-white backdrop-blur-xs flex items-center gap-1.5">
                       <Icon className="w-3 h-3" />
                       <span>{app.category}</span>
                     </span>
@@ -113,7 +117,7 @@ export const ArchitecturalApplications: React.FC = () => {
                 {/* Content */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                   <div>
-                    <h3 className="text-base font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                    <h3 className="text-base font-bold font-heading text-navy group-hover:text-blue transition-colors">
                       {app.title}
                     </h3>
                     <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">

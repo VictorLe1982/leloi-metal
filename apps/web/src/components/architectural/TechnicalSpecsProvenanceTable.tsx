@@ -6,6 +6,7 @@ import {
   getClaimSourceById,
   TechnicalClaim
 } from '@leloi/types';
+import { EvidenceTierBadge } from './EvidenceTierBadge';
 
 interface TechnicalSpecsProvenanceTableProps {
   entityId: string;
@@ -22,11 +23,11 @@ export const TechnicalSpecsProvenanceTable: React.FC<TechnicalSpecsProvenanceTab
         {/* Verified Claims Table */}
         <div>
           <div className="max-w-3xl mb-10">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#2F7BFF]" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+              <ShieldCheck className="w-3.5 h-3.5 text-blue" />
               <span>Verified Technical Provenance</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
               Verified Technical Specifications
             </h2>
             <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -53,14 +54,11 @@ export const TechnicalSpecsProvenanceTable: React.FC<TechnicalSpecsProvenanceTab
                         <td className="py-3.5 px-5 font-semibold text-slate-900 capitalize">
                           {claim.field.replace(/([A-Z])/g, ' $1').trim()}
                         </td>
-                        <td className="py-3.5 px-5 font-medium text-[#0A2D5B]">
+                        <td className="py-3.5 px-5 font-medium text-navy">
                           {claim.value}
                         </td>
                         <td className="py-3.5 px-5">
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                            <span>VERIFIED</span>
-                          </span>
+                          <EvidenceTierBadge tier={source?.evidenceTier} />
                         </td>
                         <td className="py-3.5 px-5 font-mono text-[11px] text-slate-500">
                           {source ? (
@@ -78,12 +76,19 @@ export const TechnicalSpecsProvenanceTable: React.FC<TechnicalSpecsProvenanceTab
               </table>
             </div>
 
-            <div className="bg-slate-50 p-4 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
-              <span className="flex items-center gap-1.5">
-                <Info className="w-4 h-4 text-blue-500" />
-                <span>Unverified or proprietary project metrics are delivered strictly per formal engineering drawing review.</span>
+            <div className="bg-slate-50 p-4 border-t border-slate-200 text-xs text-slate-500 space-y-1.5">
+              <span className="flex items-start gap-1.5">
+                <Info className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                <span>
+                  Project-specific performance metrics are issued only after formal engineering
+                  drawing review, not published here.
+                </span>
               </span>
-              <span className="font-mono text-[11px]">Audit Passed: 100% Provenance Backed</span>
+              <p className="pl-5.5 text-[11px] leading-relaxed">
+                Badges state the kind of evidence behind each value.
+                &ldquo;Manufacturer specification&rdquo; means stated by LELOI METAL from internal
+                process documents and not externally audited.
+              </p>
             </div>
           </div>
         </div>
@@ -91,11 +96,11 @@ export const TechnicalSpecsProvenanceTable: React.FC<TechnicalSpecsProvenanceTab
         {/* Section 7: Cross-Section / Profile Detail Anatomy */}
         <div id="cross-section" className="pt-10 border-t border-slate-200 scroll-mt-28">
           <div className="max-w-3xl mb-10">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-              <Layers className="w-3.5 h-3.5 text-[#2F7BFF]" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+              <Layers className="w-3.5 h-3.5 text-blue" />
               <span>Extrusion Anatomy</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
               Profile Geometry & Cross-Section Engineering
             </h2>
             <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -118,7 +123,7 @@ export const TechnicalSpecsProvenanceTable: React.FC<TechnicalSpecsProvenanceTab
 
             <div className="lg:col-span-6 space-y-4">
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                <h4 className="text-xs font-bold text-[#0A2D5B] uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-navy uppercase tracking-wider">
                   01. Multi-Chamber Outer Frame
                 </h4>
                 <p className="text-xs text-slate-600">
@@ -127,7 +132,7 @@ export const TechnicalSpecsProvenanceTable: React.FC<TechnicalSpecsProvenanceTab
               </div>
 
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                <h4 className="text-xs font-bold text-[#0A2D5B] uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-navy uppercase tracking-wider">
                   02. Internal Water Drainage Cascades
                 </h4>
                 <p className="text-xs text-slate-600">
@@ -136,7 +141,7 @@ export const TechnicalSpecsProvenanceTable: React.FC<TechnicalSpecsProvenanceTab
               </div>
 
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                <h4 className="text-xs font-bold text-[#0A2D5B] uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-navy uppercase tracking-wider">
                   03. Co-Extruded EPDM Gasket Channels
                 </h4>
                 <p className="text-xs text-slate-600">
@@ -145,7 +150,7 @@ export const TechnicalSpecsProvenanceTable: React.FC<TechnicalSpecsProvenanceTab
               </div>
 
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                <h4 className="text-xs font-bold text-[#0A2D5B] uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-navy uppercase tracking-wider">
                   04. Universal Glass Pocket Depth
                 </h4>
                 <p className="text-xs text-slate-600">

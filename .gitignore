@@ -51,3 +51,17 @@ prisma/*.db-journal
 uploads/
 temp/
 scratch/
+
+# Working scratch and archived source assets — large binaries that must not
+# enter git history. `archive/` alone is 29 MB, `scratch/` is 9.7 MB.
+archive/
+scratch/
+*.zip
+
+# Audit output written by scripts/audit-*.ts
+product-link-audit.json
+product-media-audit.json
+
+# Note: reports/ is deliberately NOT ignored. Those four JSON files are the
+# V6 audit record and are already in history; ignoring a tracked path only
+# creates confusion, since git keeps tracking it either way.

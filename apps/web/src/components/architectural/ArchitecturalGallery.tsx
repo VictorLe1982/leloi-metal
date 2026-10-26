@@ -13,47 +13,47 @@ interface GalleryItem {
 const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'gal-1',
-    title: 'Extruded Window & Door Cross-Sections',
-    category: 'Profile Geometry',
-    imageSrc: '/images/products/architectural-systems/window-door/cross-section.webp',
+    title: 'Precision Casement & Fixed Window Systems',
+    category: 'System Assembly',
+    imageSrc: '/media/architectural/gallery/architectural-casement-window-gallery-01.webp',
     spanClass: 'lg:col-span-2'
   },
   {
     id: 'gal-2',
     title: 'Thermal-Break PA66 Crimped Assembly',
     category: 'Thermal Insulation',
-    imageSrc: '/images/products/architectural-systems/thermal-break/cross-section.webp'
+    imageSrc: '/media/architectural/details/architectural-thermal-break-detail-01.webp'
   },
   {
     id: 'gal-3',
-    title: 'Architectural Window & Door Profiles',
-    category: 'Product Range',
-    imageSrc: '/media/catalog/18_window_door_profiles.webp'
+    title: 'Luxury Villa Ocean-Facing Sliding Envelopes',
+    category: 'Residential Project',
+    imageSrc: '/media/architectural/gallery/architectural-windows-doors-hero-01.webp'
   },
   {
     id: 'gal-4',
-    title: 'Multi-Track Sliding Window System',
-    category: 'System Assembly',
-    imageSrc: '/images/products/architectural-systems/window-door/hero.webp',
+    title: 'Seamless Multi-Track Terrace Sliding Glass',
+    category: 'Opening Solutions',
+    imageSrc: '/media/architectural/gallery/architectural-sliding-door-gallery-01.webp',
     spanClass: 'lg:col-span-2'
   },
   {
     id: 'gal-5',
-    title: 'Glazed Architectural Building Envelope',
-    category: 'Building Project',
-    imageSrc: '/images/products/architectural-systems/window-door/application.webp'
+    title: 'High-Rise Commercial Glass Curtain Wall',
+    category: 'Commercial Facade',
+    imageSrc: '/media/architectural/gallery/architectural-curtain-wall-card-01.webp'
   },
   {
     id: 'gal-6',
-    title: 'Curtain Wall & Facade Integration',
-    category: 'Commercial Facade',
-    imageSrc: '/images/products/architectural-systems/curtain-wall/hero.webp'
+    title: 'Exterior Sunshade & Architectural Louvers',
+    category: 'Solar Shading',
+    imageSrc: '/media/architectural/gallery/architectural-louvers-card-01.webp'
   },
   {
     id: 'gal-7',
-    title: 'Solar Shading & Louver Integration',
-    category: 'Exterior Shading',
-    imageSrc: '/images/products/architectural-systems/louvers/hero.webp'
+    title: 'Modern Resort Bungalow Architectural Glazing',
+    category: 'Hospitality Design',
+    imageSrc: '/media/architectural/gallery/architectural-bungalow-gallery-01.webp'
   }
 ];
 
@@ -62,11 +62,11 @@ export const ArchitecturalGallery: React.FC = () => {
     <section id="gallery" className="py-16 sm:py-20 bg-white scroll-mt-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-            <Camera className="w-3.5 h-3.5 text-[#2F7BFF]" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+            <Camera className="w-3.5 h-3.5 text-blue" />
             <span>Technical Photography</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
             Curated Technical Gallery
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">

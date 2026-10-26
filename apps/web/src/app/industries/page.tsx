@@ -57,14 +57,14 @@ const INDUSTRIES = [
 
 export default function IndustriesPage() {
   return (
-    <div className="min-h-screen bg-[#F1F4F8]/50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-gray/50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF]">
+          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-blue">
             APPLICATION EXPERTISE
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0A2D5B] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-navy tracking-tight">
             Industries We Serve
           </h1>
           <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
@@ -79,24 +79,24 @@ export default function IndustriesPage() {
             return (
               <Card key={ind.slug} variant="interactive" className="flex flex-col justify-between">
                 <div>
-                  <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-navy/5 flex items-center justify-center text-navy mb-4">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                  <h3 className="text-xl font-bold font-heading text-navy group-hover:text-blue transition-colors">
                     {ind.name}
                   </h3>
                   <p className="text-sm text-slate-600 mt-2 leading-relaxed">
                     {ind.description}
                   </p>
-                  <div className="text-xs font-mono text-[#0A2D5B] font-semibold mt-4">
+                  <div className="text-xs font-mono text-navy font-semibold mt-4">
                     Alloys: {ind.keyAlloys}
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
+                <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between">
                   <Link
                     href={`/rfq?industry=${ind.slug}`}
-                    className="text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF] flex items-center gap-1.5"
+                    className="text-xs font-heading font-semibold text-navy group-hover:text-blue flex items-center gap-1.5"
                   >
                     Request Industry Quote
                     <ArrowRight className="w-4 h-4" />

@@ -53,11 +53,11 @@ export const EngineeringAndFabrication: React.FC = () => {
     <section id="engineering" className="py-16 sm:py-20 bg-white scroll-mt-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-            <Wrench className="w-3.5 h-3.5 text-[#2F7BFF]" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+            <Wrench className="w-3.5 h-3.5 text-blue" />
             <span>Downstream Fabrication</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
             Engineering & Fabrication Capabilities
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -74,10 +74,10 @@ export const EngineeringAndFabrication: React.FC = () => {
                 className="p-6 rounded-2xl border border-slate-200 bg-slate-50/40 hover:bg-white hover:border-blue-200 hover:shadow-sm transition-all space-y-4 flex flex-col justify-between"
               >
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#2F7BFF] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue flex items-center justify-center">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-bold font-heading text-[#0A2D5B]">
+                  <h3 className="text-base font-bold font-heading text-navy">
                     {srv.title}
                   </h3>
                   <p className="text-xs text-slate-600 leading-relaxed">
@@ -100,7 +100,7 @@ export const EngineeringAndFabrication: React.FC = () => {
           })}
 
           {/* CTA Box */}
-          <div className="p-6 rounded-2xl bg-gradient-to-br from-[#0A2D5B] to-slate-900 text-white space-y-4 flex flex-col justify-between shadow-sm">
+          <div className="p-6 rounded-2xl bg-gradient-to-br from-navy to-slate-900 text-white space-y-4 flex flex-col justify-between shadow-sm">
             <div className="space-y-2">
               <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">Custom Tooling</span>
               <h3 className="text-lg font-bold font-heading text-white">Have a Custom Profile Drawing?</h3>
@@ -111,7 +111,7 @@ export const EngineeringAndFabrication: React.FC = () => {
 
             <div className="pt-4">
               <Link href="/rfq?division=architectural&family=windows-doors&mode=upload">
-                <Button className="w-full bg-[#2F7BFF] hover:bg-blue-600 text-white text-xs py-2.5 flex items-center justify-center gap-2 font-semibold">
+                <Button className="w-full bg-blue hover:bg-blue-600 text-white text-xs py-2.5 flex items-center justify-center gap-2 font-semibold">
                   <span>Upload Profile Drawing</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Button>

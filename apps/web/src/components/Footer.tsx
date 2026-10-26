@@ -1,17 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { BrandLogo } from '@leloi/ui';
-import { ShieldCheck, Mail, MapPin, Phone, ArrowRight, ExternalLink } from 'lucide-react';
+import { ShieldCheck, Mail, MapPin, ArrowRight } from 'lucide-react';
 import { getProductDivisions } from '@leloi/types';
+import { COMPANY, FACTORY_ADDRESS, CERTIFICATIONS } from '@/data/company';
+import { CAPABILITY_DOSSIERS } from '@/data/capabilities';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#061D3B] text-slate-300 border-t border-slate-800">
+    <footer className="bg-navy-dark text-slate-300 border-t border-slate-800">
       {/* Top CTA Strip */}
-      <div className="bg-[#0A2D5B] border-b border-white/10 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="bg-navy border-b border-white/10 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="max-w-2xl text-center lg:text-left">
-            <div className="text-xs uppercase font-heading font-semibold tracking-wider text-[#2F7BFF] mb-2">
+            <div className="text-xs uppercase font-heading font-semibold tracking-wider text-blue mb-2">
               Ready For Engineering Collaboration
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold font-heading text-white">
@@ -24,7 +26,7 @@ export const Footer: React.FC = () => {
           <div className="flex flex-wrap items-center gap-4 shrink-0">
             <Link
               href="/rfq"
-              className="inline-flex items-center justify-center font-heading font-semibold text-sm px-6 py-3.5 rounded-md bg-[#2F7BFF] text-white hover:bg-[#1B6BF8] shadow-md transition-all gap-2"
+              className="inline-flex items-center justify-center font-heading font-semibold text-sm px-6 py-3.5 rounded-md bg-blue text-white hover:bg-blue-hover shadow-md transition-all gap-2"
             >
               Start RFQ / Upload Drawing
               <ArrowRight className="w-4 h-4" />
@@ -48,20 +50,50 @@ export const Footer: React.FC = () => {
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed mt-4">
               Precision aluminium extrusion, CNC machining, surface treatment and OEM manufacturing from Vietnam for global B2B industries.
             </p>
-            <div className="pt-2">
-              <div className="text-xs font-semibold text-white tracking-wide uppercase mb-1">
-                Parent Corporate Entity:
+            <div className="pt-2 space-y-3">
+              <div>
+                <div className="text-xs font-semibold text-white tracking-wide uppercase mb-1">
+                  Parent Corporate Entity
+                </div>
+                <div className="text-sm text-slate-300 font-medium">{COMPANY.legalName}</div>
               </div>
-              <div className="text-sm text-slate-300 font-medium">
-                LELOI EXIM GLOBAL CO., LTD
+
+              <div className="flex items-start gap-2.5 text-xs text-slate-400">
+                <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-blue" />
+                <address className="not-italic leading-relaxed">
+                  {FACTORY_ADDRESS.streetAddress}
+                  <br />
+                  {FACTORY_ADDRESS.ward}, {FACTORY_ADDRESS.region}
+                  <br />
+                  {FACTORY_ADDRESS.country}
+                </address>
               </div>
-              <div className="text-xs text-slate-400 mt-0.5">
-                Vietnam International Trade & Manufacturing Hub
+
+              <div className="flex items-center gap-2.5 text-xs text-slate-400">
+                <Mail className="w-4 h-4 shrink-0 text-blue" />
+                <a
+                  href={`mailto:${COMPANY.salesEmail}`}
+                  className="hover:text-white transition-colors"
+                >
+                  {COMPANY.salesEmail}
+                </a>
               </div>
             </div>
-            <div className="flex items-center gap-2 text-xs text-emerald-400 pt-2">
-              <ShieldCheck className="w-4 h-4 shrink-0" />
-              <span>Confidential RFQ file handling & strict NDA protection</span>
+
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-xs">
+              {CERTIFICATIONS.map((cert) => (
+                <span
+                  key={cert.standard}
+                  className="inline-flex items-center gap-1.5 text-emerald-400 font-medium"
+                >
+                  <ShieldCheck className="w-4 h-4 shrink-0" />
+                  {cert.standard}
+                </span>
+              ))}
+              <span className="inline-flex items-center gap-1.5 text-emerald-400">
+                <ShieldCheck className="w-4 h-4 shrink-0" />
+                NDA-protected RFQ handling
+              </span>
             </div>
           </div>
 
@@ -90,34 +122,22 @@ export const Footer: React.FC = () => {
               Capabilities
             </h4>
             <ul className="space-y-2 text-sm text-slate-400 font-normal">
+              {CAPABILITY_DOSSIERS.map((capability) => (
+                <li key={capability.slug}>
+                  <Link
+                    href={`/capabilities/${capability.slug}`}
+                    className="hover:text-white transition-colors"
+                  >
+                    {capability.navLabel}
+                  </Link>
+                </li>
+              ))}
               <li>
-                <Link href="/capabilities/aluminium-extrusion" className="hover:text-white transition-colors">
-                  Extrusion Presses
-                </Link>
-              </li>
-              <li>
-                <Link href="/capabilities/cnc-machining" className="hover:text-white transition-colors">
-                  Precision CNC Machining
-                </Link>
-              </li>
-              <li>
-                <Link href="/capabilities/anodizing" className="hover:text-white transition-colors">
-                  Anodizing & Coloring
-                </Link>
-              </li>
-              <li>
-                <Link href="/capabilities/powder-coating" className="hover:text-emerald-400 font-medium transition-colors flex items-center gap-1">
-                  <span>Powder Coating (AkzoNobel)</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/capabilities/precision-cutting" className="hover:text-white transition-colors">
-                  Mitre & Precision Cutting
-                </Link>
-              </li>
-              <li>
-                <Link href="/capabilities/quality-control" className="hover:text-white transition-colors">
-                  QC & CMM Inspection
+                <Link
+                  href="/capabilities/powder-coating"
+                  className="hover:text-emerald-400 font-medium transition-colors"
+                >
+                  Powder Coating (AkzoNobel)
                 </Link>
               </li>
             </ul>
@@ -130,17 +150,17 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-sm text-slate-400 font-normal">
               <li>
-                <Link href="/tools/aluminium-weight-calculator" className="hover:text-[#2F7BFF] transition-colors font-medium">
+                <Link href="/tools/aluminium-weight-calculator" className="hover:text-blue transition-colors font-medium">
                   Weight Calculator (kg/m)
                 </Link>
               </li>
               <li>
-                <Link href="/tools/import-duty-checker" className="hover:text-[#2F7BFF] transition-colors font-medium">
+                <Link href="/tools/import-duty-checker" className="hover:text-blue transition-colors font-medium">
                   Import Duty Checker (HS 7604)
                 </Link>
               </li>
               <li>
-                <Link href="/tools/alloy-selector" className="hover:text-[#2F7BFF] transition-colors font-medium">
+                <Link href="/tools/alloy-selector" className="hover:text-blue transition-colors font-medium">
                   Alloy & Temper Selector
                 </Link>
               </li>

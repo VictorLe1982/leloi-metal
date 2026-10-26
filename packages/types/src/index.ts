@@ -7,3 +7,4 @@ export * from './data/canonical-products-data';
 export * from './legacy-product-route-map';
 export * from './services/product-catalog-service';
 export * from './data/canonical-claims-data';
+export * from './data/architectural-media';

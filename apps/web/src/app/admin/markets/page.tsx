@@ -197,17 +197,17 @@ export default function AdminMarketsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]">
+    <div className="min-h-screen bg-light-gray">
       <AdminNav />
 
       <div className="p-6 lg:p-10 space-y-8 max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-[#2F7BFF]">
+            <div className="text-xs font-semibold uppercase tracking-wider text-blue">
               MARKET INTELLIGENCE & PRIORITIZATION
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">
+            <h1 className="text-2xl sm:text-3xl font-bold font-heading text-navy">
               Market Opportunity Scoring Engine
             </h1>
           </div>
@@ -233,11 +233,11 @@ export default function AdminMarketsPage() {
         </div>
 
         {/* Algorithm Weights Control Box */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-6 shadow-xs space-y-6">
-          <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-4">
+        <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-6">
+          <div className="flex items-center justify-between border-b border-slate-200 pb-4">
             <div className="space-y-1">
-              <h2 className="text-base font-bold font-heading text-[#0A2D5B] flex items-center gap-2">
-                <Sliders className="w-4 h-4 text-[#2F7BFF]" />
+              <h2 className="text-base font-bold font-heading text-navy flex items-center gap-2">
+                <Sliders className="w-4 h-4 text-blue" />
                 Dynamic Weighting Factor Configuration
               </h2>
               <p className="text-xs text-slate-500">
@@ -256,7 +256,7 @@ export default function AdminMarketsPage() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-semibold text-slate-700">
                 <span>Tariff Advantage</span>
-                <span className="text-[#2F7BFF] font-bold">{wTariff}%</span>
+                <span className="text-blue font-bold">{wTariff}%</span>
               </div>
               <input
                 type="range"
@@ -265,7 +265,7 @@ export default function AdminMarketsPage() {
                 step="5"
                 value={wTariff}
                 onChange={(e) => setWTariff(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#2F7BFF]"
+                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue"
               />
               <p className="text-[10px] text-slate-400">FTA duty exemption vs. MFN</p>
             </div>
@@ -274,7 +274,7 @@ export default function AdminMarketsPage() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-semibold text-slate-700">
                 <span>Import Market Size</span>
-                <span className="text-[#2F7BFF] font-bold">{wVolume}%</span>
+                <span className="text-blue font-bold">{wVolume}%</span>
               </div>
               <input
                 type="range"
@@ -283,7 +283,7 @@ export default function AdminMarketsPage() {
                 step="5"
                 value={wVolume}
                 onChange={(e) => setWVolume(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#2F7BFF]"
+                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue"
               />
               <p className="text-[10px] text-slate-400">Total national extrusion imports</p>
             </div>
@@ -292,7 +292,7 @@ export default function AdminMarketsPage() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-semibold text-slate-700">
                 <span>Payment & Legal Risk</span>
-                <span className="text-[#2F7BFF] font-bold">{wPayment}%</span>
+                <span className="text-blue font-bold">{wPayment}%</span>
               </div>
               <input
                 type="range"
@@ -301,7 +301,7 @@ export default function AdminMarketsPage() {
                 step="5"
                 value={wPayment}
                 onChange={(e) => setWPayment(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#2F7BFF]"
+                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue"
               />
               <p className="text-[10px] text-slate-400">L/C enforceability & credit rating</p>
             </div>
@@ -310,7 +310,7 @@ export default function AdminMarketsPage() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-semibold text-slate-700">
                 <span>Logistics & Freight</span>
-                <span className="text-[#2F7BFF] font-bold">{wLogistics}%</span>
+                <span className="text-blue font-bold">{wLogistics}%</span>
               </div>
               <input
                 type="range"
@@ -319,7 +319,7 @@ export default function AdminMarketsPage() {
                 step="5"
                 value={wLogistics}
                 onChange={(e) => setWLogistics(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#2F7BFF]"
+                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue"
               />
               <p className="text-[10px] text-slate-400">Sea transit days & container rates</p>
             </div>
@@ -328,7 +328,7 @@ export default function AdminMarketsPage() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-semibold text-slate-700">
                 <span>Vietnam Momentum</span>
-                <span className="text-[#2F7BFF] font-bold">{wMomentum}%</span>
+                <span className="text-blue font-bold">{wMomentum}%</span>
               </div>
               <input
                 type="range"
@@ -337,7 +337,7 @@ export default function AdminMarketsPage() {
                 step="5"
                 value={wMomentum}
                 onChange={(e) => setWMomentum(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#2F7BFF]"
+                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue"
               />
               <p className="text-[10px] text-slate-400">Annual export growth velocity</p>
             </div>
@@ -345,9 +345,9 @@ export default function AdminMarketsPage() {
         </div>
 
         {/* Dynamic Opportunity Ranking Table */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] shadow-xs overflow-hidden">
-          <div className="p-4 border-b border-[#E2E8F0] flex items-center justify-between">
-            <h3 className="font-heading font-bold text-sm text-[#0A2D5B]">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+          <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+            <h3 className="font-heading font-bold text-sm text-navy">
               Calculated Market Opportunity Ranking (7 Priority Export Targets)
             </h3>
             <span className="text-xs text-slate-500 italic">
@@ -358,7 +358,7 @@ export default function AdminMarketsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-[#0A2D5B] text-white">
+                <tr className="bg-navy text-white">
                   <th className="py-3 px-4">Rank</th>
                   <th className="py-3 px-3">Market</th>
                   <th className="py-3 px-3">Primary Trade Agreement</th>
@@ -372,7 +372,7 @@ export default function AdminMarketsPage() {
                   <th className="py-3 px-4 text-right">Audit Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E2E8F0] text-slate-700">
+              <tbody className="divide-y divide-slate-200 text-slate-700">
                 {sortedMarkets.map((m, idx) => {
                   const score = calculateOpportunityScore(m);
                   return (
@@ -381,7 +381,7 @@ export default function AdminMarketsPage() {
                         #{idx + 1}
                       </td>
                       <td className="py-3.5 px-3">
-                        <div className="font-bold text-[#0A2D5B] text-sm">{m.name}</div>
+                        <div className="font-bold text-navy text-sm">{m.name}</div>
                         <div className="text-[11px] text-slate-400 font-mono">
                           {m.countryCode} • {m.region}
                         </div>
@@ -394,12 +394,12 @@ export default function AdminMarketsPage() {
                       <td className="py-3.5 px-2 font-mono text-slate-600">{m.momentumScore}</td>
                       <td className="py-3.5 px-3">
                         <div className="flex items-center gap-2">
-                          <span className="font-extrabold text-base text-[#2F7BFF]">
+                          <span className="font-extrabold text-base text-blue">
                             {score}
                           </span>
                           <div className="w-12 bg-slate-200 rounded-full h-1.5 overflow-hidden">
                             <div
-                              className="bg-[#2F7BFF] h-1.5 rounded-full"
+                              className="bg-blue h-1.5 rounded-full"
                               style={{ width: `${Math.min(100, score)}%` }}
                             />
                           </div>
@@ -419,7 +419,7 @@ export default function AdminMarketsPage() {
                       <td className="py-3.5 px-4 text-right">
                         <button
                           onClick={() => toggleVerification(m.id)}
-                          className="text-xs font-semibold text-[#2F7BFF] hover:underline"
+                          className="text-xs font-semibold text-blue hover:underline"
                         >
                           {m.verificationStatus === 'VERIFIED' ? 'Mark Review' : 'Verify'}
                         </button>

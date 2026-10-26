@@ -5,6 +5,10 @@ import { Button, FormGroup, Input, Select, Textarea } from '@leloi/ui';
 import { trackB2BEvent } from '@leloi/analytics';
 import { Mail, MapPin, Phone, CheckCircle2, ShieldCheck, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { submitContactForm, ApiError, ApiUnreachableError } from '@/lib/api';
+import { COMPANY, FACTORY_ADDRESS, CERTIFICATIONS } from '@/data/company';
+
+const SALES_EMAIL = COMPANY.salesEmail;
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -26,37 +30,42 @@ export default function ContactPage() {
     setErrorMsg(null);
 
     try {
-      try {
-        await fetch('http://localhost:4000/api/public/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-      } catch {
-        // Fallback for demo
-      }
+      await submitContactForm({
+        ...formData,
+        landingPage: typeof window !== 'undefined' ? window.location.pathname : '/contact'
+      });
 
       setIsSubmitted(true);
       trackB2BEvent({
         name: 'contact_submitted',
         params: { country: formData.country, interest: formData.productInterest }
       });
-    } catch (err: any) {
-      setErrorMsg('An error occurred. Please try again or email us directly.');
+    } catch (err) {
+      if (err instanceof ApiUnreachableError) {
+        setErrorMsg(
+          `We could not reach our server, so your message was not sent. Please try again shortly or email us directly at ${SALES_EMAIL}.`
+        );
+      } else if (err instanceof ApiError && err.status < 500) {
+        setErrorMsg(`Your message could not be sent: ${err.message}`);
+      } else {
+        setErrorMsg(
+          `Your message was not sent due to a server error. Please email us directly at ${SALES_EMAIL}.`
+        );
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]/50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-gray/50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF]">
+          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-blue">
             GLOBAL EXPORT DESK
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0A2D5B] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-navy tracking-tight">
             Contact LELOI METAL
           </h1>
           <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
@@ -66,13 +75,13 @@ export default function ContactPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left: Contact Form */}
-          <div className="lg:col-span-7 bg-white rounded-2xl border border-[#E2E8F0] p-8 sm:p-10 shadow-sm">
+          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 shadow-sm">
             {isSubmitted ? (
               <div className="py-12 text-center space-y-4">
                 <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold font-heading text-[#0A2D5B]">
+                <h3 className="text-2xl font-bold font-heading text-navy">
                   Message Received
                 </h3>
                 <p className="text-sm text-slate-600 max-w-md mx-auto">
@@ -101,7 +110,7 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] border-b border-[#E2E8F0] pb-3">
+                <h3 className="text-xl font-bold font-heading text-navy border-b border-slate-200 pb-3">
                   Send an Export Inquiry
                 </h3>
 
@@ -198,43 +207,58 @@ export default function ContactPage() {
 
           {/* Right: Contact Info & Drawing Direct Banner */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white rounded-2xl border border-[#E2E8F0] p-8 shadow-sm space-y-6">
-              <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+            <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-6">
+              <h3 className="text-xl font-bold font-heading text-navy">
                 Direct Contacts
               </h3>
 
               <div className="space-y-4 text-sm text-slate-600">
                 <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-[#2F7BFF] shrink-0 mt-0.5" />
+                  <Mail className="w-5 h-5 text-blue shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-[#0A2D5B]">Export Sales Desk</div>
-                    <a href="mailto:sales@leloimetal.com" className="hover:text-[#2F7BFF]">
+                    <div className="font-semibold text-navy">Export Sales Desk</div>
+                    <a href="mailto:sales@leloimetal.com" className="hover:text-blue">
                       sales@leloimetal.com
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-[#2F7BFF] shrink-0 mt-0.5" />
+                  <MapPin className="w-5 h-5 text-blue shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-[#0A2D5B]">Vietnam Operations</div>
+                    <div className="font-semibold text-navy">Manufacturing Facility</div>
+                    <address className="text-xs text-slate-500 mt-0.5 not-italic leading-relaxed">
+                      {COMPANY.legalName}
+                      <br />
+                      {FACTORY_ADDRESS.streetAddress}
+                      <br />
+                      {FACTORY_ADDRESS.ward}, {FACTORY_ADDRESS.region}
+                      <br />
+                      {FACTORY_ADDRESS.country}
+                    </address>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-navy">Quality Certification</div>
                     <div className="text-xs text-slate-500 mt-0.5">
-                      LELOI EXIM GLOBAL CO., LTD<br />
-                      Ho Chi Minh City / Ha Nam Extrusion Hub, Vietnam
+                      {CERTIFICATIONS.map((cert) => cert.standard).join(' · ')}
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="p-4 bg-[#F1F4F8] rounded-xl border border-[#E2E8F0] text-xs text-slate-600 space-y-1">
-                <div className="font-bold text-[#0A2D5B]">Business Hours (ICT / UTC+7):</div>
+              <div className="p-4 bg-light-gray rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1">
+                <div className="font-bold text-navy">Business Hours (ICT / UTC+7):</div>
                 <div>Monday – Friday: 08:00 – 17:30</div>
                 <div className="text-slate-400">Global inquiries monitored 24/7</div>
               </div>
             </div>
 
             {/* Drawing CTA Box */}
-            <div className="bg-[#0A2D5B] text-white rounded-2xl p-8 shadow-sm space-y-4">
+            <div className="bg-navy text-white rounded-2xl p-8 shadow-sm space-y-4">
               <h4 className="text-lg font-bold font-heading text-white">
                 Already Have a CAD Drawing?
               </h4>

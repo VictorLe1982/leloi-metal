@@ -332,14 +332,14 @@ export default function ImportDutyCheckerPage() {
   const dutySavings = Math.max(0, mfnDutyAmount - prefDutyAmount);
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]/50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-gray/50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF]">
+          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-blue">
             TRADE & COMPLIANCE TOOLS
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0A2D5B] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-navy tracking-tight">
             Aluminium Import Duty Checker
           </h1>
           <p className="text-sm sm:text-base text-slate-600">
@@ -348,7 +348,7 @@ export default function ImportDutyCheckerPage() {
         </div>
 
         {/* Interactive Selection Grid */}
-        <div className="bg-white rounded-2xl shadow-sm border border-[#E2E8F0] p-6 sm:p-8 space-y-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Country Selector */}
             <div className="space-y-2">
@@ -358,7 +358,7 @@ export default function ImportDutyCheckerPage() {
               <select
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
-                className="w-full px-4 py-3 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0A2D5B] font-medium text-base focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-navy font-medium text-base focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
               >
                 <option value="CA">🇨🇦 Canada (CPTPP Agreement)</option>
                 <option value="DE">🇩🇪 Germany / European Union (EVFTA Agreement)</option>
@@ -380,7 +380,7 @@ export default function ImportDutyCheckerPage() {
               <select
                 value={selectedHsCode}
                 onChange={(e) => setSelectedHsCode(e.target.value)}
-                className="w-full px-4 py-3 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0A2D5B] font-medium text-base focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-navy font-medium text-base focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all"
               >
                 <option value="7604.29">
                   HS 7604.29 — Other alloy profiles (Solid shapes, heat sinks, structural frames)
@@ -399,7 +399,7 @@ export default function ImportDutyCheckerPage() {
           </div>
 
           {/* Landed Duty Comparison Result Card */}
-          <div className="bg-gradient-to-br from-[#061D3B] to-[#0A2D5B] text-white rounded-2xl p-6 sm:p-8 space-y-6">
+          <div className="bg-gradient-to-br from-navy-dark to-navy text-white rounded-2xl p-6 sm:p-8 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
               <div className="space-y-1">
                 <div className="text-xs font-mono uppercase tracking-widest text-blue-300 flex items-center gap-2">
@@ -421,7 +421,7 @@ export default function ImportDutyCheckerPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-1">
                 <div className="text-xs text-slate-300 font-medium">Preferential Rate (Vietnam Origin)</div>
-                <div className="text-3xl sm:text-4xl font-extrabold text-[#2F7BFF] flex items-baseline gap-1">
+                <div className="text-3xl sm:text-4xl font-extrabold text-blue flex items-baseline gap-1">
                   {currentData.prefRate}%
                   {currentData.prefRate === 0 && (
                     <span className="text-xs font-semibold bg-green-500/20 text-green-300 px-2 py-0.5 rounded-full">
@@ -482,7 +482,7 @@ export default function ImportDutyCheckerPage() {
                     step="5000"
                     value={cargoValueUsd}
                     onChange={(e) => setCargoValueUsd(Number(e.target.value) || 0)}
-                    className="w-36 px-3 py-1.5 bg-white text-[#0A2D5B] font-bold rounded-lg text-sm text-right focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
+                    className="w-36 px-3 py-1.5 bg-white text-navy font-bold rounded-lg text-sm text-right focus:outline-none focus:ring-2 focus:ring-blue"
                   />
                   <span className="text-sm text-slate-300">USD</span>
                 </div>
@@ -497,7 +497,7 @@ export default function ImportDutyCheckerPage() {
                 </div>
                 <div>
                   <span className="text-slate-400">Duty with Vietnam Preferential:</span>
-                  <div className="text-base font-semibold text-[#2F7BFF]">
+                  <div className="text-base font-semibold text-blue">
                     ${prefDutyAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
                 </div>
@@ -514,9 +514,9 @@ export default function ImportDutyCheckerPage() {
           {/* Technical Compliance & Origin Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             {/* Rules of Origin Box */}
-            <div className="p-5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl space-y-3">
-              <div className="flex items-center gap-2 text-sm font-bold text-[#0A2D5B] font-heading">
-                <FileCheck2 className="w-4 h-4 text-[#2F7BFF]" />
+            <div className="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+              <div className="flex items-center gap-2 text-sm font-bold text-navy font-heading">
+                <FileCheck2 className="w-4 h-4 text-blue" />
                 Rules of Origin (RoO) Requirement
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -543,7 +543,7 @@ export default function ImportDutyCheckerPage() {
           </div>
 
           {/* Verified Official Source & Disclaimer */}
-          <div className="pt-4 border-t border-[#E2E8F0] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-500">
+          <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-500">
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-green-600 shrink-0" />
               <span>
@@ -553,7 +553,7 @@ export default function ImportDutyCheckerPage() {
                 href={currentData.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#2F7BFF] hover:underline inline-flex items-center gap-1 font-medium"
+                className="text-blue hover:underline inline-flex items-center gap-1 font-medium"
               >
                 Official Schedule <ExternalLink className="w-3 h-3" />
               </a>
@@ -576,7 +576,7 @@ export default function ImportDutyCheckerPage() {
         </div>
 
         {/* Next Action Conversion Strip */}
-        <div className="bg-[#0A2D5B] text-white rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
+        <div className="bg-navy text-white rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-bold font-heading">
               Need Landed-Cost Calculation or Drawing Verification?

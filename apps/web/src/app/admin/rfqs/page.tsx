@@ -103,16 +103,16 @@ export default function AdminRfqsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]">
+    <div className="min-h-screen bg-light-gray">
       <AdminNav />
       <div className="p-6 lg:p-10 space-y-6 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-[#2F7BFF]">
+            <div className="text-xs font-semibold uppercase tracking-wider text-blue">
               RFQ & FILE DISCOVERY DESK
             </div>
-            <h1 className="text-2xl font-bold font-heading text-[#0A2D5B]">
+            <h1 className="text-2xl font-bold font-heading text-navy">
               Manage Qualified RFQs & CAD Drawings
             </h1>
           </div>
@@ -126,11 +126,11 @@ export default function AdminRfqsPage() {
       )}
 
       {/* RFQ Table */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] shadow-xs overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-sm">
             <thead>
-              <tr className="bg-[#F1F4F8] text-[11px] font-heading font-semibold text-[#0A2D5B] uppercase tracking-wider border-b border-[#E2E8F0]">
+              <tr className="bg-light-gray text-[11px] font-heading font-semibold text-navy uppercase tracking-wider border-b border-slate-200">
                 <th className="p-4">RFQ Ref #</th>
                 <th className="p-4">Company & Country</th>
                 <th className="p-4">Product & Alloy</th>
@@ -140,10 +140,10 @@ export default function AdminRfqsPage() {
                 <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E2E8F0]">
+            <tbody className="divide-y divide-slate-200">
               {mockRfqs.map((rfq) => (
                 <tr key={rfq.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="p-4 font-mono font-bold text-[#0A2D5B]">
+                  <td className="p-4 font-mono font-bold text-navy">
                     {rfq.rfqNumber}
                     <div className="text-[11px] font-sans font-normal text-slate-400 mt-0.5">
                       {rfq.submittedAt}
@@ -155,11 +155,11 @@ export default function AdminRfqsPage() {
                   </td>
                   <td className="p-4">
                     <div className="font-medium text-slate-800">{rfq.productCategory}</div>
-                    <span className="text-xs font-mono text-[#0A2D5B] bg-slate-100 px-1.5 py-0.5 rounded">
+                    <span className="text-xs font-mono text-navy bg-slate-100 px-1.5 py-0.5 rounded">
                       {rfq.alloy}
                     </span>
                   </td>
-                  <td className="p-4 font-semibold text-[#0A2D5B]">
+                  <td className="p-4 font-semibold text-navy">
                     {rfq.orderQuantity}
                     <div className="text-xs font-normal text-slate-500">{rfq.incoterm}</div>
                   </td>
@@ -200,7 +200,7 @@ export default function AdminRfqsPage() {
           maxWidth="2xl"
         >
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4 text-xs bg-[#F1F4F8] p-4 rounded-xl border border-[#E2E8F0]">
+            <div className="grid grid-cols-2 gap-4 text-xs bg-light-gray p-4 rounded-xl border border-slate-200">
               <div>
                 <span className="text-slate-500 block">Contact Email:</span>
                 <span className="font-semibold text-slate-800">{selectedRfq.email}</span>
@@ -215,13 +215,13 @@ export default function AdminRfqsPage() {
               </div>
               <div>
                 <span className="text-slate-500 block">Order Volume:</span>
-                <span className="font-semibold text-[#0A2D5B]">{selectedRfq.orderQuantity}</span>
+                <span className="font-semibold text-navy">{selectedRfq.orderQuantity}</span>
               </div>
             </div>
 
             {/* Files & Signed Downloads */}
             <div className="space-y-3">
-              <h4 className="text-xs uppercase font-heading font-semibold text-[#0A2D5B] tracking-wider flex items-center gap-1.5">
+              <h4 className="text-xs uppercase font-heading font-semibold text-navy tracking-wider flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
                 Confidential Engineering Drawing Files (Private S3)
               </h4>
@@ -230,10 +230,10 @@ export default function AdminRfqsPage() {
                 {selectedRfq.files.map((file: any) => (
                   <div
                     key={file.id}
-                    className="p-3 bg-white rounded-lg border border-[#E2E8F0] flex items-center justify-between hover:border-[#2F7BFF] transition-colors"
+                    className="p-3 bg-white rounded-lg border border-slate-200 flex items-center justify-between hover:border-blue transition-colors"
                   >
                     <div>
-                      <div className="font-mono text-xs font-semibold text-[#0A2D5B]">{file.name}</div>
+                      <div className="font-mono text-xs font-semibold text-navy">{file.name}</div>
                       <div className="text-[11px] text-slate-400 mt-0.5">
                         {file.type} • {file.size} • Virus Scan: <span className="text-emerald-600 font-semibold">{file.scanStatus}</span>
                       </div>
@@ -251,7 +251,7 @@ export default function AdminRfqsPage() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-[#E2E8F0] flex justify-end gap-3">
+            <div className="pt-4 border-t border-slate-200 flex justify-end gap-3">
               <Button variant="secondary" size="md" onClick={() => setSelectedRfq(null)}>
                 Close
               </Button>

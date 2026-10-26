@@ -54,7 +54,7 @@ const WINDOW_SYSTEMS: SystemCardItem[] = [
     slug: 'sliding-window',
     summary:
       '2-track and 3-track sliding window profiles with stainless steel glide rail inserts, multi-point lock mortises, and cascading drainage sill.',
-    imageSrc: '/images/products/architectural-systems/window-door/hero.webp',
+    imageSrc: '/media/architectural/cards/architectural-sliding-door-gallery-01.webp',
     href: '/products/architectural/windows-doors/sliding-window',
     isDeepPageAvailable: true,
     highlights: ['2-track & 3-track options', 'Stainless roller glide rail', 'Integrated flyscreen track'],
@@ -67,7 +67,7 @@ const WINDOW_SYSTEMS: SystemCardItem[] = [
     slug: 'casement-window',
     summary:
       'Outward-opening and inward-opening casement window extrusions with multi-chamber structural chambers and friction stay channels.',
-    imageSrc: '/images/products/architectural-systems/thermal-break/hero.webp',
+    imageSrc: '/media/architectural/cards/architectural-casement-window-gallery-01.webp',
     href: '/rfq?division=architectural&family=windows-doors&system=casement-window',
     isDeepPageAvailable: false,
     highlights: ['Multi-point friction stay grooves', 'Heavy sash weight capacity', 'High acoustic weatherstripping'],
@@ -80,7 +80,7 @@ const WINDOW_SYSTEMS: SystemCardItem[] = [
     slug: 'fixed-window',
     summary:
       'Slim-sightline perimeter framing profiles for non-operable vision panels, clerestory windows, and storefront sidelites.',
-    imageSrc: '/images/products/architectural-systems/window-door/application.webp',
+    imageSrc: '/media/architectural/cards/architectural-windows-doors-hero-01.webp',
     href: '/rfq?division=architectural&family=windows-doors&system=fixed-window',
     isDeepPageAvailable: false,
     highlights: ['Maximum daylight transmission', 'Structural glass pocket', 'Snap-on exterior glazing beads'],
@@ -93,7 +93,7 @@ const WINDOW_SYSTEMS: SystemCardItem[] = [
     slug: 'combination-window',
     summary:
       'Coupler mullions and transom adapters enabling seamless structural joining of sliding, casement, and fixed units.',
-    imageSrc: '/media/catalog/18_window_door_profiles.webp',
+    imageSrc: '/media/architectural/cards/architectural-bungalow-gallery-01.webp',
     href: '/rfq?division=architectural&family=windows-doors&system=combination-window',
     isDeepPageAvailable: false,
     highlights: ['Heavy structural coupler bars', 'Thermal-break continuity', 'Concealed expansion joints'],
@@ -109,7 +109,7 @@ const DOOR_SYSTEMS: SystemCardItem[] = [
     slug: 'sliding-door',
     summary:
       'Robust floor-to-ceiling sliding terrace door profiles engineered for high panel weights, tandem stainless rollers, and low threshold tracks.',
-    imageSrc: '/images/products/architectural-systems/window-door/hero.webp',
+    imageSrc: '/media/architectural/cards/architectural-sliding-door-gallery-01.webp',
     href: '/rfq?division=architectural&family=windows-doors&system=sliding-door',
     isDeepPageAvailable: false,
     highlights: ['Panel weight capacity to 300 kg', 'Barrier-free low step threshold', 'Heavy interlock meeting stiles'],
@@ -122,7 +122,7 @@ const DOOR_SYSTEMS: SystemCardItem[] = [
     slug: 'hinged-door',
     summary:
       'Heavy commercial entrance and residential terrace door profiles designed for flush door sashes, heavy barrel hinges, and panic hardware.',
-    imageSrc: '/images/products/architectural-systems/curtain-wall/application.webp',
+    imageSrc: '/media/architectural/cards/architectural-casement-window-gallery-01.webp',
     href: '/rfq?division=architectural&family=windows-doors&system=hinged-door',
     isDeepPageAvailable: false,
     highlights: ['Reinforced corner bracket crimping', '3D adjustable hinge channels', 'Drop-down automatic bottom seals'],
@@ -135,7 +135,7 @@ const DOOR_SYSTEMS: SystemCardItem[] = [
     slug: 'bifold-door',
     summary:
       'Concertina folding door profiles providing expansive 90% clear wall openings with top-hung or bottom-rolling heavy guide carriages.',
-    imageSrc: '/images/products/architectural-systems/category-hero/hero.webp',
+    imageSrc: '/media/architectural/cards/architectural-pergola-card-01.webp',
     href: '/rfq?division=architectural&family=windows-doors&system=bifold-door',
     isDeepPageAvailable: false,
     highlights: ['Up to 8 panels per configuration', 'Heavy carriage roller channels', 'Weatherproof finger-pinch gaskets'],
@@ -148,7 +148,7 @@ const DOOR_SYSTEMS: SystemCardItem[] = [
     slug: 'panoramic-door',
     summary:
       'Ultra-slim interlocking stiles (down to 25mm visible sightline) with recessed concealed outer frames for luxury villa architecture.',
-    imageSrc: '/images/products/architectural-systems/window-door/application.webp',
+    imageSrc: '/media/architectural/cards/architectural-windows-doors-hero-01.webp',
     href: '/rfq?division=architectural&family=windows-doors&system=panoramic-door',
     isDeepPageAvailable: false,
     highlights: ['Concealed perimeter frame', 'Motorized actuator compatible', 'Structural glass-bearing sash'],
@@ -162,7 +162,7 @@ export default function WindowsDoorsGoldenPage() {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: 'Aluminium Window & Door Systems',
-    image: 'https://leloimetal.com/images/products/architectural-systems/window-door/hero.webp',
+    image: 'https://leloimetal.com/media/architectural/hero/architectural-windows-doors-hero-01.webp',
     description:
       'Precision architectural aluminium window and door profiles from Vietnam factory. Multi-track sliding, casements, thermal break PA66, and AkzoNobel powder coating.',
     brand: {
@@ -287,11 +287,11 @@ export default function WindowsDoorsGoldenPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider">
-                <Layers className="w-3.5 h-3.5 text-[#2F7BFF]" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider">
+                <Layers className="w-3.5 h-3.5 text-blue" />
                 <span>Product Family Overview</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
                 Complete Architectural Building Envelope Extrusions
               </h2>
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -303,15 +303,15 @@ export default function WindowsDoorsGoldenPage() {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="block text-xl font-bold font-mono text-[#0A2D5B]">6063</span>
+                  <span className="block text-xl font-bold font-mono text-navy">6063</span>
                   <span className="text-[11px] text-slate-500">T5 / T6 Alloy Grade</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="block text-xl font-bold font-mono text-[#0A2D5B]">EN 755-9</span>
+                  <span className="block text-xl font-bold font-mono text-navy">EN 755-9</span>
                   <span className="text-[11px] text-slate-500">Precision Tolerance</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="block text-xl font-bold font-mono text-[#0A2D5B]">PA66 GF25</span>
+                  <span className="block text-xl font-bold font-mono text-navy">PA66 GF25</span>
                   <span className="text-[11px] text-slate-500">Thermal Barrier</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
@@ -322,7 +322,7 @@ export default function WindowsDoorsGoldenPage() {
             </div>
 
             <div className="lg:col-span-5">
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-[#0A2D5B] to-slate-900 text-white space-y-4 shadow-lg border border-blue-900/50">
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-navy to-slate-900 text-white space-y-4 shadow-lg border border-blue-900/50">
                 <span className="text-xs font-bold text-blue-400 uppercase tracking-wider font-mono">
                   B2B Sourcing Advantages
                 </span>
@@ -350,7 +350,7 @@ export default function WindowsDoorsGoldenPage() {
 
                 <div className="pt-2">
                   <Link href="/rfq?division=architectural&family=windows-doors">
-                    <Button className="w-full bg-[#2F7BFF] hover:bg-blue-600 text-white text-xs py-2.5 flex items-center justify-center gap-2 font-semibold">
+                    <Button className="w-full bg-blue hover:bg-blue-600 text-white text-xs py-2.5 flex items-center justify-center gap-2 font-semibold">
                       <span>Request Wholesale Container Pricing</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Button>

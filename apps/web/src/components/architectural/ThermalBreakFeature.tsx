@@ -14,8 +14,8 @@ export const ThermalBreakFeature: React.FC = () => {
             <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-white p-4 shadow-sm">
               <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-slate-100">
                 <Image
-                  src="/images/products/architectural-systems/thermal-break/cross-section.webp"
-                  alt="Thermal-Break Polyamide Barrier Cross-Section"
+                  src="/media/architectural/details/architectural-thermal-break-detail-01.webp"
+                  alt="Technical cross-section detail of architectural aluminium profile with Polyamide PA66 GF25 thermal break barrier"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -25,7 +25,7 @@ export const ThermalBreakFeature: React.FC = () => {
               {/* Technical Callout Annotations */}
               <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
                 <div className="p-2 rounded bg-blue-50/70 border border-blue-100">
-                  <span className="block font-semibold text-[#0A2D5B]">Exterior Profile</span>
+                  <span className="block font-semibold text-navy">Exterior Profile</span>
                   <span className="text-[11px] text-slate-500">Weather-Facing 6063</span>
                 </div>
                 <div className="p-2 rounded bg-amber-50/70 border border-amber-200">
@@ -33,7 +33,7 @@ export const ThermalBreakFeature: React.FC = () => {
                   <span className="text-[11px] text-amber-700">Polyamide Thermal Strip</span>
                 </div>
                 <div className="p-2 rounded bg-slate-100 border border-slate-200">
-                  <span className="block font-semibold text-[#0A2D5B]">Interior Profile</span>
+                  <span className="block font-semibold text-navy">Interior Profile</span>
                   <span className="text-[11px] text-slate-500">Room-Facing 6063</span>
                 </div>
               </div>
@@ -42,12 +42,12 @@ export const ThermalBreakFeature: React.FC = () => {
 
           {/* Right Column: Engineering Explanation */}
           <div className="lg:col-span-6 space-y-6 order-1 lg:order-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider">
-              <Layers className="w-3.5 h-3.5 text-[#2F7BFF]" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-navy text-xs font-semibold uppercase tracking-wider">
+              <Layers className="w-3.5 h-3.5 text-blue" />
               <span>Thermal Insulation Engineering</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
               Polyamide PA66 GF25 Thermal-Break Technology
             </h2>
 
@@ -89,7 +89,7 @@ export const ThermalBreakFeature: React.FC = () => {
 
             <div className="pt-2">
               <Link href="/rfq?division=architectural&family=windows-doors&system=thermal-break">
-                <Button className="bg-[#0A2D5B] hover:bg-blue-900 text-white text-xs px-5 py-2.5 rounded-lg flex items-center gap-2">
+                <Button className="bg-navy hover:bg-blue-900 text-white text-xs px-5 py-2.5 rounded-lg flex items-center gap-2">
                   <span>Inquire for Thermal-Break Extrusions</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Button>

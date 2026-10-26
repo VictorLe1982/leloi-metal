@@ -30,10 +30,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const imageSrc = product.primaryImage || product.coverImage;
   const verifiedChips: string[] = product.verifiedChips || (product.alloys && product.alloys.length ? product.alloys : ['Extruded Aluminium']);
   return (
-    <div className="group flex flex-col justify-between h-full bg-white rounded-2xl border border-[#E2E8F0] hover:border-[#2F7BFF]/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 overflow-hidden">
+    <div className="group flex flex-col justify-between h-full bg-white rounded-2xl border border-slate-200 hover:border-blue/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 overflow-hidden">
       {/* Upper section: Image & Badges */}
       <div>
-        <div className="relative aspect-[4/3] bg-[#F8FAFC] overflow-hidden">
+        <div className="relative aspect-[4/3] bg-slate-50 overflow-hidden">
           {imageSrc ? (
             <ResponsiveProductImage
               src={imageSrc}
@@ -48,7 +48,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           )}
           {/* Top badges */}
           <div className="absolute top-3 left-3">
-            <span className="text-[10px] font-bold bg-[#0A2D5B]/90 text-white px-2.5 py-1 rounded-md shadow-xs backdrop-blur-xs font-heading uppercase tracking-wider">
+            <span className="text-[10px] font-bold bg-navy/90 text-white px-2.5 py-1 rounded-md shadow-xs backdrop-blur-xs font-heading uppercase tracking-wider">
               {categoryName}
             </span>
           </div>
@@ -62,14 +62,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Content Details */}
         <div className="p-5 space-y-3">
           {/* Category eyebrow */}
-          <div className="text-[11px] font-mono font-bold text-[#2F7BFF] uppercase tracking-wider">
+          <div className="text-[11px] font-mono font-bold text-blue uppercase tracking-wider">
             {categoryName} • {profileGeometry}
           </div>
 
           {/* Product Name (max 2 lines, fixed height for row alignment) */}
           <div className="h-12 flex items-start">
             <Link href={detailUrl} className="block">
-              <h3 className="font-heading font-bold text-base text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors line-clamp-2 leading-snug">
+              <h3 className="font-heading font-bold text-base text-navy group-hover:text-blue transition-colors line-clamp-2 leading-snug">
                 {product.name}
               </h3>
             </Link>
@@ -117,7 +117,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               title={isCompared ? 'Remove from compare' : 'Compare product'}
               className={`p-2 rounded-lg border text-xs transition-colors cursor-pointer ${
                 isCompared
-                  ? 'bg-blue-50 border-[#2F7BFF] text-[#2F7BFF]'
+                  ? 'bg-blue-50 border-blue text-blue'
                   : 'bg-white border-slate-200 text-slate-400 hover:text-slate-700 hover:bg-slate-50'
               }`}
             >

@@ -10,6 +10,9 @@
 }
 
 @theme {
+  /* Approved brand palette (ADR-004). Components must use these token
+     utilities — text-navy, bg-blue, border-slate-200 — never arbitrary
+     values like text-[#0A2D5B], or a rebrand means editing every file. */
   --color-navy: #0A2D5B;
   --color-navy-dark: #061D3B;
   --color-navy-light: #123D77;
@@ -19,19 +22,41 @@
   --color-light-gray: #F1F4F8;
   --color-charcoal: #172033;
   --color-sustainability: #16A34A;
+  /* Surface and hairline greys map exactly onto Tailwind's slate scale
+     (slate-50 / slate-200 / slate-300), so those built-ins are used directly. */
   
-  --font-heading: 'Montserrat', sans-serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Supplied by next/font in app/layout.tsx — never hardcode the family name. */
+  --font-heading: var(--font-montserrat), 'Montserrat', sans-serif;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-  color: #172033;
+  color: var(--color-charcoal);
   background-color: #FFFFFF;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-heading);
+}
+
+/* Visible keyboard focus. The browser default is removed by Tailwind's reset,
+   and without this the mega menu and form controls are unusable by keyboard. */
+:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -200,14 +200,14 @@ export default function AlloySelectorPage() {
   const recommended = ALLOYS[recommendedId];
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]/50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-gray/50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF]">
+          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-blue">
             ENGINEERING & METALLURGY ASSISTANT
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0A2D5B] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-navy tracking-tight">
             Aluminium Alloy Selector
           </h1>
           <p className="text-sm sm:text-base text-slate-600">
@@ -216,7 +216,7 @@ export default function AlloySelectorPage() {
         </div>
 
         {/* Interactive Criteria Box */}
-        <div className="bg-white rounded-2xl shadow-sm border border-[#E2E8F0] p-6 sm:p-8 space-y-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Criteria 1: Industry / Application */}
             <div className="space-y-2">
@@ -226,7 +226,7 @@ export default function AlloySelectorPage() {
               <select
                 value={selectedIndustry}
                 onChange={(e) => setSelectedIndustry(e.target.value)}
-                className="w-full px-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0A2D5B] font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
+                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-navy font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue"
               >
                 <option value="solar">Solar PV Energy (Rails & Carports)</option>
                 <option value="architectural">Architectural & Facades (Curtain walls, Louvers)</option>
@@ -245,7 +245,7 @@ export default function AlloySelectorPage() {
               <select
                 value={strengthNeed}
                 onChange={(e) => setStrengthNeed(e.target.value)}
-                className="w-full px-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0A2D5B] font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
+                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-navy font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue"
               >
                 <option value="moderate">Moderate (~145 MPa Yield) — High formability & finish</option>
                 <option value="high">High (~225–240 MPa Yield) — Structural load bearing</option>
@@ -262,7 +262,7 @@ export default function AlloySelectorPage() {
               <select
                 value={machiningNeed}
                 onChange={(e) => setMachiningNeed(e.target.value)}
-                className="w-full px-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0A2D5B] font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
+                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-navy font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue"
               >
                 <option value="low">Minimal (Cut-to-length, hole punching)</option>
                 <option value="moderate">Moderate (Drilling, tapping, slot routing)</option>
@@ -278,7 +278,7 @@ export default function AlloySelectorPage() {
               <select
                 value={environment}
                 onChange={(e) => setEnvironment(e.target.value)}
-                className="w-full px-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0A2D5B] font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
+                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-navy font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue"
               >
                 <option value="indoor">Indoor / Controlled Environment</option>
                 <option value="outdoor">Outdoor Industrial / Atmospheric</option>
@@ -294,7 +294,7 @@ export default function AlloySelectorPage() {
               <select
                 value={surfaceGoal}
                 onChange={(e) => setSurfaceGoal(e.target.value)}
-                className="w-full px-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-[#0A2D5B] font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
+                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-navy font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue"
               >
                 <option value="decorative-anodized">Decorative Anodized (Clear / Matte / Architectural Color)</option>
                 <option value="hard-anodized">Hard Anodized (Wear resistant 25–50µm industrial)</option>
@@ -305,10 +305,10 @@ export default function AlloySelectorPage() {
           </div>
 
           {/* Recommendation Banner */}
-          <div className="bg-gradient-to-br from-[#061D3B] to-[#0A2D5B] text-white rounded-2xl p-6 sm:p-8 space-y-6">
+          <div className="bg-gradient-to-br from-navy-dark to-navy text-white rounded-2xl p-6 sm:p-8 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
               <div className="space-y-1">
-                <div className="text-xs font-mono uppercase tracking-widest text-[#2F7BFF] flex items-center gap-1.5">
+                <div className="text-xs font-mono uppercase tracking-widest text-blue flex items-center gap-1.5">
                   <Sparkles className="w-4 h-4" />
                   <span>RECOMMENDED ALLOY CANDIDATE</span>
                 </div>
@@ -330,7 +330,7 @@ export default function AlloySelectorPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="bg-white/5 border border-white/10 rounded-xl p-3.5 space-y-1">
                 <div className="text-xs text-slate-400">Yield Strength (Rp0.2)</div>
-                <div className="text-xl sm:text-2xl font-bold text-[#2F7BFF]">
+                <div className="text-xl sm:text-2xl font-bold text-blue">
                   {recommended.yieldStrengthMpa} MPa
                 </div>
                 <div className="text-[11px] text-slate-400">Tensile: {recommended.tensileStrengthMpa} MPa</div>
@@ -378,7 +378,7 @@ export default function AlloySelectorPage() {
                   <ul className="space-y-1 text-xs text-slate-300">
                     {recommended.idealApplications.map((app, idx) => (
                       <li key={idx} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#2F7BFF]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue" />
                         {app}
                       </li>
                     ))}
@@ -408,9 +408,9 @@ export default function AlloySelectorPage() {
         </div>
 
         {/* Master Alloy Comparison Matrix Table */}
-        <div className="bg-white rounded-2xl shadow-sm border border-[#E2E8F0] p-6 sm:p-8 space-y-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
           <div className="space-y-1">
-            <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+            <h3 className="text-xl font-bold font-heading text-navy">
               Standard Extrusion Alloys Mechanical & Physical Comparison
             </h3>
             <p className="text-xs text-slate-500">
@@ -421,7 +421,7 @@ export default function AlloySelectorPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-[#0A2D5B] text-white">
+                <tr className="bg-navy text-white">
                   <th className="py-3 px-4 rounded-tl-lg">Alloy & Temper</th>
                   <th className="py-3 px-3">Yield Strength (Rp0.2)</th>
                   <th className="py-3 px-3">Tensile Strength (Rm)</th>
@@ -433,20 +433,20 @@ export default function AlloySelectorPage() {
                   <th className="py-3 px-4 rounded-tr-lg">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E2E8F0] text-slate-700 font-medium">
+              <tbody className="divide-y divide-slate-200 text-slate-700 font-medium">
                 {Object.values(ALLOYS).map((al) => (
                   <tr
                     key={al.id}
                     className={
                       al.id === recommended.id
-                        ? 'bg-blue-50/80 font-semibold text-[#0A2D5B]'
+                        ? 'bg-blue-50/80 font-semibold text-navy'
                         : 'hover:bg-slate-50'
                     }
                   >
                     <td className="py-3.5 px-4 font-bold">
                       {al.name}-{al.temper.split(' ')[0]}
                       {al.id === recommended.id && (
-                        <span className="ml-2 text-[10px] bg-[#2F7BFF] text-white px-1.5 py-0.5 rounded">
+                        <span className="ml-2 text-[10px] bg-blue text-white px-1.5 py-0.5 rounded">
                           MATCH
                         </span>
                       )}
@@ -466,7 +466,7 @@ export default function AlloySelectorPage() {
                     </td>
                     <td className="py-3.5 px-4">
                       <Link href={`/rfq?alloy=${al.id.split('-')[0]}`}>
-                        <span className="text-[#2F7BFF] hover:underline cursor-pointer">
+                        <span className="text-blue hover:underline cursor-pointer">
                           Quote Alloy →
                         </span>
                       </Link>
@@ -479,7 +479,7 @@ export default function AlloySelectorPage() {
         </div>
 
         {/* CTA Banner */}
-        <div className="bg-[#0A2D5B] text-white rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
+        <div className="bg-navy text-white rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-bold font-heading">
               Have a Custom Profile Drawing with Tight Tolerances?

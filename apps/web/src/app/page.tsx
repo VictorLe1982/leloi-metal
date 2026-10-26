@@ -19,17 +19,72 @@ import {
   Microscope,
   FileCheck
 } from 'lucide-react';
+import { SiteImage } from '@/components/media/SiteImage';
+
+const BASE_URL = 'https://leloimetal.com';
+
+// Organization JSON-LD lives in the root layout; WebSite belongs on the home
+// page only, where it identifies the site entity itself.
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'LELOI METAL',
+  alternateName: 'LELOI METAL Aluminium',
+  url: BASE_URL,
+  inLanguage: 'en',
+  description:
+    'Precision aluminium extrusion, CNC machining, surface finishing and OEM manufacturing from Vietnam for global B2B industries.',
+  publisher: { '@type': 'Organization', name: 'LELOI METAL', url: BASE_URL }
+};
 
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       {/* ==================================================================== */}
       {/* 7.1 HERO SECTION                                                     */}
       {/* ==================================================================== */}
-      <section className="relative bg-gradient-to-b from-[#061D3B] via-[#0A2D5B] to-[#0D3870] text-white py-20 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative bg-navy-dark text-white py-20 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Photographic backdrop, sitting behind the headline. Falls back
+            silently to the navy gradient until the file is supplied — a
+            labelled placeholder here would show through the scrim.
+            Spec: public/media/site/hero/README.md */}
+        <div className="absolute inset-0" aria-hidden="true">
+          <SiteImage
+            slotId="home-hero"
+            className="object-cover"
+            sizes="100vw"
+            alt=""
+            priority
+            fallback="silent"
+          />
+        </div>
+
+        {/* Readability scrim, tuned for the supplied plant-floor photograph.
+            That frame is mid-tone with bright ceiling lighting and strong
+            yellow/red machinery on the left, so the left needs a heavy wash to
+            hold white type while the centre stays legible as a photograph.
+              1. left-to-right gradient — contrast for the headline
+              2. top/bottom vignette — seats the band against the sticky header
+                 and the trust strip below
+            Kept deliberately light on the right: the glass capabilities card
+            already sits over that half, so any extra tint there stacks with the
+            card's own backdrop blur and flattens the photograph entirely. */}
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-navy-dark via-navy-dark/75 to-navy-dark/30 lg:to-navy-dark/10 pointer-events-none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-navy-dark/45 via-transparent to-navy-dark/60 pointer-events-none"
+          aria-hidden="true"
+        />
+
         {/* Subtle technical background grid overlay */}
         <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
+          className="absolute inset-0 opacity-[0.07] pointer-events-none"
           style={{
             backgroundImage:
               'linear-gradient(to right, #9AA3AF 1px, transparent 1px), linear-gradient(to bottom, #9AA3AF 1px, transparent 1px)',
@@ -39,21 +94,21 @@ export default function HomePage() {
         />
 
         {/* Ambient glow */}
-        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-[#2F7BFF]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-blue/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               {/* Eyebrow */}
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-heading font-semibold text-[#DCE6F3] tracking-wider uppercase">
-                <span className="w-2 h-2 rounded-full bg-[#2F7BFF] animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-blue animate-pulse" />
                 Precision Aluminium Extrusion & Fabrication From Vietnam
               </div>
 
               {/* H1 - Approved Slogan */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-heading tracking-tight leading-tight text-white">
                 Aluminium for a <br className="hidden sm:inline" />
-                <span className="text-[#2F7BFF]">Better World</span>
+                <span className="text-blue">Better World</span>
               </h1>
 
               {/* Supporting Copy */}
@@ -73,7 +128,7 @@ export default function HomePage() {
                     variant="outline"
                     size="xl"
                     className="text-white border-white/40 hover:bg-white/10 hover:border-white"
-                    leftIcon={<FileUp className="w-5 h-5 text-[#2F7BFF]" />}
+                    leftIcon={<FileUp className="w-5 h-5 text-blue" />}
                   >
                     Upload Your Drawing
                   </Button>
@@ -87,21 +142,21 @@ export default function HomePage() {
                   Confidential Drawing Storage & Bilateral NDA
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#2F7BFF]" />
+                  <CheckCircle2 className="w-4 h-4 text-blue" />
                   Custom Profile Engineering & DFM
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <FileCheck className="w-4 h-4 text-[#2F7BFF]" />
+                  <FileCheck className="w-4 h-4 text-blue" />
                   Origin-Certified (CPTPP / EVFTA / VKFTA)
                 </span>
               </div>
             </div>
 
-            {/* Hero Visual Card: 4 Verified Core Capabilities */}
+            {/* Hero Visual Card: 4 core capabilities */}
             <div className="lg:col-span-5">
               <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 shadow-2xl text-slate-100 space-y-5">
                 <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                  <div className="text-xs uppercase font-heading font-semibold text-[#2F7BFF] tracking-wider">
+                  <div className="text-xs uppercase font-heading font-semibold text-blue tracking-wider">
                     Core Manufacturing Capabilities
                   </div>
                   <span className="text-[11px] font-mono bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded border border-emerald-400/30">
@@ -112,7 +167,7 @@ export default function HomePage() {
                 <div className="space-y-3.5 text-xs sm:text-sm">
                   <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
                     <div className="font-bold text-white flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F7BFF]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue" />
                       Custom Extrusion Tooling & Dies
                     </div>
                     <div className="text-slate-300 text-xs pl-3.5">
@@ -122,7 +177,7 @@ export default function HomePage() {
 
                   <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
                     <div className="font-bold text-white flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F7BFF]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue" />
                       Precision CNC Machining & Fabrication
                     </div>
                     <div className="text-slate-300 text-xs pl-3.5">
@@ -132,7 +187,7 @@ export default function HomePage() {
 
                   <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
                     <div className="font-bold text-white flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F7BFF]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue" />
                       Protective Surface Finishing
                     </div>
                     <div className="text-slate-300 text-xs pl-3.5">
@@ -154,7 +209,7 @@ export default function HomePage() {
                 <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs">
                   <Link
                     href="/rfq?mode=upload"
-                    className="text-[#2F7BFF] hover:underline font-semibold flex items-center gap-1"
+                    className="text-blue hover:underline font-semibold flex items-center gap-1"
                   >
                     Upload Drawing for DFM Review <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
@@ -174,28 +229,32 @@ export default function HomePage() {
       {/* ==================================================================== */}
       {/* 7.2 TRUST STRIP (Truth Safeguard: Real Verified Data Only)           */}
       {/* ==================================================================== */}
-      <section className="bg-[#F1F4F8] border-b border-[#E2E8F0] py-8 px-4 sm:px-6 lg:px-8">
+      <section className="bg-light-gray border-b border-slate-200 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div className="p-4 bg-white rounded-lg border border-[#E2E8F0] shadow-xs">
-            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">100%</div>
+          <div className="p-4 bg-white rounded-lg border border-slate-200 shadow-xs">
+            <div className="text-2xl sm:text-3xl font-bold font-heading text-navy">
+              ISO 9001
+            </div>
             <div className="text-xs font-medium text-slate-600 uppercase tracking-wider mt-1">
-              Made-to-Drawing OEM Focus
+              2015 Certified Quality System
             </div>
           </div>
-          <div className="p-4 bg-white rounded-lg border border-[#E2E8F0] shadow-xs">
-            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">0% Duty</div>
+          <div className="p-4 bg-white rounded-lg border border-slate-200 shadow-xs">
+            <div className="text-2xl sm:text-3xl font-bold font-heading text-navy">
+              100,000+
+            </div>
             <div className="text-xs font-medium text-slate-600 uppercase tracking-wider mt-1">
-              FTA Preferential (CPTPP / EVFTA)
+              Tonnes/Year Affiliated Capacity
             </div>
           </div>
-          <div className="p-4 bg-white rounded-lg border border-[#E2E8F0] shadow-xs">
-            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">Direct Port</div>
+          <div className="p-4 bg-white rounded-lg border border-slate-200 shadow-xs">
+            <div className="text-2xl sm:text-3xl font-bold font-heading text-navy">Direct Port</div>
             <div className="text-xs font-medium text-slate-600 uppercase tracking-wider mt-1">
               Hai Phong & Cat Lai Logistics
             </div>
           </div>
-          <div className="p-4 bg-white rounded-lg border border-[#E2E8F0] shadow-xs">
-            <div className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">Strict NDA</div>
+          <div className="p-4 bg-white rounded-lg border border-slate-200 shadow-xs">
+            <div className="text-2xl sm:text-3xl font-bold font-heading text-navy">Strict NDA</div>
             <div className="text-xs font-medium text-slate-600 uppercase tracking-wider mt-1">
               Confidential CAD Data Security
             </div>
@@ -208,10 +267,10 @@ export default function HomePage() {
       {/* ==================================================================== */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="text-xs uppercase font-heading font-semibold text-[#2F7BFF] tracking-widest">
+          <div className="text-xs uppercase font-heading font-semibold text-blue tracking-widest">
             ENGINEERED PROFILES & FABRICATION
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold font-heading text-[#0A2D5B]">
+          <h2 className="text-3xl sm:text-4xl font-bold font-heading text-navy">
             Aluminium Solutions for Global Sourcing
           </h2>
           <p className="text-slate-600 text-sm sm:text-base">
@@ -222,12 +281,19 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Card 1: Custom Extrusions */}
           <Link href="/products/custom-extrusions" className="block h-full group">
-            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-blue/50 transition-all">
               <div>
-                <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] group-hover:bg-[#2F7BFF]/10 group-hover:text-[#2F7BFF] transition-colors mb-4">
+                <div className="relative aspect-[4/3] -mx-6 -mt-6 mb-5 overflow-hidden bg-light-gray">
+                  <SiteImage
+                    slotId="division-custom-extrusions"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+                <div className="w-12 h-12 rounded-lg bg-navy/5 flex items-center justify-center text-navy group-hover:bg-blue/10 group-hover:text-blue transition-colors mb-4">
                   <Layers className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                <h3 className="text-xl font-bold font-heading text-navy group-hover:text-blue transition-colors">
                   Custom Aluminium Extrusions
                 </h3>
                 <p className="text-sm text-slate-600 mt-2 leading-relaxed">
@@ -239,21 +305,28 @@ export default function HomePage() {
                   <Badge variant="default">Custom Tooling</Badge>
                 </div>
               </div>
-              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+              <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-heading font-semibold text-navy group-hover:text-blue">
                 <span>Explore Extrusion Scope</span>
-                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-blue group-hover:translate-x-1.5 transition-transform" />
               </div>
             </Card>
           </Link>
 
           {/* Card 2: Industrial Profiles */}
           <Link href="/products/industrial-profiles" className="block h-full group">
-            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-blue/50 transition-all">
               <div>
-                <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] group-hover:bg-[#2F7BFF]/10 group-hover:text-[#2F7BFF] transition-colors mb-4">
+                <div className="relative aspect-[4/3] -mx-6 -mt-6 mb-5 overflow-hidden bg-light-gray">
+                  <SiteImage
+                    slotId="division-industrial-profiles"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+                <div className="w-12 h-12 rounded-lg bg-navy/5 flex items-center justify-center text-navy group-hover:bg-blue/10 group-hover:text-blue transition-colors mb-4">
                   <Settings2 className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                <h3 className="text-xl font-bold font-heading text-navy group-hover:text-blue transition-colors">
                   Industrial Aluminium Profiles
                 </h3>
                 <p className="text-sm text-slate-600 mt-2 leading-relaxed">
@@ -265,21 +338,28 @@ export default function HomePage() {
                   <Badge variant="default">Anodized Clear</Badge>
                 </div>
               </div>
-              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+              <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-heading font-semibold text-navy group-hover:text-blue">
                 <span>View Industrial Profiles</span>
-                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-blue group-hover:translate-x-1.5 transition-transform" />
               </div>
             </Card>
           </Link>
 
           {/* Card 3: Solar Profiles */}
           <Link href="/products/solar" className="block h-full group">
-            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-blue/50 transition-all">
               <div>
+                <div className="relative aspect-[4/3] -mx-6 -mt-6 mb-5 overflow-hidden bg-light-gray">
+                  <SiteImage
+                    slotId="division-solar"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
                 <div className="w-12 h-12 rounded-lg bg-amber-50 flex items-center justify-center text-amber-500 mb-4">
                   <Sun className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                <h3 className="text-xl font-bold font-heading text-navy group-hover:text-blue transition-colors">
                   Solar Aluminium Profiles
                 </h3>
                 <p className="text-sm text-slate-600 mt-2 leading-relaxed">
@@ -291,18 +371,25 @@ export default function HomePage() {
                   <Badge variant="default">Anodized 15-25µm</Badge>
                 </div>
               </div>
-              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+              <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-heading font-semibold text-navy group-hover:text-blue">
                 <span>Solar Mounting Solutions</span>
-                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-blue group-hover:translate-x-1.5 transition-transform" />
               </div>
             </Card>
           </Link>
 
           {/* Card 4: Architectural Systems (EXPANDED TO CONSTRUCTION SOLUTIONS) */}
           <Link href="/products/architectural" className="block h-full group">
-            <Card variant="interactive" className="h-full flex flex-col justify-between border-blue-200/80 bg-linear-to-b from-blue-50/30 to-white group-hover:border-[#2F7BFF] group-hover:shadow-lg transition-all">
+            <Card variant="interactive" className="h-full flex flex-col justify-between border-blue-200/80 bg-linear-to-b from-blue-50/30 to-white group-hover:border-blue group-hover:shadow-lg transition-all">
               <div>
-                <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center text-[#2F7BFF] mb-4">
+                <div className="relative aspect-[4/3] -mx-6 -mt-6 mb-5 overflow-hidden bg-light-gray">
+                  <SiteImage
+                    slotId="division-architectural"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+                <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue mb-4">
                   <Building2 className="w-6 h-6" />
                 </div>
                 <div className="flex items-center gap-2 mb-1">
@@ -310,33 +397,40 @@ export default function HomePage() {
                     Residential & Commercial
                   </span>
                 </div>
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                <h3 className="text-xl font-bold font-heading text-navy group-hover:text-blue transition-colors">
                   Architectural Aluminium Systems
                 </h3>
                 <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                  Integrated building systems: Windows, doors, curtain walls, louvers, wall cladding, linear ceilings, pergolas, canopies, and resort structures with AkzoNobel 10-year warranty powder coating.
+                  Integrated building systems: Windows, doors, curtain walls, louvers, wall cladding, linear ceilings, pergolas, canopies, and resort structures finished with AkzoNobel powder coating systems.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   <Badge variant="alloy">6063-T5/T6</Badge>
                   <Badge variant="default">Thermal Break</Badge>
-                  <Badge variant="verified">AkzoNobel 10-Yr</Badge>
+                  <Badge variant="verified">AkzoNobel coating</Badge>
                 </div>
               </div>
-              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+              <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-heading font-semibold text-navy group-hover:text-blue">
                 <span>Explore Architectural Vertical</span>
-                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-blue group-hover:translate-x-1.5 transition-transform" />
               </div>
             </Card>
           </Link>
 
           {/* Card 5: Heat Sink Profiles */}
           <Link href="/products/thermal-management" className="block h-full group">
-            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-blue/50 transition-all">
               <div>
+                <div className="relative aspect-[4/3] -mx-6 -mt-6 mb-5 overflow-hidden bg-light-gray">
+                  <SiteImage
+                    slotId="division-thermal-management"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
                 <div className="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500 mb-4">
                   <Flame className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                <h3 className="text-xl font-bold font-heading text-navy group-hover:text-blue transition-colors">
                   Heat Sink / Thermal Profiles
                 </h3>
                 <p className="text-sm text-slate-600 mt-2 leading-relaxed">
@@ -348,21 +442,28 @@ export default function HomePage() {
                   <Badge variant="default">Black Anodized</Badge>
                 </div>
               </div>
-              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+              <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-heading font-semibold text-navy group-hover:text-blue">
                 <span>Thermal Management</span>
-                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-blue group-hover:translate-x-1.5 transition-transform" />
               </div>
             </Card>
           </Link>
 
           {/* Card 6: OEM Machined Components */}
           <Link href="/products/oem-components" className="block h-full group">
-            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-[#2F7BFF]/50 transition-all">
+            <Card variant="interactive" className="h-full flex flex-col justify-between group-hover:border-blue/50 transition-all">
               <div>
-                <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] group-hover:bg-[#2F7BFF]/10 group-hover:text-[#2F7BFF] transition-colors mb-4">
+                <div className="relative aspect-[4/3] -mx-6 -mt-6 mb-5 overflow-hidden bg-light-gray">
+                  <SiteImage
+                    slotId="division-oem-components"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+                <div className="w-12 h-12 rounded-lg bg-navy/5 flex items-center justify-center text-navy group-hover:bg-blue/10 group-hover:text-blue transition-colors mb-4">
                   <Cpu className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                <h3 className="text-xl font-bold font-heading text-navy group-hover:text-blue transition-colors">
                   OEM Aluminium Components
                 </h3>
                 <p className="text-sm text-slate-600 mt-2 leading-relaxed">
@@ -374,9 +475,9 @@ export default function HomePage() {
                   <Badge variant="default">Full CNC Machining</Badge>
                 </div>
               </div>
-              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF]">
+              <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-heading font-semibold text-navy group-hover:text-blue">
                 <span>OEM Component Sourcing</span>
-                <ArrowRight className="w-4 h-4 text-[#2F7BFF] group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-blue group-hover:translate-x-1.5 transition-transform" />
               </div>
             </Card>
           </Link>
@@ -386,14 +487,14 @@ export default function HomePage() {
       {/* ==================================================================== */}
       {/* 7.4 MANUFACTURING CAPABILITIES GRID                                 */}
       {/* ==================================================================== */}
-      <section className="py-20 bg-[#F1F4F8]/70 border-t border-b border-[#E2E8F0] px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-light-gray/70 border-t border-b border-slate-200 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
             <div>
-              <div className="text-xs uppercase font-heading font-semibold text-[#2F7BFF] tracking-widest mb-2">
+              <div className="text-xs uppercase font-heading font-semibold text-blue tracking-widest mb-2">
                 END-TO-END FACTORY PRODUCTION
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold font-heading text-[#0A2D5B]">
+              <h2 className="text-3xl sm:text-4xl font-bold font-heading text-navy">
                 Precision Manufacturing Capabilities
               </h2>
             </div>
@@ -405,70 +506,78 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg border border-[#E2E8F0]">
-              <Factory className="w-8 h-8 text-[#0A2D5B] mb-3" />
-              <h4 className="text-lg font-bold font-heading text-[#0A2D5B]">Extrusion Presses</h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                Automated extrusion lines with double pullers, quenching systems and aging ovens producing T5 and T6 structural tempers.
-              </p>
-              <div className="text-[11px] text-[#2F7BFF] font-medium mt-3">Alloys: 6063, 6061, 6005A, 6082</div>
-            </div>
+            <Link href="/capabilities/aluminium-extrusion" className="block group">
+              <div className="bg-white p-6 rounded-lg border border-slate-200 group-hover:border-blue transition-all h-full">
+                <Factory className="w-8 h-8 text-navy group-hover:text-blue transition-colors mb-3" />
+                <h4 className="text-lg font-bold font-heading text-navy group-hover:text-blue transition-colors">
+                  Extrusion Presses
+                </h4>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  A 5-inch and a 6-inch extrusion press with double pullers, quenching and an age-hardening oven producing T5 and T6 structural tempers.
+                </p>
+                <div className="text-[11px] text-blue font-medium mt-3">Alloys: 6063, 6061, 6005A, 6082</div>
+              </div>
+            </Link>
 
-            <div className="bg-white p-6 rounded-lg border border-[#E2E8F0]">
-              <Cpu className="w-8 h-8 text-[#0A2D5B] mb-3" />
-              <h4 className="text-lg font-bold font-heading text-[#0A2D5B]">Precision CNC Machining</h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                3-axis and 4-axis long-bed CNC machining centers specialized in profile milling, complex slotting, drilling and tapping.
-              </p>
-              <div className="text-[11px] text-[#2F7BFF] font-medium mt-3">Tolerances: ISO 2768 Precision Class</div>
-            </div>
+            <Link href="/capabilities/cnc-machining" className="block group">
+              <div className="bg-white p-6 rounded-lg border border-slate-200 group-hover:border-blue transition-all h-full">
+                <Cpu className="w-8 h-8 text-navy group-hover:text-blue transition-colors mb-3" />
+                <h4 className="text-lg font-bold font-heading text-navy group-hover:text-blue transition-colors">
+                  Precision CNC Machining
+                </h4>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Four CNC cutting and fabrication centres for cut-to-length, mitre cutting, notching, profile milling, drilling and tapping.
+                </p>
+                <div className="text-[11px] text-blue font-medium mt-3">Tolerances: ISO 2768 Precision Class</div>
+              </div>
+            </Link>
 
             <Link href="/capabilities/powder-coating" className="block group">
-              <div className="bg-white p-6 rounded-lg border border-[#E2E8F0] group-hover:border-[#2F7BFF] transition-all h-full flex flex-col justify-between">
+              <div className="bg-white p-6 rounded-lg border border-slate-200 group-hover:border-blue transition-all h-full flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <Layers className="w-8 h-8 text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors" />
+                    <Layers className="w-8 h-8 text-navy group-hover:text-blue transition-colors" />
                     <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">
-                      AkzoNobel 10-Yr
+                      AkzoNobel coating
                     </span>
                   </div>
-                  <h4 className="text-lg font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">Surface Finishing</h4>
+                  <h4 className="text-lg font-bold font-heading text-navy group-hover:text-blue transition-colors">Surface Finishing</h4>
                   <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                    Full-dip automated anodizing (Clear, Black, Bronze 10-25µm) and electrostatic powder coating with certified AkzoNobel 10-Year Warranty.
+                    Two German-standard powder coating lines plus a wood-grain film transfer oven, alongside anodizing from 10–25µm in clear, black and bronze.
                   </p>
                 </div>
-                <div className="text-[11px] text-[#2F7BFF] font-medium mt-3 flex items-center justify-between">
+                <div className="text-[11px] text-blue font-medium mt-3 flex items-center justify-between">
                   <span>Qualicoat & AAMA 2604/2605</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </Link>
 
-            <div className="bg-white p-6 rounded-lg border border-[#E2E8F0]">
-              <Settings2 className="w-8 h-8 text-[#0A2D5B] mb-3" />
-              <h4 className="text-lg font-bold font-heading text-[#0A2D5B]">Fabrication & Assembly</h4>
+            <div className="bg-white p-6 rounded-lg border border-slate-200">
+              <Settings2 className="w-8 h-8 text-navy mb-3" />
+              <h4 className="text-lg font-bold font-heading text-navy">Fabrication & Assembly</h4>
               <p className="text-xs text-slate-600 mt-1 leading-relaxed">
                 Precision miter cutting, hydraulic punching, deburring, hardware insertion, sub-assembly and custom kitting for export.
               </p>
-              <div className="text-[11px] text-[#2F7BFF] font-medium mt-3">Turnkey OEM Sub-Assemblies</div>
+              <div className="text-[11px] text-blue font-medium mt-3">Turnkey OEM Sub-Assemblies</div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg border border-[#E2E8F0]">
-              <Microscope className="w-8 h-8 text-[#0A2D5B] mb-3" />
-              <h4 className="text-lg font-bold font-heading text-[#0A2D5B]">Quality Control & Metrology</h4>
+            <div className="bg-white p-6 rounded-lg border border-slate-200">
+              <Microscope className="w-8 h-8 text-navy mb-3" />
+              <h4 className="text-lg font-bold font-heading text-navy">Quality Control & Metrology</h4>
               <p className="text-xs text-slate-600 mt-1 leading-relaxed">
                 Equipped with optical profile projectors, coordinate measuring machines (CMM), spectrometry alloy testing and Webster hardness testers.
               </p>
-              <div className="text-[11px] text-[#2F7BFF] font-medium mt-3">Full Mill Test Certificates (MTR)</div>
+              <div className="text-[11px] text-blue font-medium mt-3">Full Mill Test Certificates (MTR)</div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg border border-[#E2E8F0]">
-              <Globe2 className="w-8 h-8 text-[#0A2D5B] mb-3" />
-              <h4 className="text-lg font-bold font-heading text-[#0A2D5B]">Export Packaging & Freight</h4>
+            <div className="bg-white p-6 rounded-lg border border-slate-200">
+              <Globe2 className="w-8 h-8 text-navy mb-3" />
+              <h4 className="text-lg font-bold font-heading text-navy">Export Packaging & Freight</h4>
               <p className="text-xs text-slate-600 mt-1 leading-relaxed">
                 Fumigated timber pallets, steel strapping, shrink-film wrapping, rust-inhibiting paper and desiccants for secure containerized sea freight.
               </p>
-              <div className="text-[11px] text-[#2F7BFF] font-medium mt-3">FOB & CIF Global Incoterms</div>
+              <div className="text-[11px] text-blue font-medium mt-3">FOB & CIF Global Incoterms</div>
             </div>
           </div>
         </div>
@@ -480,10 +589,10 @@ export default function HomePage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6 space-y-6">
-            <div className="text-xs uppercase font-heading font-semibold text-[#2F7BFF] tracking-widest">
+            <div className="text-xs uppercase font-heading font-semibold text-blue tracking-widest">
               STRATEGIC SUPPLY ADVANTAGE
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-heading text-[#0A2D5B]">
+            <h2 className="text-3xl sm:text-4xl font-bold font-heading text-navy">
               Why Global Sourcing Teams Partner with LELOI METAL
             </h2>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
@@ -492,11 +601,11 @@ export default function HomePage() {
 
             <div className="space-y-4 pt-2">
               <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] shrink-0 font-bold">
+                <div className="w-10 h-10 rounded-full bg-navy/5 flex items-center justify-center text-navy shrink-0 font-bold">
                   1
                 </div>
                 <div>
-                  <h4 className="font-bold font-heading text-[#0A2D5B]">China+1 Supply Chain Diversification</h4>
+                  <h4 className="font-bold font-heading text-navy">China+1 Supply Chain Diversification</h4>
                   <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
                     Mitigate tariff volatility, reduce single-source geopolitical risk and leverage Vietnam&apos;s free trade agreements (CPTPP, EVFTA, VKFTA).
                   </p>
@@ -504,11 +613,11 @@ export default function HomePage() {
               </div>
 
               <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] shrink-0 font-bold">
+                <div className="w-10 h-10 rounded-full bg-navy/5 flex items-center justify-center text-navy shrink-0 font-bold">
                   2
                 </div>
                 <div>
-                  <h4 className="font-bold font-heading text-[#0A2D5B]">Flexible MOQs & Die Investment</h4>
+                  <h4 className="font-bold font-heading text-navy">Flexible MOQs & Die Investment</h4>
                   <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
                     Custom die tooling at highly competitive rates with low initial trial batch quantities (500–1000 kg) before ramping to multi-container mass production.
                   </p>
@@ -516,11 +625,11 @@ export default function HomePage() {
               </div>
 
               <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] shrink-0 font-bold">
+                <div className="w-10 h-10 rounded-full bg-navy/5 flex items-center justify-center text-navy shrink-0 font-bold">
                   3
                 </div>
                 <div>
-                  <h4 className="font-bold font-heading text-[#0A2D5B]">Direct Engineering Support (DFM)</h4>
+                  <h4 className="font-bold font-heading text-navy">Direct Engineering Support (DFM)</h4>
                   <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
                     Our technical extrusion engineers optimize wall thickness, radii, snap-fits and assembly tolerances before die cut, reducing cost and lead time.
                   </p>
@@ -528,11 +637,11 @@ export default function HomePage() {
               </div>
 
               <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] shrink-0 font-bold">
+                <div className="w-10 h-10 rounded-full bg-navy/5 flex items-center justify-center text-navy shrink-0 font-bold">
                   4
                 </div>
                 <div>
-                  <h4 className="font-bold font-heading text-[#0A2D5B]">International Export Documentation</h4>
+                  <h4 className="font-bold font-heading text-navy">International Export Documentation</h4>
                   <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
                     Clear certificate of origin (Form B, EUR.1, CPTPP), mill test reports (EN 10204 3.1), packing lists and sea freight customs paperwork.
                   </p>
@@ -542,9 +651,9 @@ export default function HomePage() {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="bg-[#0A2D5B] text-white p-8 sm:p-10 rounded-2xl relative shadow-xl">
+            <div className="bg-navy text-white p-8 sm:p-10 rounded-2xl relative shadow-xl">
               <div className="space-y-4">
-                <div className="text-xs uppercase tracking-wider text-[#2F7BFF] font-heading font-semibold">
+                <div className="text-xs uppercase tracking-wider text-blue font-heading font-semibold">
                   CONFIDENTIAL RFQ GUARANTEE
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-bold font-heading text-white">
@@ -585,13 +694,13 @@ export default function HomePage() {
       {/* ==================================================================== */}
       {/* 7.9 INTERACTIVE TOOL PREVIEW: WEIGHT CALCULATOR                       */}
       {/* ==================================================================== */}
-      <section className="py-16 bg-[#F1F4F8] border-t border-b border-[#E2E8F0] px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-light-gray border-t border-b border-slate-200 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="text-xs uppercase font-heading font-semibold text-[#2F7BFF] tracking-widest mb-1">
+            <div className="text-xs uppercase font-heading font-semibold text-blue tracking-widest mb-1">
               FREE TECHNICAL SOURCING TOOL
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy">
               Estimate Extrusion Weight & Sourcing Volume
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-2">
@@ -607,7 +716,7 @@ export default function HomePage() {
       {/* 7.8 SUSTAINABILITY SECTION (CBAM & Low Carbon Readiness)             */}
       {/* ==================================================================== */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="rounded-2xl bg-gradient-to-r from-emerald-950 via-[#0A2D5B] to-[#061D3B] text-white p-8 sm:p-12 relative overflow-hidden">
+        <div className="rounded-2xl bg-gradient-to-r from-emerald-950 via-navy to-navy-dark text-white p-8 sm:p-12 relative overflow-hidden">
           <div className="max-w-3xl space-y-4 relative z-10">
             <div className="inline-flex items-center gap-2 text-emerald-400 text-xs font-heading font-semibold tracking-wider uppercase">
               <Leaf className="w-4 h-4" />
@@ -637,9 +746,9 @@ export default function HomePage() {
       {/* ==================================================================== */}
       {/* 7.10 FINAL CONVERSION CTA SECTION                                    */}
       {/* ==================================================================== */}
-      <section className="py-20 bg-[#061D3B] text-white px-4 sm:px-6 lg:px-8 text-center border-t border-slate-800">
+      <section className="py-20 bg-navy-dark text-white px-4 sm:px-6 lg:px-8 text-center border-t border-slate-800">
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF]">
+          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-blue">
             START YOUR VIETNAM SOURCING PROJECT
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold font-heading tracking-tight text-white">

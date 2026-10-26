@@ -18,10 +18,11 @@ export const AdminNav: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleLogout = () => {
-    localStorage.removeItem('leloi_token');
-    localStorage.removeItem('leloi_user');
-    router.push('/admin/login');
+  const handleLogout = async () => {
+    // Clears the HTTP-only session cookie server-side; there is no client-held token.
+    await fetch('/api/admin/session', { method: 'DELETE' }).catch(() => undefined);
+    router.replace('/admin/login');
+    router.refresh();
   };
 
   const navItems = [
@@ -33,7 +34,7 @@ export const AdminNav: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#061D3B] text-white border-b border-white/10 px-4 sm:px-8 py-3">
+    <div className="bg-navy-dark text-white border-b border-white/10 px-4 sm:px-8 py-3">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
@@ -56,7 +57,7 @@ export const AdminNav: React.FC = () => {
                   href={item.href}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-medium transition-colors ${
                     isActive
-                      ? 'bg-[#2F7BFF] text-white'
+                      ? 'bg-blue text-white'
                       : 'text-slate-300 hover:text-white hover:bg-white/10'
                   }`}
                 >

@@ -92,9 +92,9 @@ export default function PowderCoatingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
+    <div className="min-h-screen bg-slate-50">
       {/* 1. HERO SECTION */}
-      <section className="bg-[#061D3B] text-white py-20 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative overflow-hidden">
+      <section className="bg-navy-dark text-white py-20 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(47,123,255,0.15),transparent_50%)] pointer-events-none" />
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -129,7 +129,7 @@ export default function PowderCoatingPage() {
                 variant="outline"
                 size="lg"
                 className="border-white/30 text-white hover:bg-white/10 gap-2"
-                leftIcon={<FileUp className="w-4 h-4 text-[#2F7BFF]" />}
+                leftIcon={<FileUp className="w-4 h-4 text-blue" />}
               >
                 Upload Section Drawing
               </Button>
@@ -140,7 +140,7 @@ export default function PowderCoatingPage() {
 
       {/* 2. AKZONOBEL PARTNERSHIP & 10-YEAR WARRANTY CALLOUT */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm p-8 sm:p-12 relative overflow-hidden">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 sm:p-12 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-linear-to-bl from-emerald-50 via-blue-50 to-transparent -z-0 rounded-bl-full pointer-events-none" />
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8">
@@ -148,7 +148,7 @@ export default function PowderCoatingPage() {
                 <Award className="w-4 h-4 text-emerald-600" />
                 Guaranteed Project Durability
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">
+              <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy">
                 The AkzoNobel Powder Coating Warranty Proposition
               </h2>
               <p className="text-sm text-slate-600 mt-3 leading-relaxed">
@@ -158,35 +158,35 @@ export default function PowderCoatingPage() {
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-sm text-[#0A2D5B] block">Anti-Chalking Guarantee</strong>
+                    <strong className="text-sm text-navy block">Anti-Chalking Guarantee</strong>
                     <span className="text-xs text-slate-500">Subject to approved system and environmental parameters.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-sm text-[#0A2D5B] block">Color Retention & UV Resistance</strong>
+                    <strong className="text-sm text-navy block">Color Retention & UV Resistance</strong>
                     <span className="text-xs text-slate-500">Engineered for long-term color integrity under outdoor exposure.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-sm text-[#0A2D5B] block">Adhesion Integrity</strong>
+                    <strong className="text-sm text-navy block">Adhesion Integrity</strong>
                     <span className="text-xs text-slate-500">Superior film adhesion to prevent peeling, flaking, or blistering.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-sm text-[#0A2D5B] block">Corrosion Protection</strong>
+                    <strong className="text-sm text-navy block">Corrosion Protection</strong>
                     <span className="text-xs text-slate-500">Barrier protection against moisture, humidity, and atmospheric pollutants.</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="lg:col-span-4 bg-[#0A2D5B] text-white p-6 rounded-xl border border-white/10 flex flex-col justify-between">
+            <div className="lg:col-span-4 bg-navy text-white p-6 rounded-xl border border-white/10 flex flex-col justify-between">
               <div>
                 <div className="text-xs text-blue-300 font-semibold uppercase tracking-wider">
                   Quality Milestone
@@ -218,7 +218,7 @@ export default function PowderCoatingPage() {
               </div>
               <Link
                 href="/rfq?mode=upload&finish=AkzoNobel-10yr"
-                className="mt-4 bg-[#2F7BFF] hover:bg-[#1B6BF8] text-white font-bold py-2.5 px-4 rounded-lg text-xs text-center transition-colors block"
+                className="mt-4 bg-blue hover:bg-blue-hover text-white font-bold py-2.5 px-4 rounded-lg text-xs text-center transition-colors block"
               >
                 Inquire With Drawing
               </Link>
@@ -228,13 +228,13 @@ export default function PowderCoatingPage() {
       </section>
 
       {/* 3. SIX-STAGE POWDER COATING PROCESS */}
-      <section className="py-16 bg-white border-t border-b border-[#E2E8F0] px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-white border-t border-b border-slate-200 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-xs font-bold font-heading text-[#2F7BFF] uppercase tracking-widest">
+            <span className="text-xs font-bold font-heading text-blue uppercase tracking-widest">
               State-of-the-Art Line
             </span>
-            <h2 className="text-3xl font-bold font-heading text-[#0A2D5B] mt-2">
+            <h2 className="text-3xl font-bold font-heading text-navy mt-2">
               Automated 6-Stage Electrostatic Coating Process
             </h2>
             <p className="text-sm text-slate-600 mt-2">
@@ -246,17 +246,17 @@ export default function PowderCoatingPage() {
             {steps.map((s) => (
               <div
                 key={s.step}
-                className="p-6 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] hover:bg-white hover:border-[#2F7BFF] hover:shadow-md transition-all group"
+                className="p-6 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-blue hover:shadow-md transition-all group"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-black font-heading text-[#2F7BFF]">
+                  <span className="text-2xl font-black font-heading text-blue">
                     {s.step}
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-blue-50 text-[#2F7BFF] flex items-center justify-center group-hover:bg-[#2F7BFF] group-hover:text-white transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-blue-50 text-blue flex items-center justify-center group-hover:bg-blue group-hover:text-white transition-colors">
                     <Check className="w-4 h-4" />
                   </div>
                 </div>
-                <h3 className="text-base font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                <h3 className="text-base font-bold font-heading text-navy group-hover:text-blue transition-colors">
                   {s.title}
                 </h3>
                 <p className="text-xs text-slate-600 mt-2 leading-relaxed">
@@ -271,10 +271,10 @@ export default function PowderCoatingPage() {
       {/* 4. PERFORMANCE STANDARDS MATRIX (AAMA 2603 vs 2604 vs 2605) */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="mb-8">
-          <span className="text-xs font-bold font-heading text-[#2F7BFF] uppercase tracking-widest">
+          <span className="text-xs font-bold font-heading text-blue uppercase tracking-widest">
             International Compliance
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] mt-1">
+          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy mt-1">
             Coating Standards & Architectural Specifications
           </h2>
           <p className="text-sm text-slate-600 mt-1">
@@ -282,9 +282,9 @@ export default function PowderCoatingPage() {
           </p>
         </div>
 
-        <div className="overflow-x-auto bg-white rounded-xl border border-[#E2E8F0] shadow-xs">
+        <div className="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-xs">
           <table className="w-full text-left text-xs text-slate-700">
-            <thead className="bg-[#0A2D5B] text-white uppercase text-[11px] font-heading font-semibold">
+            <thead className="bg-navy text-white uppercase text-[11px] font-heading font-semibold">
               <tr>
                 <th className="p-4">Standard / Spec</th>
                 <th className="p-4">Classification</th>
@@ -296,7 +296,7 @@ export default function PowderCoatingPage() {
             <tbody className="divide-y divide-slate-100">
               {standards.map((st, idx) => (
                 <tr key={st.standard} className={idx === 2 ? 'bg-emerald-50/50 font-medium' : 'hover:bg-slate-50'}>
-                  <td className="p-4 font-bold text-[#0A2D5B] flex items-center gap-2">
+                  <td className="p-4 font-bold text-navy flex items-center gap-2">
                     {idx === 2 && <ShieldCheck className="w-4 h-4 text-emerald-600" />}
                     {st.standard}
                   </td>
@@ -312,14 +312,14 @@ export default function PowderCoatingPage() {
       </section>
 
       {/* 5. COLOR PALETTES & FINISH TEXTURES */}
-      <section className="py-16 bg-white border-t border-b border-[#E2E8F0] px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-white border-t border-b border-slate-200 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-xs font-bold font-heading text-[#2F7BFF] uppercase tracking-widest">
+              <span className="text-xs font-bold font-heading text-blue uppercase tracking-widest">
                 Aesthetics & Finishes
               </span>
-              <h2 className="text-3xl font-bold font-heading text-[#0A2D5B] mt-2">
+              <h2 className="text-3xl font-bold font-heading text-navy mt-2">
                 RAL Custom Colors & Premium Architectural Textures
               </h2>
               <p className="text-sm text-slate-600 mt-3 leading-relaxed">
@@ -328,19 +328,19 @@ export default function PowderCoatingPage() {
 
               <div className="mt-6 space-y-3 text-xs text-slate-700">
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#2F7BFF]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue" />
                   <span><strong>Matte & Satin Architecture:</strong> 25–35% gloss level for contemporary glare-free building envelopes.</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#2F7BFF]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue" />
                   <span><strong>Sand-Texture & Micro-Structure:</strong> Scratch-resistant tactile finish, ideal for high-traffic door frames and balustrades.</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#2F7BFF]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue" />
                   <span><strong>Metallic & Pearl Accents:</strong> Bonded metallic particles delivering consistent pearlescent sparkle without clouding.</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#2F7BFF]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue" />
                   <span><strong>Wood-Grain Sublimation:</strong> Realistic timber aesthetics with the fire safety and durability of aluminium.</span>
                 </div>
               </div>
@@ -355,10 +355,10 @@ export default function PowderCoatingPage() {
             </div>
 
             {/* Visual Color Grid */}
-            <div className="bg-[#F8FAFC] p-6 rounded-2xl border border-[#E2E8F0]">
-              <div className="text-xs font-bold text-[#0A2D5B] mb-4 uppercase tracking-wider flex items-center justify-between">
+            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+              <div className="text-xs font-bold text-navy mb-4 uppercase tracking-wider flex items-center justify-between">
                 <span>Popular Architectural RAL Palettes</span>
-                <span className="text-slate-400 font-normal">AkzoNobel Approved</span>
+                <span className="text-slate-400 font-normal">AkzoNobel Powder Systems</span>
               </div>
               <div className="grid grid-cols-3 gap-3 text-[11px]">
                 <div className="bg-white p-3 rounded-lg border border-slate-200 text-center shadow-xs">
@@ -401,9 +401,9 @@ export default function PowderCoatingPage() {
       </section>
 
       {/* 6. CONVERSION CTA SECTION */}
-      <section className="py-20 bg-[#061D3B] text-white px-4 sm:px-6 lg:px-8 border-t border-white/10">
+      <section className="py-20 bg-navy-dark text-white px-4 sm:px-6 lg:px-8 border-t border-white/10">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#2F7BFF]">
+          <span className="text-xs font-bold uppercase tracking-widest text-blue">
             Direct Factory Partnership
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold font-heading text-white mt-2">

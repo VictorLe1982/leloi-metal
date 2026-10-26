@@ -24,8 +24,28 @@ import {
   FileCheck,
   Globe2,
   ShieldCheck,
-  AlertCircle
+  AlertCircle,
+  AlertTriangle
 } from 'lucide-react';
+import {
+  submitRfq,
+  uploadRfqDrawing,
+  ApiError,
+  ApiUnreachableError
+} from '@/lib/api';
+
+const SALES_EMAIL = 'sales@leloimetal.com';
+const MAX_DRAWING_BYTES = 52_428_800; // 50 MB — mirrors the API limit
+const ACCEPTED_DRAWING_EXTENSIONS = [
+  '.pdf',
+  '.dwg',
+  '.dxf',
+  '.step',
+  '.stp',
+  '.iges',
+  '.igs',
+  '.zip'
+];
 
 function RfqFormContent() {
   const searchParams = useSearchParams();
@@ -44,8 +64,12 @@ function RfqFormContent() {
     rfqNumber: string;
     submittedAt: string;
     engineeringReviewSla: string;
+    drawingUploaded: boolean;
+    drawingWarning?: string;
   } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -81,7 +105,6 @@ function RfqFormContent() {
     },
     files: [] as Array<{
       originalFileName: string;
-      storageKey: string;
       mimeType: string;
       fileSize: number;
     }>,
@@ -226,27 +249,43 @@ function RfqFormContent() {
   const updateCommercial = (key: string, value: any) =>
     setFormData((prev) => ({ ...prev, commercial: { ...prev.commercial, [key]: value } }));
 
-  // File selection mock upload for frontend
+  // Holds the real File so it can be uploaded to private storage after the RFQ
+  // record exists. The `files` metadata array is only a manifest for the API.
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFileName(file.name);
-      setFormData((prev) => ({
-        ...prev,
-        files: [
-          {
-            originalFileName: file.name,
-            storageKey: `mock-upload/${Date.now()}-${file.name}`,
-            mimeType: file.type || 'application/octet-stream',
-            fileSize: file.size
-          }
-        ]
-      }));
-      trackB2BEvent({
-        name: 'rfq_file_uploaded',
-        params: { fileType: file.name.split('.').pop() || 'unknown', fileSizeMb: file.size / (1024 * 1024) }
-      });
+    if (!file) return;
+
+    setFileError(null);
+
+    const extension = `.${file.name.split('.').pop()?.toLowerCase() ?? ''}`;
+    if (!ACCEPTED_DRAWING_EXTENSIONS.includes(extension)) {
+      setFileError(
+        `Format ${extension} is not accepted. Permitted: ${ACCEPTED_DRAWING_EXTENSIONS.join(', ')}.`
+      );
+      e.target.value = '';
+      return;
     }
+
+    if (file.size > MAX_DRAWING_BYTES) {
+      setFileError(
+        `This file is ${(file.size / (1024 * 1024)).toFixed(1)} MB. The maximum drawing size is 50 MB.`
+      );
+      e.target.value = '';
+      return;
+    }
+
+    setSelectedFile(file);
+    setSelectedFileName(file.name);
+    setFormData((prev) => ({
+      ...prev,
+      files: [
+        {
+          originalFileName: file.name,
+          mimeType: file.type || 'application/octet-stream',
+          fileSize: file.size
+        }
+      ]
+    }));
   };
 
   // Step progression with analytics tracking
@@ -277,45 +316,82 @@ function RfqFormContent() {
     setCurrentStep((prev) => Math.max(1, prev - 1));
   };
 
-  // Submission handler
+  /**
+   * Submits the RFQ, then uploads the drawing against the created record.
+   *
+   * A confirmation screen is shown only when the backend has actually persisted
+   * the RFQ. Any failure is surfaced to the buyer — never silently swallowed.
+   */
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setErrorMsg(null);
 
     try {
-      // In local dev/demo mode, post to API if reachable, or simulate immediate confirmed RFQ
-      let responseData;
-      try {
-        const res = await fetch('http://localhost:4000/api/public/rfqs', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-        if (res.ok) {
-          responseData = await res.json();
+      // Drawing bytes are registered by the dedicated upload endpoint, which
+      // computes the SHA-256 hash and private storage key server-side, so the
+      // submission itself carries no file manifest.
+      const response = await submitRfq({
+        ...formData,
+        files: [],
+        landingPage: typeof window !== 'undefined' ? window.location.pathname : '/rfq'
+      });
+
+      let drawingUploaded = false;
+      let drawingWarning: string | undefined;
+
+      if (selectedFile) {
+        try {
+          await uploadRfqDrawing(response.rfqId, selectedFile);
+          drawingUploaded = true;
+          trackB2BEvent({
+            name: 'rfq_file_uploaded',
+            params: {
+              fileType: selectedFile.name.split('.').pop() || 'unknown',
+              fileSizeMb: selectedFile.size / (1024 * 1024)
+            }
+          });
+        } catch (uploadErr) {
+          // The RFQ itself is saved, so we confirm it — but we must be explicit
+          // that the drawing did not arrive.
+          drawingWarning =
+            uploadErr instanceof ApiError
+              ? uploadErr.message
+              : 'The drawing could not be transferred. Our team will email you a secure upload link.';
         }
-      } catch {
-        // Fallback for standalone demo
       }
 
-      const rfqNumber = responseData?.rfqNumber || `RFQ-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-
       setSubmittedRfq({
-        rfqNumber,
-        submittedAt: new Date().toISOString(),
-        engineeringReviewSla: '24 business hours'
+        rfqNumber: response.rfqNumber,
+        submittedAt: response.submittedAt || new Date().toISOString(),
+        engineeringReviewSla: response.engineeringReviewSla || '24 business hours',
+        drawingUploaded,
+        drawingWarning
       });
 
       trackB2BEvent({
         name: 'rfq_submitted',
         params: {
-          rfqNumber,
+          rfqNumber: response.rfqNumber,
           productCategory: formData.product.productCategory,
           country: formData.company.country
         }
       });
-    } catch (err: any) {
-      setErrorMsg(err.message || 'An error occurred during submission. Please try again.');
+    } catch (err) {
+      if (err instanceof ApiUnreachableError) {
+        setErrorMsg(
+          `We could not reach our RFQ server, so your request has not been submitted. Please try again in a moment, or email your specifications and drawing directly to ${SALES_EMAIL}.`
+        );
+      } else if (err instanceof ApiError) {
+        setErrorMsg(
+          err.status >= 500
+            ? `Our RFQ server returned an error and your request was not saved. Please try again shortly, or email ${SALES_EMAIL}.`
+            : `Your submission was rejected: ${err.message}`
+        );
+      } else {
+        setErrorMsg(
+          `An unexpected error occurred and your RFQ was not submitted. Please email ${SALES_EMAIL} so we can assist you directly.`
+        );
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -334,31 +410,57 @@ function RfqFormContent() {
             <span className="text-xs uppercase font-heading font-semibold text-emerald-700 tracking-widest">
               RFQ Successfully Submitted
             </span>
-            <h1 className="text-3xl font-extrabold font-heading text-[#0A2D5B]">
+            <h1 className="text-3xl font-extrabold font-heading text-navy">
               Thank You for Your Inquiry
             </h1>
             <p className="text-slate-600 text-sm max-w-lg mx-auto">
-              Your engineering specifications and drawing files have been received by the LELOI METAL export technical team in Vietnam.
+              Your engineering specifications have been received by the LELOI METAL export technical team in Vietnam.
             </p>
           </div>
 
-          <div className="p-4 bg-[#F1F4F8] rounded-xl border border-[#E2E8F0] inline-block max-w-md w-full text-left">
-            <div className="flex justify-between items-center py-1 border-b border-[#E2E8F0] text-sm">
-              <span className="text-slate-500">RFQ Reference:</span>
-              <span className="font-mono font-bold text-[#0A2D5B]">{submittedRfq.rfqNumber}</span>
+          {submittedRfq.drawingWarning && (
+            <div className="p-4 bg-amber-50 border border-amber-300 rounded-xl text-left max-w-md mx-auto flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="text-xs text-amber-900 leading-relaxed">
+                <span className="font-bold block mb-0.5">Your drawing was not attached</span>
+                {submittedRfq.drawingWarning} Your RFQ reference below is valid — please reply to
+                our confirmation email with the file, or send it to {SALES_EMAIL}.
+              </div>
             </div>
-            <div className="flex justify-between items-center py-1 border-b border-[#E2E8F0] text-sm">
+          )}
+
+          <div className="p-4 bg-light-gray rounded-xl border border-slate-200 inline-block max-w-md w-full text-left">
+            <div className="flex justify-between items-center py-1 border-b border-slate-200 text-sm">
+              <span className="text-slate-500">RFQ Reference:</span>
+              <span className="font-mono font-bold text-navy">{submittedRfq.rfqNumber}</span>
+            </div>
+            <div className="flex justify-between items-center py-1 border-b border-slate-200 text-sm">
               <span className="text-slate-500">Target Response SLA:</span>
               <span className="font-semibold text-emerald-700">Within {submittedRfq.engineeringReviewSla}</span>
             </div>
-            <div className="flex justify-between items-center py-1 text-sm">
+            <div className="flex justify-between items-center py-1 border-b border-slate-200 text-sm">
               <span className="text-slate-500">Contact Email:</span>
               <span className="font-medium text-slate-800">{formData.company.workEmail}</span>
+            </div>
+            <div className="flex justify-between items-center py-1 text-sm">
+              <span className="text-slate-500">Drawing Attached:</span>
+              <span
+                className={`font-semibold ${
+                  submittedRfq.drawingUploaded ? 'text-emerald-700' : 'text-slate-600'
+                }`}
+              >
+                {submittedRfq.drawingUploaded
+                  ? `Yes — ${selectedFileName}`
+                  : selectedFileName
+                    ? 'Not received'
+                    : 'None submitted'}
+              </span>
             </div>
           </div>
 
           <div className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
-            * A confirmation email with your reference code and drawing upload summary has been dispatched. Our technical engineer will review profile tolerances, die design feasibility, and FOB/CIF costing.
+            Our technical engineer will review profile tolerances, die design feasibility, and
+            FOB/CIF costing. Please keep your RFQ reference for all follow-up correspondence.
           </div>
 
           <div className="pt-4 flex justify-center gap-4">
@@ -367,6 +469,10 @@ function RfqFormContent() {
               size="md"
               onClick={() => {
                 setSubmittedRfq(null);
+                setSelectedFile(null);
+                setSelectedFileName(null);
+                setFileError(null);
+                setFormData((prev) => ({ ...prev, files: [] }));
                 setCurrentStep(1);
               }}
             >
@@ -386,14 +492,14 @@ function RfqFormContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]/60 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-gray/60 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Title Header */}
         <div className="text-center space-y-2">
-          <span className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF]">
+          <span className="text-xs uppercase font-heading font-semibold tracking-widest text-blue">
             GLOBAL SOURCING GATEWAY
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold font-heading text-[#0A2D5B]">
+          <h1 className="text-3xl sm:text-4xl font-extrabold font-heading text-navy">
             Request a Technical Quotation (RFQ)
           </h1>
           <p className="text-sm text-slate-600 max-w-2xl mx-auto">
@@ -402,7 +508,7 @@ function RfqFormContent() {
         </div>
 
         {/* Step Indicator Progress Bar */}
-        <div className="bg-white p-4 rounded-xl border border-[#E2E8F0] shadow-xs">
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
           <div className="grid grid-cols-5 gap-2 text-center text-xs font-heading font-semibold">
             {[
               { step: 1, name: 'Company', icon: Building },
@@ -415,7 +521,7 @@ function RfqFormContent() {
                 key={step}
                 className={`flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors ${
                   currentStep === step
-                    ? 'text-[#2F7BFF] bg-blue-50/60 font-bold'
+                    ? 'text-blue bg-blue-50/60 font-bold'
                     : currentStep > step
                     ? 'text-emerald-600'
                     : 'text-slate-400'
@@ -424,7 +530,7 @@ function RfqFormContent() {
                 <div
                   className={`w-7 h-7 rounded-full flex items-center justify-center text-xs ${
                     currentStep === step
-                      ? 'bg-[#2F7BFF] text-white'
+                      ? 'bg-blue text-white'
                       : currentStep > step
                       ? 'bg-emerald-100 text-emerald-700'
                       : 'bg-slate-100 text-slate-500'
@@ -447,12 +553,12 @@ function RfqFormContent() {
         )}
 
         {/* Multi-step Form Body */}
-        <div className="bg-white rounded-2xl border border-[#E2E8F0] p-6 sm:p-10 shadow-sm">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm">
           {/* STEP 1: COMPANY */}
           {currentStep === 1 && (
             <div className="space-y-6 animate-in fade-in duration-200">
-              <div className="border-b border-[#E2E8F0] pb-4">
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+              <div className="border-b border-slate-200 pb-4">
+                <h3 className="text-xl font-bold font-heading text-navy">
                   Step 1: Company & Contact Information
                 </h3>
                 <p className="text-xs text-slate-500 mt-1">
@@ -540,8 +646,8 @@ function RfqFormContent() {
 
             return (
               <div className="space-y-6 animate-in fade-in duration-200">
-                <div className="border-b border-[#E2E8F0] pb-4">
-                  <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+                <div className="border-b border-slate-200 pb-4">
+                  <h3 className="text-xl font-bold font-heading text-navy">
                     Step 2: Profile Specifications & Alloy
                   </h3>
                   <p className="text-xs text-slate-500 mt-1">
@@ -552,7 +658,7 @@ function RfqFormContent() {
                 </div>
 
                 {isArchitectural && (
-                  <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200 text-xs text-[#0A2D5B] flex items-center justify-between">
+                  <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200 text-xs text-navy flex items-center justify-between">
                     <span className="font-semibold">
                       Architectural Project Sourcing Active: Profile geometries, opening schedules & finishes tailored for facade/window fabricators.
                     </span>
@@ -681,8 +787,8 @@ function RfqFormContent() {
           {/* STEP 3: PROCESS */}
           {currentStep === 3 && (
             <div className="space-y-6 animate-in fade-in duration-200">
-              <div className="border-b border-[#E2E8F0] pb-4">
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+              <div className="border-b border-slate-200 pb-4">
+                <h3 className="text-xl font-bold font-heading text-navy">
                   Step 3: Surface Treatment & Processing Requirements
                 </h3>
                 <p className="text-xs text-slate-500 mt-1">
@@ -723,7 +829,7 @@ function RfqFormContent() {
               </div>
 
               <div>
-                <label className="text-xs font-heading font-semibold text-[#172033] uppercase tracking-wide block mb-3">
+                <label className="text-xs font-heading font-semibold text-charcoal uppercase tracking-wide block mb-3">
                   Secondary Fabrication & CNC Operations (Select all required):
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -741,15 +847,15 @@ function RfqFormContent() {
                       key={req}
                       className={`flex items-center gap-2 p-3 rounded-lg border text-xs cursor-pointer select-none transition-colors ${
                         formData.process.processRequirements.includes(req)
-                          ? 'border-[#2F7BFF] bg-blue-50/50 text-[#0A2D5B] font-semibold'
-                          : 'border-[#E2E8F0] hover:bg-slate-50 text-slate-700'
+                          ? 'border-blue bg-blue-50/50 text-navy font-semibold'
+                          : 'border-slate-200 hover:bg-slate-50 text-slate-700'
                       }`}
                     >
                       <input
                         type="checkbox"
                         checked={formData.process.processRequirements.includes(req)}
                         onChange={() => toggleProcessReq(req)}
-                        className="rounded text-[#2F7BFF] focus:ring-[#2F7BFF]"
+                        className="rounded text-blue focus:ring-blue"
                       />
                       {req}
                     </label>
@@ -762,8 +868,8 @@ function RfqFormContent() {
           {/* STEP 4: FILES */}
           {currentStep === 4 && (
             <div className="space-y-6 animate-in fade-in duration-200">
-              <div className="border-b border-[#E2E8F0] pb-4">
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+              <div className="border-b border-slate-200 pb-4">
+                <h3 className="text-xl font-bold font-heading text-navy">
                   Step 4: Upload Engineering Drawings
                 </h3>
                 <p className="text-xs text-slate-500 mt-1">
@@ -772,13 +878,13 @@ function RfqFormContent() {
               </div>
 
               {/* Secure Drag & Drop Zone */}
-              <div className="border-2 border-dashed border-[#2F7BFF]/40 bg-blue-50/20 hover:bg-blue-50/40 transition-colors rounded-xl p-8 text-center space-y-4">
-                <div className="w-14 h-14 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto text-[#2F7BFF]">
+              <div className="border-2 border-dashed border-blue/40 bg-blue-50/20 hover:bg-blue-50/40 transition-colors rounded-xl p-8 text-center space-y-4">
+                <div className="w-14 h-14 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto text-blue">
                   <FileUp className="w-7 h-7" />
                 </div>
                 <div>
                   <label htmlFor="file-upload" className="cursor-pointer">
-                    <span className="font-heading font-semibold text-sm text-[#2F7BFF] hover:underline">
+                    <span className="font-heading font-semibold text-sm text-blue hover:underline">
                       Click to choose file
                     </span>
                     <span className="text-sm text-slate-600"> or drag and drop your CAD drawing</span>
@@ -795,18 +901,33 @@ function RfqFormContent() {
                   </p>
                 </div>
 
-                {selectedFileName && (
+                {fileError && (
+                  <div
+                    role="alert"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-100 text-red-800 rounded-lg text-xs font-medium"
+                  >
+                    <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                    {fileError}
+                  </div>
+                )}
+
+                {selectedFileName && !fileError && (
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-100 text-emerald-800 rounded-lg text-xs font-mono font-medium">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     Selected: {selectedFileName}
+                    {selectedFile && (
+                      <span className="text-emerald-600">
+                        ({(selectedFile.size / (1024 * 1024)).toFixed(1)} MB)
+                      </span>
+                    )}
                   </div>
                 )}
               </div>
 
-              <div className="p-4 bg-[#F1F4F8] rounded-xl border border-[#E2E8F0] flex items-start gap-3 text-xs text-slate-600">
+              <div className="p-4 bg-light-gray rounded-xl border border-slate-200 flex items-start gap-3 text-xs text-slate-600">
                 <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-[#0A2D5B]">Proprietary IP Protection: </span>
+                  <span className="font-bold text-navy">Proprietary IP Protection: </span>
                   Drawings submitted through this portal are held strictly confidential, protected under commercial NDA, and stored in private encrypted storage accessible only to assigned extrusion review engineers.
                 </div>
               </div>
@@ -816,8 +937,8 @@ function RfqFormContent() {
           {/* STEP 5: COMMERCIAL */}
           {currentStep === 5 && (
             <div className="space-y-6 animate-in fade-in duration-200">
-              <div className="border-b border-[#E2E8F0] pb-4">
-                <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+              <div className="border-b border-slate-200 pb-4">
+                <h3 className="text-xl font-bold font-heading text-navy">
                   Step 5: Commercial Conditions & Freight Destination
                 </h3>
                 <p className="text-xs text-slate-500 mt-1">
@@ -879,7 +1000,7 @@ function RfqFormContent() {
           )}
 
           {/* Navigation Action Buttons */}
-          <div className="mt-8 pt-6 border-t border-[#E2E8F0] flex justify-between items-center">
+          <div className="mt-8 pt-6 border-t border-slate-200 flex justify-between items-center">
             {currentStep > 1 ? (
               <Button
                 variant="secondary"

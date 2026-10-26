@@ -9,6 +9,8 @@ import {
   getFamiliesByDivision,
   LEGACY_CATEGORY_ROUTE_MAP
 } from '@leloi/types';
+import { composeKeywords } from '@leloi/seo';
+import { getDivisionFaqs } from '@/data/division-faqs';
 import {
   ArrowRight,
   FileUp,
@@ -18,9 +20,19 @@ import {
   ShieldCheck
 } from 'lucide-react';
 
+/**
+ * Divisions that have a hand-built landing page at a static route.
+ *
+ * Prerendering them here too put two pages on the same URL, and the generic one
+ * won — silently hiding the bespoke architectural landing page. Excluding them
+ * lets the static segment own its URL.
+ */
+const DIVISIONS_WITH_DEDICATED_PAGE = new Set(['architectural']);
+
 export function generateStaticParams() {
-  const divisions = getProductDivisions();
-  const divisionSlugs = divisions.map((d) => ({ category: d.slug }));
+  const divisionSlugs = getProductDivisions()
+    .filter((d) => !DIVISIONS_WITH_DEDICATED_PAGE.has(d.slug))
+    .map((d) => ({ category: d.slug }));
   const legacySlugs = Object.keys(LEGACY_CATEGORY_ROUTE_MAP).map((category) => ({ category }));
   return [...divisionSlugs, ...legacySlugs];
 }
@@ -49,10 +61,11 @@ export async function generateMetadata({
     };
   }
 
+  // Division pages own their head/mid cluster; family pages below them do not.
   return {
     title: division.seo.title,
     description: division.seo.description,
-    keywords: division.seo.keywords,
+    keywords: composeKeywords(division.seo.keywords, `/products/${division.slug}`, division.alloys),
     alternates: {
       canonical: `https://leloimetal.com/products/${division.slug}`
     }
@@ -77,17 +90,82 @@ export default async function CategoryLandingPage({
   }
 
   const families = getFamiliesByDivision(division.slug);
+  const canonicalUrl = `https://leloimetal.com/products/${division.slug}`;
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://leloimetal.com/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Products',
+        item: 'https://leloimetal.com/products'
+      },
+      { '@type': 'ListItem', position: 3, name: division.name, item: canonicalUrl }
+    ]
+  };
+
+  // Lets search and AI engines see every family in this division as one set,
+  // even before they crawl the individual family pages.
+  const collectionJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: division.name,
+    description: division.seo.description,
+    url: canonicalUrl,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: families.length,
+      itemListElement: families.map((family, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: family.name,
+        url: `https://leloimetal.com/products/${family.divisionSlug}/${family.slug}`
+      }))
+    }
+  };
+
+  const faqs = getDivisionFaqs(division.slug);
+
+  // Mirrors the questions rendered further down this page, verbatim.
+  const faqJsonLd = faqs.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer }
+        }))
+      }
+    : null;
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]/60 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-gray/60 py-12 px-4 sm:px-6 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs text-slate-500 font-medium">
-          <Link href="/" className="hover:text-[#2F7BFF]">
+          <Link href="/" className="hover:text-blue">
             Home
           </Link>
           <ChevronRight className="w-3 h-3" />
-          <Link href="/products" className="hover:text-[#2F7BFF]">
+          <Link href="/products" className="hover:text-blue">
             Products
           </Link>
           <ChevronRight className="w-3 h-3" />
@@ -95,9 +173,9 @@ export default async function CategoryLandingPage({
         </nav>
 
         {/* Division Hero */}
-        <div className="bg-gradient-to-br from-[#061D3B] to-[#0A2D5B] text-white rounded-2xl p-8 sm:p-12 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="bg-gradient-to-br from-navy-dark to-navy text-white rounded-2xl p-8 sm:p-12 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-4">
-            <div className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF] flex items-center gap-2">
+            <div className="text-xs uppercase font-heading font-semibold tracking-widest text-blue flex items-center gap-2">
               <span>LELOI METAL PRODUCT DIVISION</span>
               <span>•</span>
               <span>DIRECT FACTORY VIETNAM</span>
@@ -137,7 +215,7 @@ export default async function CategoryLandingPage({
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
             <div>
-              <h2 className="text-2xl font-bold font-heading text-[#0A2D5B]">
+              <h2 className="text-2xl font-bold font-heading text-navy">
                 {division.name} Solutions
               </h2>
               <p className="text-xs text-slate-500">
@@ -146,7 +224,7 @@ export default async function CategoryLandingPage({
             </div>
             <Link
               href="/products"
-              className="text-xs font-semibold text-[#2F7BFF] hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-blue hover:underline flex items-center gap-1"
             >
               Browse Full Product Catalog <ArrowRight className="w-3 h-3" />
             </Link>
@@ -157,7 +235,7 @@ export default async function CategoryLandingPage({
               <Card
                 key={fam.id}
                 variant="default"
-                className="p-0 overflow-hidden flex flex-col justify-between border border-[#E2E8F0] hover:border-[#2F7BFF] transition-all group bg-white shadow-xs"
+                className="p-0 overflow-hidden flex flex-col justify-between border border-slate-200 hover:border-blue transition-all group bg-white shadow-xs"
               >
                 <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -177,7 +255,7 @@ export default async function CategoryLandingPage({
                 <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
                   <div className="space-y-1.5">
                     <Link href={`/products/${division.slug}/${fam.slug}`}>
-                      <h3 className="font-heading font-bold text-sm text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors line-clamp-1">
+                      <h3 className="font-heading font-bold text-sm text-navy group-hover:text-blue transition-colors line-clamp-1">
                         {fam.name}
                       </h3>
                     </Link>
@@ -218,19 +296,19 @@ export default async function CategoryLandingPage({
         </div>
 
         {/* Engineering Guidelines Box */}
-        <div className="bg-white rounded-2xl border border-[#E2E8F0] p-6 sm:p-10 shadow-xs space-y-8">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-8">
           <div className="space-y-2 border-b border-slate-100 pb-4">
-            <div className="text-xs font-semibold uppercase tracking-wider text-[#2F7BFF]">
+            <div className="text-xs font-semibold uppercase tracking-wider text-blue">
               ENGINEERING SPECIFICATION & METALLURGY
             </div>
-            <h2 className="text-2xl font-bold font-heading text-[#0A2D5B]">
+            <h2 className="text-2xl font-bold font-heading text-navy">
               Manufacturing {division.name} in Vietnam: Engineering Guidelines
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs sm:text-sm text-slate-600 leading-relaxed">
             <div className="space-y-4">
-              <h3 className="font-bold text-base text-[#0A2D5B] font-heading">
+              <h3 className="font-bold text-base text-navy font-heading">
                 Die Tooling, Extrusion Ratio & Tolerances
               </h3>
               <p>
@@ -242,7 +320,7 @@ export default async function CategoryLandingPage({
             </div>
 
             <div className="space-y-4">
-              <h3 className="font-bold text-base text-[#0A2D5B] font-heading">
+              <h3 className="font-bold text-base text-navy font-heading">
                 Alloy Metallurgy & Thermal Treatment
               </h3>
               <p>
@@ -256,7 +334,7 @@ export default async function CategoryLandingPage({
 
           {/* Key Advantages Grid */}
           <div className="p-6 bg-slate-50 rounded-xl space-y-3 border border-slate-100">
-            <div className="font-bold text-sm text-[#0A2D5B] font-heading">
+            <div className="font-bold text-sm text-navy font-heading">
               Division Capabilities & Standards:
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700">
@@ -270,8 +348,39 @@ export default async function CategoryLandingPage({
           </div>
         </div>
 
+        {/* Buyer FAQ — mirrored exactly in the FAQPage JSON-LD above */}
+        {faqs.length > 0 && (
+          <section className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10">
+            <div className="max-w-3xl mb-8">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+                <HelpCircle className="w-3.5 h-3.5 text-blue" />
+                Buyer FAQ
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
+                {division.name}: Questions Buyers Ask
+              </h2>
+              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                Answers from our engineering and export desk. Anything not covered here, send us the
+                drawing and we will answer it specifically.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              {faqs.map((faq) => (
+                <div
+                  key={faq.question}
+                  className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2"
+                >
+                  <h3 className="font-bold text-sm text-navy leading-snug">{faq.question}</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Bottom RFQ CTA Banner */}
-        <div className="bg-[#0A2D5B] text-white rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
+        <div className="bg-navy text-white rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-bold font-heading">
               Ready to Quote Your Custom {division.name}?

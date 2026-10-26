@@ -1,14 +1,41 @@
 import type { Metadata } from 'next';
+import { Inter, Montserrat } from 'next/font/google';
 import './globals.css';
+
+/**
+ * Self-hosted via next/font instead of a <link> to fonts.googleapis.com.
+ * That removed two render-blocking round trips to a third-party origin on
+ * every cold visit, and removes the third-party font request entirely — which
+ * also simplifies the GDPR position for EU visitors.
+ */
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-inter',
+  display: 'swap'
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-montserrat',
+  display: 'swap'
+});
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { Analytics } from '@/components/Analytics';
+import { ConsentBanner } from '@/components/ConsentBanner';
 import { generateOrganizationJsonLd } from '@leloi/seo';
+import { COMPANY, FACTORY_ADDRESS } from '@/data/company';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://leloimetal.com'),
+  // No `template` here on purpose: every page title in this app (including the
+  // 73 curated seo.title values in canonical-products-data.ts) already carries
+  // the brand, so a template would render "… | LELOI METAL | LELOI METAL".
   title: {
     default: 'LELOI METAL | Precision Aluminium Extrusion & Fabrication Vietnam',
-    template: '%s | LELOI METAL'
+    template: '%s'
   },
   description:
     'Aluminium for a Better World. Precision aluminium extrusion, CNC machining, surface finishing and OEM manufacturing from Vietnam for global B2B industries.',
@@ -36,6 +63,19 @@ export const metadata: Metadata = {
       'max-snippet': -1
     }
   },
+  alternates: {
+    canonical: '/'
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/images/brand/favicon.png', type: 'image/png' }
+    ],
+    apple: '/images/brand/favicon.png'
+  },
+  manifest: '/manifest.webmanifest',
+  // og:image / twitter:image are supplied by app/opengraph-image.tsx so the card
+  // is generated from the brand palette instead of a static binary.
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -43,21 +83,12 @@ export const metadata: Metadata = {
     siteName: 'LELOI METAL',
     title: 'LELOI METAL | Aluminium for a Better World',
     description:
-      'Precision aluminium extrusion, fabrication and OEM manufacturing from Vietnam for global industries.',
-    images: [
-      {
-        url: 'https://leloimetal.com/og-default.png',
-        width: 1200,
-        height: 630,
-        alt: 'LELOI METAL Aluminium Extrusions & Fabrication Vietnam'
-      }
-    ]
+      'Precision aluminium extrusion, fabrication and OEM manufacturing from Vietnam for global industries.'
   },
   twitter: {
     card: 'summary_large_image',
     title: 'LELOI METAL | Aluminium for a Better World',
-    description: 'Precision aluminium extrusion and OEM manufacturing from Vietnam.',
-    images: ['https://leloimetal.com/og-default.png']
+    description: 'Precision aluminium extrusion and OEM manufacturing from Vietnam.'
   }
 };
 
@@ -70,35 +101,34 @@ export default function RootLayout({
     name: 'LELOI METAL',
     legalName: 'LELOI EXIM GLOBAL CO., LTD',
     url: 'https://leloimetal.com',
-    logo: 'https://leloimetal.com/logo-two-l.svg',
+    logo: 'https://leloimetal.com/brand/leloi-metal/logo-primary.svg',
     description:
       'Precision aluminium extrusion, CNC machining, surface finishing and OEM manufacturing from Vietnam for global industries.',
-    slogan: 'Aluminium for a Better World',
-    email: 'contact@leloimetal.com',
+    slogan: COMPANY.slogan,
+    email: COMPANY.contactEmail,
+    sameAs: ['https://leloiglobal.com'],
     address: {
-      addressCountry: 'VN',
-      addressLocality: 'Ho Chi Minh City / Ha Nam'
+      streetAddress: FACTORY_ADDRESS.streetAddress,
+      addressLocality: FACTORY_ADDRESS.ward,
+      addressRegion: FACTORY_ADDRESS.region,
+      addressCountry: FACTORY_ADDRESS.countryCode
     }
   });
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-white text-[#172033]">
+      <body className="min-h-screen flex flex-col bg-white text-charcoal">
+        <Analytics />
         <Header />
         <main className="grow">{children}</main>
         <Footer />
+        <ConsentBanner />
       </body>
     </html>
   );

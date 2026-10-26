@@ -19,7 +19,7 @@ const CROSS_SELL_ITEMS: CrossSellItem[] = [
     slug: 'curtain-wall-facade',
     category: 'High-Rise Envelopes',
     summary: 'Unitized and stick curtain wall structural mullions and transoms engineered for high wind loads.',
-    imageSrc: '/media/catalog/17_curtain_wall_profiles.webp',
+    imageSrc: '/media/architectural/cards/architectural-curtain-wall-card-01.webp',
     href: '/products/architectural/curtain-wall-facade'
   },
   {
@@ -27,7 +27,7 @@ const CROSS_SELL_ITEMS: CrossSellItem[] = [
     slug: 'louvers-sunshade',
     category: 'Passive Solar Control',
     summary: 'Aerofoil and continuous box louver profiles engineered for solar shading and exterior building envelope aesthetics.',
-    imageSrc: '/media/catalog/16_led_lighting_profiles.webp',
+    imageSrc: '/media/architectural/cards/architectural-louvers-card-01.webp',
     href: '/products/architectural/louvers-sunshade'
   },
   {
@@ -35,7 +35,7 @@ const CROSS_SELL_ITEMS: CrossSellItem[] = [
     slug: 'wall-cladding',
     category: 'Rainscreen Envelopes',
     summary: 'Interlocking aluminium siding slats, soffit panels, and rainscreen facade sub-framing extrusions.',
-    imageSrc: '/media/catalog/05_u_channel_profiles.webp',
+    imageSrc: '/media/architectural/cards/architectural-cladding-card-01.webp',
     href: '/products/architectural/wall-cladding'
   },
   {
@@ -43,7 +43,7 @@ const CROSS_SELL_ITEMS: CrossSellItem[] = [
     slug: 'pergola',
     category: 'Outdoor Living',
     summary: 'Motorized bi-climatic louvered roof beams and heavy hollow support columns with integrated water gutters.',
-    imageSrc: '/media/catalog/01_square_rectangular_hollow_profiles.webp',
+    imageSrc: '/media/architectural/cards/architectural-pergola-card-01.webp',
     href: '/products/architectural/pergola'
   }
 ];
@@ -53,11 +53,11 @@ export const CrossSellSolutions: React.FC = () => {
     <section id="related" className="py-16 sm:py-20 bg-slate-50 border-t border-slate-200 scroll-mt-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-            <Grid className="w-3.5 h-3.5 text-[#2F7BFF]" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+            <Grid className="w-3.5 h-3.5 text-blue" />
             <span>Complementary Solutions</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
             Related Architectural Aluminium Systems
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -81,14 +81,14 @@ export const CrossSellSolutions: React.FC = () => {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   />
                   <div className="absolute top-2.5 left-2.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#0A2D5B]/90 text-white backdrop-blur-xs">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-navy/90 text-white backdrop-blur-xs">
                       {item.category}
                     </span>
                   </div>
                 </div>
 
                 <div className="p-4 space-y-2">
-                  <h3 className="text-sm font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors leading-snug">
+                  <h3 className="text-sm font-bold font-heading text-navy group-hover:text-blue transition-colors leading-snug">
                     {item.name}
                   </h3>
                   <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">

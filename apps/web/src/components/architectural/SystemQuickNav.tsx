@@ -79,8 +79,8 @@ export const SystemQuickNav: React.FC = () => {
                 onClick={(e) => scrollToSection(e, sec.id)}
                 className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-[#0A2D5B] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-[#0A2D5B] hover:bg-slate-100'
+                    ? 'bg-navy text-white shadow-xs'
+                    : 'text-slate-600 hover:text-navy hover:bg-slate-100'
                 }`}
               >
                 {sec.label}

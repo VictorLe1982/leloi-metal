@@ -6,34 +6,66 @@ on:
   pull_request:
     branches: [main, master]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  audit-and-test:
-    name: Lint, Test & Validate Schemas
+  verify:
+    name: Typecheck, Test & Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Source
+      - name: Checkout source
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 10.13.1
 
-      - name: Install Dependencies
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile=false
 
-      - name: Run Engineering Calculator & Validation Tests
-        run: pnpm dlx tsx --test tests/calculator.test.ts tests/validation.test.ts
+      # Catches type errors before they reach a build, which is faster to read
+      # than a failed Next.js compile.
+      - name: Typecheck web app
+        run: pnpm --filter @leloi/web exec tsc --noEmit
 
-      - name: Check Truth Policy & Security Guardrails
+      # Previously only calculator + validation ran, so the taxonomy, routing,
+      # claim-provenance and GEO suites could break silently.
+      - name: Run full test suite
+        run: pnpm dlx tsx@4.19.2 --test tests/*.test.ts
+
+      # A green test suite does not prove the site builds: route conflicts,
+      # metadata errors and RSC boundary mistakes only surface here.
+      - name: Build web app
+        run: pnpm --filter @leloi/web build
+
+      - name: Verify truth-policy documents are present
         run: |
-          echo "Running Anti-Greenwashing & Data Truth verification..."
           test -f docs/GAPS.md
           test -f docs/DECISIONS.md
           test -f docs/IMPLEMENTATION_PLAN.md
-          echo "CI Verification Passed."
+          echo "Truth policy documents present."
+
+  link-check:
+    name: Internal Link Integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Nine broken internal links shipped to production before this check
+      # existed. It resolves every href in the app against the real route tree.
+      - name: Check for broken internal links
+        run: node scripts/check-internal-links.mjs

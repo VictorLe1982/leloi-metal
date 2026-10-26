@@ -20,12 +20,23 @@ import {
   Settings2,
   Boxes
 } from 'lucide-react';
-import { getProductDivisions } from '@leloi/types';
+import { getProductDivisions, getFamiliesByDivision } from '@leloi/types';
+
+const DIVISION_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  'custom-extrusions': Layers,
+  architectural: Building2,
+  'industrial-profiles': Boxes,
+  solar: Sun,
+  'thermal-management': Cpu,
+  'oem-components': Settings2
+};
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const megaMenuRef = useRef<HTMLDivElement | null>(null);
+  const megaTriggerRef = useRef<HTMLButtonElement | null>(null);
   const divisions = getProductDivisions();
 
   const handleMouseEnter = () => {
@@ -45,10 +56,52 @@ export const Header: React.FC = () => {
     };
   }, []);
 
+  // Escape closes the mega menu and returns focus to its trigger, so keyboard
+  // users are not stranded inside the panel (WCAG 2.1.2, No Keyboard Trap).
+  useEffect(() => {
+    if (!megaMenuOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMegaMenuOpen(false);
+        megaTriggerRef.current?.focus();
+      }
+    };
+
+    // Clicking or tabbing outside the panel closes it.
+    const onFocusOrPointerOutside = (event: Event) => {
+      const target = event.target as Node | null;
+      if (
+        target &&
+        !megaMenuRef.current?.contains(target) &&
+        !megaTriggerRef.current?.contains(target)
+      ) {
+        setMegaMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('focusin', onFocusOrPointerOutside);
+    document.addEventListener('pointerdown', onFocusOrPointerOutside);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('focusin', onFocusOrPointerOutside);
+      document.removeEventListener('pointerdown', onFocusOrPointerOutside);
+    };
+  }, [megaMenuOpen]);
+
+  // Prevents the page scrolling behind an open mobile drawer.
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   return (
-    <header className="sticky top-0 z-50 bg-white/98 backdrop-blur-md border-b border-[#E2E8F0] shadow-xs">
+    <header className="sticky top-0 z-50 bg-white/98 backdrop-blur-md border-b border-slate-200 shadow-xs">
       {/* Corporate division ribbon / Utility bar */}
-      <div className="bg-[#061D3B] text-slate-300 text-[11px] py-1.5 px-4 sm:px-8 flex justify-between items-center border-b border-white/10">
+      <div className="bg-navy-dark text-slate-300 text-[11px] py-1.5 px-4 sm:px-8 flex justify-between items-center border-b border-white/10">
         <div className="flex items-center gap-2">
           <span className="text-white font-medium">LELOI METAL</span>
           <span className="text-slate-500">|</span>
@@ -59,7 +112,7 @@ export const Header: React.FC = () => {
             href="/tools/aluminium-weight-calculator"
             className="hover:text-white flex items-center gap-1.5 transition-colors"
           >
-            <Calculator className="w-3 h-3 text-[#2F7BFF]" />
+            <Calculator className="w-3 h-3 text-blue" />
             Weight Calculator
           </Link>
           <span className="text-slate-600">•</span>
@@ -67,16 +120,16 @@ export const Header: React.FC = () => {
             href="/tools/import-duty-checker"
             className="hover:text-white flex items-center gap-1.5 transition-colors"
           >
-            <Scale className="w-3 h-3 text-[#2F7BFF]" />
+            <Scale className="w-3 h-3 text-blue" />
             Duty Checker (HS 7604)
           </Link>
           <span className="text-slate-600">•</span>
           <Link
             href="/capabilities/powder-coating"
-            className="hover:text-[#2F7BFF] flex items-center gap-1.5 text-slate-300 transition-colors"
+            className="hover:text-blue flex items-center gap-1.5 text-slate-300 transition-colors"
           >
             <ShieldCheck className="w-3 h-3 text-emerald-400" />
-            <span>AkzoNobel 10-Yr Warranty</span>
+            <span>AkzoNobel coating, up to 10-yr warranty</span>
           </Link>
           <span className="text-slate-600">•</span>
           <Link href="/contact" className="hover:text-white transition-colors">
@@ -93,72 +146,91 @@ export const Header: React.FC = () => {
         </Link>
 
         {/* Desktop Primary Navigation Links (Clean 6-item nav with 32px spacing) */}
-        <nav className="hidden lg:flex items-center gap-8 font-heading text-[14px] font-semibold tracking-wide text-[#172033]">
+        <nav className="hidden lg:flex items-center gap-8 font-heading text-[14px] font-semibold tracking-wide text-charcoal">
           {/* 1. Products with Mega Menu */}
           <div
             className="relative py-6"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <Link
-              href="/products"
-              className={`flex items-center gap-1.5 transition-colors hover:text-[#2F7BFF] ${
-                megaMenuOpen ? 'text-[#2F7BFF]' : 'text-[#172033]'
+            {/* A real <button> so the panel is reachable by keyboard and by
+                touch. The "Products" index page stays reachable from the panel
+                footer and from the mobile drawer. */}
+            <button
+              ref={megaTriggerRef}
+              type="button"
+              aria-expanded={megaMenuOpen}
+              aria-haspopup="true"
+              aria-controls="products-mega-menu"
+              onClick={() => setMegaMenuOpen((open) => !open)}
+              className={`flex items-center gap-1.5 transition-colors hover:text-blue ${
+                megaMenuOpen ? 'text-blue' : 'text-charcoal'
               }`}
             >
               <span>Products</span>
               <ChevronDown
                 className={`w-4 h-4 transition-transform duration-200 ${
-                  megaMenuOpen ? 'rotate-180 text-[#2F7BFF]' : 'text-slate-400'
+                  megaMenuOpen ? 'rotate-180 text-blue' : 'text-slate-400'
                 }`}
+                aria-hidden="true"
               />
-            </Link>
+            </button>
 
-            {/* Products Dropdown: Exactly 6 Core Business Lines */}
+            {/* Products Dropdown: 6 business lines, each with its families */}
             {megaMenuOpen && (
-              <div className="absolute top-full -left-12 w-[620px] bg-white border border-[#E2E8F0] shadow-2xl rounded-2xl p-5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+              <div
+                ref={megaMenuRef}
+                id="products-mega-menu"
+                className="absolute top-full -left-12 w-[860px] max-h-[75vh] overflow-y-auto bg-white border border-slate-200 shadow-2xl rounded-2xl p-5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+              >
                 <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">
                   Primary Business Lines
                 </div>
-                <div className="grid grid-cols-2 gap-2 pb-4 border-b border-slate-100">
+                <div className="grid grid-cols-3 gap-x-5 gap-y-4 pb-4 border-b border-slate-100">
                   {divisions.map((div) => {
-                    const getIcon = () => {
-                      switch (div.id) {
-                        case 'custom-extrusions':
-                          return <Layers className="w-4 h-4 text-[#2F7BFF]" />;
-                        case 'architectural':
-                          return <Building2 className="w-4 h-4 text-[#2F7BFF]" />;
-                        case 'industrial-profiles':
-                          return <Boxes className="w-4 h-4 text-[#2F7BFF]" />;
-                        case 'solar':
-                          return <Sun className="w-4 h-4 text-amber-500" />;
-                        case 'thermal-management':
-                          return <Cpu className="w-4 h-4 text-orange-500" />;
-                        case 'oem-components':
-                          return <Settings2 className="w-4 h-4 text-[#2F7BFF]" />;
-                        default:
-                          return <Layers className="w-4 h-4 text-[#2F7BFF]" />;
-                      }
-                    };
+                    const Icon = DIVISION_ICONS[div.id] ?? Layers;
+                    // Deep links to families: the mega menu is the main internal
+                    // linking surface for the 60 family pages.
+                    const families = getFamiliesByDivision(div.slug).slice(0, 5);
+                    const remaining = getFamiliesByDivision(div.slug).length - families.length;
+
                     return (
-                      <Link
-                        key={div.slug}
-                        href={`/products/${div.slug}`}
-                        onClick={() => setMegaMenuOpen(false)}
-                        className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100"
-                      >
-                        <div className="p-2 rounded-lg bg-slate-100 group-hover:bg-blue-50 transition-colors shrink-0 mt-0.5">
-                          {getIcon()}
-                        </div>
-                        <div className="min-w-0">
-                          <div className="font-bold text-[13px] text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors leading-snug">
-                            {div.name}
-                          </div>
-                          <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5 leading-tight">
-                            {div.summary}
-                          </div>
-                        </div>
-                      </Link>
+                      <div key={div.slug} className="min-w-0">
+                        <Link
+                          href={`/products/${div.slug}`}
+                          onClick={() => setMegaMenuOpen(false)}
+                          className="group flex items-center gap-2 mb-2"
+                        >
+                          <Icon className="w-4 h-4 text-blue shrink-0" aria-hidden="true" />
+                          <span className="font-bold text-[13px] text-navy group-hover:text-blue transition-colors leading-snug">
+                            {div.navLabel || div.name}
+                          </span>
+                        </Link>
+                        <ul className="space-y-1 pl-6">
+                          {families.map((family) => (
+                            <li key={family.slug}>
+                              <Link
+                                href={`/products/${family.divisionSlug}/${family.slug}`}
+                                onClick={() => setMegaMenuOpen(false)}
+                                className="block text-[12px] text-slate-600 hover:text-blue transition-colors leading-snug py-0.5"
+                              >
+                                {family.name}
+                              </Link>
+                            </li>
+                          ))}
+                          {remaining > 0 && (
+                            <li>
+                              <Link
+                                href={`/products/${div.slug}`}
+                                onClick={() => setMegaMenuOpen(false)}
+                                className="block text-[11px] font-semibold text-blue hover:underline py-0.5"
+                              >
+                                +{remaining} more
+                              </Link>
+                            </li>
+                          )}
+                        </ul>
+                      </div>
                     );
                   })}
                 </div>
@@ -168,7 +240,7 @@ export const Header: React.FC = () => {
                   <Link
                     href="/products"
                     onClick={() => setMegaMenuOpen(false)}
-                    className="text-[#0A2D5B] hover:text-[#2F7BFF] flex items-center gap-1.5 font-bold transition-colors"
+                    className="text-navy hover:text-blue flex items-center gap-1.5 font-bold transition-colors"
                   >
                     <span>Browse Full Product Catalog</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -176,7 +248,7 @@ export const Header: React.FC = () => {
                   <Link
                     href="/rfq"
                     onClick={() => setMegaMenuOpen(false)}
-                    className="text-[#2F7BFF] hover:underline flex items-center gap-1 font-bold"
+                    className="text-blue hover:underline flex items-center gap-1 font-bold"
                   >
                     <span>Request a Quote / Upload Drawing</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -187,61 +259,83 @@ export const Header: React.FC = () => {
           </div>
 
           {/* 2. Capabilities */}
-          <Link href="/capabilities" className="hover:text-[#2F7BFF] transition-colors py-2">
+          <Link href="/capabilities" className="hover:text-blue transition-colors py-2">
             Capabilities
           </Link>
 
           {/* 3. Industries */}
-          <Link href="/industries" className="hover:text-[#2F7BFF] transition-colors py-2">
+          <Link href="/industries" className="hover:text-blue transition-colors py-2">
             Industries
           </Link>
 
           {/* 4. Markets */}
-          <Link href="/markets" className="hover:text-[#2F7BFF] transition-colors py-2">
+          <Link href="/markets" className="hover:text-blue transition-colors py-2">
             Markets
           </Link>
 
           {/* 5. Insights */}
-          <Link href="/insights" className="hover:text-[#2F7BFF] transition-colors py-2">
+          <Link href="/insights" className="hover:text-blue transition-colors py-2">
             Insights
           </Link>
 
           {/* 6. About */}
-          <Link href="/about" className="hover:text-[#2F7BFF] transition-colors py-2">
+          <Link href="/about" className="hover:text-blue transition-colors py-2">
             About
           </Link>
         </nav>
 
-        {/* Right Desktop Element: Sleek Contact link */}
-        <div className="hidden lg:flex items-center gap-4">
+        {/* Right Desktop Element: secondary contact + primary conversion CTA */}
+        <div className="hidden lg:flex items-center gap-2 shrink-0">
           <Link
             href="/contact"
-            className="text-sm font-semibold text-[#0A2D5B] hover:text-[#2F7BFF] transition-colors py-2 px-3 rounded-lg hover:bg-slate-50"
+            className="text-sm font-semibold text-navy hover:text-blue transition-colors py-2 px-3 rounded-lg hover:bg-slate-50"
           >
             Contact
           </Link>
+          <Link
+            href="/rfq"
+            className="inline-flex items-center gap-2 bg-blue hover:bg-blue-hover text-white text-sm font-heading font-bold py-2.5 px-5 rounded-lg shadow-sm transition-colors whitespace-nowrap"
+          >
+            Request a Quote
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
         </div>
 
-        {/* Mobile menu hamburger button */}
-        <div className="flex lg:hidden">
+        {/* Mobile: compact RFQ CTA stays visible alongside the hamburger */}
+        <div className="flex lg:hidden items-center gap-2">
+          <Link
+            href="/rfq"
+            className="bg-blue hover:bg-blue-hover text-white text-xs font-heading font-bold py-2 px-3.5 rounded-lg transition-colors whitespace-nowrap"
+          >
+            Get a Quote
+          </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-[#0A2D5B] hover:bg-[#F1F4F8] focus:outline-none"
-            aria-label="Toggle menu"
+            className="p-2 rounded-lg text-navy hover:bg-light-gray"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6" aria-hidden="true" />
+            ) : (
+              <Menu className="w-6 h-6" aria-hidden="true" />
+            )}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer (Includes navigation + RFQ touchpoints) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-[#E2E8F0] bg-white px-4 pt-3 pb-6 space-y-3 shadow-xl animate-in slide-in-from-top-2 duration-150 max-h-[calc(100vh-80px)] overflow-y-auto">
-          <div className="flex flex-col space-y-1 font-heading font-medium text-sm text-[#172033]">
+        <div
+          id="mobile-menu"
+          className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3 shadow-xl animate-in slide-in-from-top-2 duration-150 max-h-[calc(100vh-80px)] overflow-y-auto"
+        >
+          <div className="flex flex-col space-y-1 font-heading font-medium text-sm text-charcoal">
             <Link
               href="/products"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-[#F1F4F8] font-bold text-[#0A2D5B]"
+              className="px-3 py-2 rounded-lg hover:bg-light-gray font-bold text-navy"
             >
               Product Catalog
             </Link>
@@ -251,7 +345,7 @@ export const Header: React.FC = () => {
                   key={div.slug}
                   href={`/products/${div.slug}`}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block py-1 text-slate-700 hover:text-[#2F7BFF] font-medium"
+                  className="block py-1 text-slate-700 hover:text-blue font-medium"
                 >
                   {div.name}
                 </Link>
@@ -261,7 +355,7 @@ export const Header: React.FC = () => {
             <Link
               href="/capabilities"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-[#F1F4F8]"
+              className="px-3 py-2 rounded-lg hover:bg-light-gray"
             >
               Capabilities & Factory
             </Link>
@@ -271,58 +365,58 @@ export const Header: React.FC = () => {
               className="px-3 py-2 rounded-lg hover:bg-emerald-50 text-emerald-800 font-semibold flex items-center gap-1.5"
             >
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>AkzoNobel 10-Yr Warranty Coating</span>
+              <span>AkzoNobel coating, up to 10-yr warranty</span>
             </Link>
             <Link
               href="/industries"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-[#F1F4F8]"
+              className="px-3 py-2 rounded-lg hover:bg-light-gray"
             >
               Industries Served
             </Link>
             <Link
               href="/markets"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-[#F1F4F8]"
+              className="px-3 py-2 rounded-lg hover:bg-light-gray"
             >
               Export Markets
             </Link>
             <Link
               href="/insights"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-[#F1F4F8]"
+              className="px-3 py-2 rounded-lg hover:bg-light-gray"
             >
               Technical Insights
             </Link>
             <Link
               href="/about"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-[#F1F4F8]"
+              className="px-3 py-2 rounded-lg hover:bg-light-gray"
             >
               About LELOI METAL
             </Link>
             <Link
               href="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-[#F1F4F8]"
+              className="px-3 py-2 rounded-lg hover:bg-light-gray"
             >
               Contact Team
             </Link>
           </div>
 
           {/* Preserved Mobile Actions */}
-          <div className="pt-3 border-t border-[#E2E8F0] flex flex-col gap-2">
+          <div className="pt-3 border-t border-slate-200 flex flex-col gap-2">
             <Link
               href="/rfq"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full bg-[#2F7BFF] hover:bg-[#1B6BF8] text-white font-bold py-2.5 px-4 rounded-xl text-center text-sm shadow-md transition-colors"
+              className="w-full bg-blue hover:bg-blue-hover text-white font-bold py-2.5 px-4 rounded-xl text-center text-sm shadow-md transition-colors"
             >
               Request a Quote
             </Link>
             <Link
               href="/rfq?mode=upload"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full bg-white border border-[#2F7BFF] text-[#2F7BFF] hover:bg-blue-50 font-bold py-2.5 px-4 rounded-xl text-center text-sm flex items-center justify-center gap-2 transition-colors"
+              className="w-full bg-white border border-blue text-blue hover:bg-blue-50 font-bold py-2.5 px-4 rounded-xl text-center text-sm flex items-center justify-center gap-2 transition-colors"
             >
               <FileText className="w-4 h-4" />
               <span>Upload Drawing</span>

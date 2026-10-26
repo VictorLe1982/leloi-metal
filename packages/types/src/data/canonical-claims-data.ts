@@ -4,6 +4,7 @@ export const CANONICAL_CLAIM_SOURCES: Record<string, ClaimSource> = {
   'SRC-MB-2026-AL': {
     id: 'SRC-MB-2026-AL',
     sourceType: 'MATERIAL_CERTIFICATE',
+    evidenceTier: 'INTERNAL_SPECIFICATION',
     title: 'LELOI METAL Master Blueprint v1 - Alloy & Metallurgy Matrix',
     reference: 'LELOI_METAL_MASTER_BLUEPRINT_V1.md Section 4',
     issueDate: '2026-01-15',
@@ -12,6 +13,7 @@ export const CANONICAL_CLAIM_SOURCES: Record<string, ClaimSource> = {
   'SRC-TOL-EN755': {
     id: 'SRC-TOL-EN755',
     sourceType: 'DRAWING_STANDARD',
+    evidenceTier: 'INTERNATIONAL_STANDARD',
     title: 'EN 755-9 / DIN 17615 Aluminium Extrusions Tolerance Standard',
     reference: 'CEN EN 755-9:2016',
     issueDate: '2016-06-01',
@@ -20,6 +22,7 @@ export const CANONICAL_CLAIM_SOURCES: Record<string, ClaimSource> = {
   'SRC-AKZ-PROP-2026': {
     id: 'SRC-AKZ-PROP-2026',
     sourceType: 'EXECUTIVE_ORDER',
+    evidenceTier: 'INTERNAL_SPECIFICATION',
     title: 'AkzoNobel Powder Coating Approved Proposition & Warranty Framework',
     reference: 'LELOI_METAL_V6_SPEC_SECTION_2',
     issueDate: '2026-09-10',

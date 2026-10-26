@@ -33,7 +33,7 @@ export function ProductGallery({
           className="w-full h-full object-cover"
         />
         <div className="absolute top-3 left-3">
-          <span className="text-[10px] font-bold bg-[#0A2D5B] text-white px-2.5 py-1 rounded shadow font-heading uppercase">
+          <span className="text-[10px] font-bold bg-navy text-white px-2.5 py-1 rounded shadow font-heading uppercase">
             {categoryName}
           </span>
         </div>
@@ -53,7 +53,7 @@ export function ProductGallery({
             onClick={() => setActiveImageIndex(idx)}
             className={`aspect-[4/3] rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
               activeImageIndex === idx
-                ? 'border-[#2F7BFF] shadow-xs'
+                ? 'border-blue shadow-xs'
                 : 'border-transparent opacity-70 hover:opacity-100'
             }`}
           >

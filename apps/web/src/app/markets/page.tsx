@@ -80,14 +80,14 @@ const MARKETS_DATA = [
 
 export default function MarketsPage() {
   return (
-    <div className="min-h-screen bg-[#F1F4F8]/50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-gray/50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF]">
+          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-blue">
             TRADE & TARIFF INTELLIGENCE
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0A2D5B] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-navy tracking-tight">
             Priority Export Markets
           </h1>
           <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
@@ -97,9 +97,9 @@ export default function MarketsPage() {
 
         {/* Informational Disclaimer Notice */}
         <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-start gap-3 text-xs text-slate-600 max-w-4xl mx-auto">
-          <ShieldCheck className="w-5 h-5 text-[#2F7BFF] shrink-0 mt-0.5" />
+          <ShieldCheck className="w-5 h-5 text-blue shrink-0 mt-0.5" />
           <p className="leading-relaxed">
-            <strong className="text-[#0A2D5B]">Market Intelligence Governance: </strong>
+            <strong className="text-navy">Market Intelligence Governance: </strong>
             All tariff rates and trade measures displayed on LELOI METAL are monitored, reviewed and cited directly from official customs portals. Final applicable duty rates remain subject to precise HS classification, Certificate of Origin (Form CPTPP / EUR.1 / VJEPA), and binding customs authority rulings.
           </p>
         </div>
@@ -109,12 +109,12 @@ export default function MarketsPage() {
           {MARKETS_DATA.map((market) => (
             <Card key={market.slug} variant="technical" className="p-6 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#E2E8F0]">
+                <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-200">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-sm font-bold text-[#0A2D5B] bg-[#0A2D5B]/5 px-2 py-0.5 rounded border border-[#0A2D5B]/10">
+                    <span className="font-mono text-sm font-bold text-navy bg-navy/5 px-2 py-0.5 rounded border border-navy/10">
                       {market.code}
                     </span>
-                    <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+                    <h3 className="text-xl font-bold font-heading text-navy">
                       {market.name}
                     </h3>
                   </div>
@@ -143,17 +143,17 @@ export default function MarketsPage() {
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-[#E2E8F0] flex justify-between items-center text-[11px] text-slate-400">
+                  <div className="pt-2 border-t border-slate-200 flex justify-between items-center text-[11px] text-slate-400">
                     <span>Verified: {market.lastVerified}</span>
                     <span className="font-mono">{market.verifiedBy}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
+              <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between">
                 <Link
                   href={`/markets/${market.slug}`}
-                  className="text-xs font-heading font-semibold text-[#0A2D5B] hover:text-[#2F7BFF] flex items-center gap-1.5 transition-colors"
+                  className="text-xs font-heading font-semibold text-navy hover:text-blue flex items-center gap-1.5 transition-colors"
                 >
                   View Market Dossier & FAQs
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -164,7 +164,7 @@ export default function MarketsPage() {
         </div>
 
         {/* Interactive Duty Checker Banner */}
-        <div className="bg-[#0A2D5B] text-white rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
+        <div className="bg-navy text-white rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
           <div className="space-y-1 max-w-xl">
             <h3 className="text-2xl font-bold font-heading text-white">
               Looking for Tariff & Duty Calculation for Your HS Code?

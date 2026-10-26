@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@leloi/ui';
 import {
@@ -21,8 +21,22 @@ import {
   ChevronRight
 } from 'lucide-react';
 
+/** Query-string keys for each facet. Keep short — these end up in shared links. */
+const FILTER_PARAMS = {
+  category: 'division',
+  alloy: 'alloy',
+  finish: 'finish',
+  application: 'use',
+  search: 'q'
+} as const;
+
 export default function ProductsCatalogPage() {
   const divisions = getProductDivisions();
+
+  // Filters start unset so the server renders the complete 60-family grid into
+  // the static HTML. Reading the URL with useSearchParams instead would force
+  // this route behind a Suspense boundary, and the catalogue would ship as a
+  // "Loading…" shell with no product names for crawlers to read.
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedAlloy, setSelectedAlloy] = useState<string>('all');
   const [selectedFinish, setSelectedFinish] = useState<string>('all');
@@ -30,6 +44,44 @@ export default function ProductsCatalogPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [mobileFilterOpen, setMobileFilterOpen] = useState<boolean>(false);
   const [compareList, setCompareList] = useState<string[]>([]);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Apply any filters carried in the URL once, after hydration, so a shared or
+  // bookmarked filtered link still opens filtered.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get(FILTER_PARAMS.category);
+    const alloy = params.get(FILTER_PARAMS.alloy);
+    const finish = params.get(FILTER_PARAMS.finish);
+    const application = params.get(FILTER_PARAMS.application);
+    const search = params.get(FILTER_PARAMS.search);
+
+    if (category) setSelectedCategory(category);
+    if (alloy) setSelectedAlloy(alloy);
+    if (finish) setSelectedFinish(finish);
+    if (application) setSelectedApp(application);
+    if (search) setSearchQuery(search);
+
+    setIsHydrated(true);
+  }, []);
+
+  // Mirror state back into the URL so the current view is always shareable.
+  // history.replaceState is used directly rather than router.replace: the
+  // latter re-runs the route and would reset scroll and re-render the grid on
+  // every keystroke.
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    const params = new URLSearchParams();
+    if (selectedCategory !== 'all') params.set(FILTER_PARAMS.category, selectedCategory);
+    if (selectedAlloy !== 'all') params.set(FILTER_PARAMS.alloy, selectedAlloy);
+    if (selectedFinish !== 'all') params.set(FILTER_PARAMS.finish, selectedFinish);
+    if (selectedApp !== 'all') params.set(FILTER_PARAMS.application, selectedApp);
+    if (searchQuery.trim()) params.set(FILTER_PARAMS.search, searchQuery.trim());
+
+    const query = params.toString();
+    window.history.replaceState(null, '', query ? `?${query}` : window.location.pathname);
+  }, [isHydrated, selectedCategory, selectedAlloy, selectedFinish, selectedApp, searchQuery]);
 
   // Filter canonical families
   const filteredFamilies = useMemo(() => {
@@ -94,12 +146,12 @@ export default function ProductsCatalogPage() {
   const comparedProducts = CANONICAL_FAMILIES.filter((f) => compareList.includes(f.slug));
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]/60 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-gray/60 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-10">
         {/* Compact Hero */}
-        <div className="bg-gradient-to-br from-[#061D3B] via-[#0A2D5B] to-[#0F3A72] text-white rounded-2xl p-8 sm:p-12 shadow-lg relative overflow-hidden">
+        <div className="bg-gradient-to-br from-navy-dark via-navy to-[#0F3A72] text-white rounded-2xl p-8 sm:p-12 shadow-lg relative overflow-hidden">
           <div className="max-w-3xl space-y-4">
-            <div className="text-xs uppercase font-mono font-semibold tracking-widest text-[#2F7BFF]">
+            <div className="text-xs uppercase font-mono font-semibold tracking-widest text-blue">
               B2B TECHNICAL PRODUCT CATALOGUE
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
@@ -129,7 +181,7 @@ export default function ProductsCatalogPage() {
             onClick={() => setSelectedCategory('all')}
             className={`px-4 py-2 rounded-xl text-xs font-heading font-semibold whitespace-nowrap transition-all cursor-pointer ${
               selectedCategory === 'all'
-                ? 'bg-[#0A2D5B] text-white shadow-xs'
+                ? 'bg-navy text-white shadow-xs'
                 : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
             }`}
           >
@@ -143,7 +195,7 @@ export default function ProductsCatalogPage() {
                 onClick={() => setSelectedCategory(div.slug)}
                 className={`px-4 py-2 rounded-xl text-xs font-heading font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-[#2F7BFF] text-white shadow-xs'
+                    ? 'bg-blue text-white shadow-xs'
                     : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
                 }`}
               >
@@ -156,16 +208,16 @@ export default function ProductsCatalogPage() {
         {/* Main Catalog Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Desktop Filter Sidebar (Sticky) */}
-          <aside className="hidden lg:block lg:col-span-3 bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-xs space-y-6 sticky top-24">
+          <aside className="hidden lg:block lg:col-span-3 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6 sticky top-24">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div className="flex items-center gap-2 text-sm font-bold font-heading text-[#0A2D5B]">
-                <SlidersHorizontal className="w-4 h-4 text-[#2F7BFF]" />
+              <div className="flex items-center gap-2 text-sm font-bold font-heading text-navy">
+                <SlidersHorizontal className="w-4 h-4 text-blue" />
                 Filter Catalog
               </div>
               {hasActiveFilters && (
                 <button
                   onClick={handleResetFilters}
-                  className="text-xs text-[#2F7BFF] hover:underline flex items-center gap-1 font-medium cursor-pointer"
+                  className="text-xs text-blue hover:underline flex items-center gap-1 font-medium cursor-pointer"
                 >
                   <RotateCcw className="w-3 h-3" />
                   Reset
@@ -185,7 +237,7 @@ export default function ProductsCatalogPage() {
                   placeholder="Keyword, alloy, application..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
+                  className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue"
                 />
                 {searchQuery && (
                   <button
@@ -206,7 +258,7 @@ export default function ProductsCatalogPage() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
+                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue font-medium text-slate-700"
               >
                 <option value="all">All 6 Divisions</option>
                 {divisions.map((d) => (
@@ -225,7 +277,7 @@ export default function ProductsCatalogPage() {
               <select
                 value={selectedAlloy}
                 onChange={(e) => setSelectedAlloy(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
+                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue font-medium text-slate-700"
               >
                 <option value="all">All Structural Alloys</option>
                 <option value="6063">6063 (Architectural & Heat Sink)</option>
@@ -244,7 +296,7 @@ export default function ProductsCatalogPage() {
               <select
                 value={selectedFinish}
                 onChange={(e) => setSelectedFinish(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
+                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue font-medium text-slate-700"
               >
                 <option value="all">All Surface Finishes</option>
                 <option value="ANODIZED">Architectural Anodized</option>
@@ -262,7 +314,7 @@ export default function ProductsCatalogPage() {
               <select
                 value={selectedApp}
                 onChange={(e) => setSelectedApp(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF] font-medium text-slate-700"
+                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue font-medium text-slate-700"
               >
                 <option value="all">All Applications & Sectors</option>
                 <option value="Window">Windows & Doors</option>
@@ -284,9 +336,9 @@ export default function ProductsCatalogPage() {
                 href="/products/architectural"
                 className="block p-2.5 bg-blue-50/70 hover:bg-blue-100/70 border border-blue-200 rounded-xl transition-colors group"
               >
-                <div className="text-xs font-bold text-[#0A2D5B] group-hover:text-[#2F7BFF] flex items-center justify-between">
+                <div className="text-xs font-bold text-navy group-hover:text-blue flex items-center justify-between">
                   <span>Architectural Hub</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#2F7BFF] group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3.5 h-3.5 text-blue group-hover:translate-x-1 transition-transform" />
                 </div>
                 <div className="text-[10px] text-slate-600 mt-0.5">
                   11 Engineering Solution Families
@@ -316,7 +368,7 @@ export default function ProductsCatalogPage() {
                   <Link
                     key={div.slug}
                     href={`/products/${div.slug}`}
-                    className="flex items-center justify-between py-1 px-1.5 rounded hover:bg-slate-50 hover:text-[#2F7BFF] transition-colors"
+                    className="flex items-center justify-between py-1 px-1.5 rounded hover:bg-slate-50 hover:text-blue transition-colors"
                   >
                     <span>{div.name}</span>
                     <ChevronRight className="w-3 h-3 text-slate-400" />
@@ -327,8 +379,8 @@ export default function ProductsCatalogPage() {
           </aside>
 
           {/* Mobile Filter Toggle Button */}
-          <div className="lg:hidden col-span-1 flex items-center justify-between bg-white p-4 rounded-xl border border-[#E2E8F0]">
-            <span className="text-xs font-bold text-[#0A2D5B]">
+          <div className="lg:hidden col-span-1 flex items-center justify-between bg-white p-4 rounded-xl border border-slate-200">
+            <span className="text-xs font-bold text-navy">
               Showing {filteredFamilies.length} Solution Families
             </span>
             <Button
@@ -344,7 +396,7 @@ export default function ProductsCatalogPage() {
           {/* Product Grid Area */}
           <div className="lg:col-span-9 space-y-6">
             {/* Header info strip */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-600 bg-white p-4 rounded-xl border border-[#E2E8F0]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-600 bg-white p-4 rounded-xl border border-slate-200">
               <div>
                 <span>
                   Explore <strong>{filteredFamilies.length}</strong> aluminium solution families
@@ -359,7 +411,7 @@ export default function ProductsCatalogPage() {
               {selectedCategory !== 'all' && (
                 <Link
                   href={`/products/${selectedCategory}`}
-                  className="text-[#2F7BFF] font-semibold hover:underline flex items-center gap-1"
+                  className="text-blue font-semibold hover:underline flex items-center gap-1"
                 >
                   View Full Division Dossier <ArrowRight className="w-3 h-3" />
                 </Link>
@@ -368,7 +420,7 @@ export default function ProductsCatalogPage() {
 
             {/* Active Filter Chips Bar */}
             {hasActiveFilters && (
-              <div className="flex flex-wrap items-center gap-2 bg-[#F8FAFC] p-3 rounded-xl border border-slate-200 text-xs">
+              <div className="flex flex-wrap items-center gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
                 <span className="text-slate-500 font-medium">Active Filters:</span>
                 {selectedCategory !== 'all' && (
                   <span className="bg-white border border-slate-300 px-2.5 py-1 rounded-md text-slate-800 flex items-center gap-1">
@@ -412,7 +464,7 @@ export default function ProductsCatalogPage() {
                 )}
                 <button
                   onClick={handleResetFilters}
-                  className="text-[#2F7BFF] font-semibold hover:underline ml-auto cursor-pointer"
+                  className="text-blue font-semibold hover:underline ml-auto cursor-pointer"
                 >
                   Clear all
                 </button>
@@ -446,7 +498,7 @@ export default function ProductsCatalogPage() {
 
                     {/* Engineering Callout Strip after every 6 products */}
                     {(idx + 1) % 6 === 0 && idx + 1 < filteredFamilies.length && (
-                      <div className="col-span-1 md:col-span-2 xl:col-span-3 bg-gradient-to-r from-[#061D3B] to-[#0A2D5B] text-white p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 my-2 border border-slate-700 shadow-md">
+                      <div className="col-span-1 md:col-span-2 xl:col-span-3 bg-gradient-to-r from-navy-dark to-navy text-white p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 my-2 border border-slate-700 shadow-md">
                         <div className="space-y-1 text-center sm:text-left">
                           <h4 className="font-heading font-bold text-base text-white">
                             Can&apos;t find your exact extrusion geometry?
@@ -472,7 +524,7 @@ export default function ProductsCatalogPage() {
                 <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
                   <Search className="w-6 h-6" />
                 </div>
-                <h3 className="font-heading font-bold text-lg text-[#0A2D5B]">
+                <h3 className="font-heading font-bold text-lg text-navy">
                   No matching aluminium solutions found
                 </h3>
                 <p className="text-xs text-slate-500 max-w-md mx-auto">
@@ -488,9 +540,9 @@ export default function ProductsCatalogPage() {
 
         {/* Floating Compare Bar */}
         {compareList.length > 0 && (
-          <div className="fixed bottom-6 right-6 z-50 bg-[#0A2D5B] text-white p-4 rounded-2xl shadow-2xl border border-white/20 flex items-center gap-4 animate-in slide-in-from-bottom-5">
+          <div className="fixed bottom-6 right-6 z-50 bg-navy text-white p-4 rounded-2xl shadow-2xl border border-white/20 flex items-center gap-4 animate-in slide-in-from-bottom-5">
             <div className="flex items-center gap-2">
-              <Scale className="w-5 h-5 text-[#2F7BFF]" />
+              <Scale className="w-5 h-5 text-blue" />
               <div className="text-xs">
                 <span className="font-bold">{compareList.length}</span> / 4 solutions selected
               </div>
@@ -520,7 +572,7 @@ export default function ProductsCatalogPage() {
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex justify-end">
           <div className="w-full max-w-xs bg-white h-full p-6 space-y-6 overflow-y-auto animate-in slide-in-from-right duration-200">
             <div className="flex items-center justify-between border-b pb-4">
-              <span className="font-bold text-sm text-[#0A2D5B]">Filter Solutions</span>
+              <span className="font-bold text-sm text-navy">Filter Solutions</span>
               <button onClick={() => setMobileFilterOpen(false)} className="text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -620,3 +672,4 @@ export default function ProductsCatalogPage() {
     </div>
   );
 }
+

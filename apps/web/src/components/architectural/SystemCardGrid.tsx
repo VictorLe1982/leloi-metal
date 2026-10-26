@@ -34,11 +34,11 @@ export const SystemCardGrid: React.FC<SystemCardGridProps> = ({
     <section id={id} className="py-12 sm:py-16 scroll-mt-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-10">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-            <Layers className="w-3.5 h-3.5 text-[#2F7BFF]" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+            <Layers className="w-3.5 h-3.5 text-blue" />
             <span>Engineered Product Systems</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
             {title}
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -71,7 +71,7 @@ export const SystemCardGrid: React.FC<SystemCardGridProps> = ({
               {/* Body */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="text-base font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors leading-snug">
+                  <h3 className="text-base font-bold font-heading text-navy group-hover:text-blue transition-colors leading-snug">
                     {item.name}
                   </h3>
                   <p className="mt-2 text-xs text-slate-600 leading-relaxed line-clamp-3">

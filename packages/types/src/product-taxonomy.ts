@@ -571,7 +571,7 @@ export const PRODUCT_TAXONOMY: ProductTopCategory[] = [
     name: 'Architectural Aluminium',
     navLabel: 'Architectural Systems',
     shortDescription: 'Comprehensive architectural aluminium systems for residential, commercial, hospitality, and modern buildings.',
-    overview: 'High-performance architectural extrusions manufactured to international building standards. Engineered for wind load deflection, thermal barrier performance, and weatherproofing with certified AkzoNobel 10-Year Warranty Powder Coating.',
+    overview: 'High-performance architectural extrusions manufactured to international building standards. Engineered for wind load deflection, thermal barrier performance, and weatherproofing with certified AkzoNobel powder coating, warranties up to 10 years.',
     heroImage: '/media/catalog/17_curtain_wall_profiles.webp',
     seoTitle: 'Architectural Aluminium Systems | Facades & Windows | LELOI METAL',
     seoDescription: 'Architectural aluminium systems for residential, commercial, hospitality and resort projects from Vietnam: Windows, doors, curtain walls, louvers, wall cladding, linear ceilings, pergolas, canopies and balustrades.',

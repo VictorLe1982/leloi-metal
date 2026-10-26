@@ -25,7 +25,7 @@ import { getFamiliesByDivision } from '@leloi/types';
 export const metadata: Metadata = {
   title: 'Architectural Aluminium Systems | Residential & Commercial | LELOI METAL',
   description:
-    'Comprehensive architectural aluminium systems from Vietnam: Windows & doors, curtain walls, louvers, wall cladding, linear ceilings, pergolas, bungalow structures, and thermal-break profiles with AkzoNobel 10-Year Warranty.',
+    'Comprehensive architectural aluminium systems from Vietnam: Windows & doors, curtain walls, louvers, wall cladding, linear ceilings, pergolas, bungalow structures, and thermal-break profiles with AkzoNobel coating, warranties up to 10 years.',
   keywords: [
     'architectural aluminium systems',
     'curtain wall profiles',
@@ -35,25 +35,88 @@ export const metadata: Metadata = {
     'architectural pergolas aluminium',
     'AkzoNobel aluminium coating Vietnam',
     'LELOI METAL architectural'
-  ]
+  ],
+  alternates: { canonical: 'https://leloimetal.com/products/architectural' },
+  openGraph: {
+    type: 'website',
+    title: 'Architectural Aluminium Systems | LELOI METAL',
+    description:
+      'Windows, doors, curtain walls, louvers, cladding, ceilings, pergolas and thermal-break profiles manufactured in Vietnam.',
+    url: 'https://leloimetal.com/products/architectural',
+    siteName: 'LELOI METAL'
+  }
 };
+
+const BASE_URL = 'https://leloimetal.com';
 
 export default function ArchitecturalProductsPage() {
   const families = getFamiliesByDivision('architectural');
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Products', item: `${BASE_URL}/products` },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'Architectural Aluminium Systems',
+        item: `${BASE_URL}/products/architectural`
+      }
+    ]
+  };
+
+  const collectionJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Architectural Aluminium Systems',
+    description:
+      'Integrated architectural aluminium systems for residential, commercial and hospitality buildings, manufactured in Vietnam.',
+    url: `${BASE_URL}/products/architectural`,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: families.length,
+      itemListElement: families.map((family, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: family.name,
+        url: `${BASE_URL}/products/architectural/${family.slug}`
+      }))
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
+    <div className="min-h-screen bg-slate-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
       {/* 1. HERO SECTION */}
-      <section className="bg-[#061D3B] text-white py-20 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative overflow-hidden">
+      <section className="bg-navy-dark text-white py-20 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative overflow-hidden">
+        {/* Subtle Architectural Ambient Background */}
+        <div className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none">
+          <Image
+            src="/media/architectural/hero/architectural-windows-doors-hero-01.webp"
+            alt="Architectural Aluminium Systems"
+            fill
+            priority
+            className="object-cover"
+          />
+        </div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(47,123,255,0.2),transparent_50%)] pointer-events-none" />
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="text-[11px] font-bold uppercase tracking-wider bg-[#2F7BFF]/20 text-[#2F7BFF] px-3 py-1 rounded-full border border-[#2F7BFF]/30">
+            <span className="text-[11px] font-bold uppercase tracking-wider bg-blue/20 text-blue px-3 py-1 rounded-full border border-blue/30">
               Architectural Systems Vertical
             </span>
             <span className="text-[11px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              AkzoNobel 10-Year Warranty
+              AkzoNobel coating, warranties up to 10 years
             </span>
             <span className="text-[11px] font-bold uppercase tracking-wider bg-slate-500/20 text-slate-300 px-3 py-1 rounded-full border border-white/20">
               Residential & Commercial
@@ -64,7 +127,7 @@ export default function ArchitecturalProductsPage() {
             Architectural Aluminium Systems
           </h1>
           <p className="text-slate-300 text-base sm:text-lg max-w-2xl mt-4 leading-relaxed font-sans">
-            Aluminium solutions for residential, commercial, hospitality and modern building applications. Engineered to international building codes with certified <strong>AkzoNobel 10-Year Warranty Powder Coating</strong>.
+            Aluminium solutions for residential, commercial, hospitality and modern building applications. Engineered to international building codes with certified <strong>AkzoNobel powder coating, warranties up to 10 years</strong>.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4 items-center">
@@ -79,7 +142,7 @@ export default function ArchitecturalProductsPage() {
                 variant="outline"
                 size="lg"
                 className="border-white/30 text-white hover:bg-white/10 gap-2"
-                leftIcon={<FileUp className="w-4 h-4 text-[#2F7BFF]" />}
+                leftIcon={<FileUp className="w-4 h-4 text-blue" />}
               >
                 Upload Section Drawing
               </Button>
@@ -102,16 +165,16 @@ export default function ArchitecturalProductsPage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <span className="text-xs font-bold font-heading text-[#2F7BFF] uppercase tracking-widest">
+            <span className="text-xs font-bold font-heading text-blue uppercase tracking-widest">
               11 Engineered Systems (Groups A - K)
             </span>
-            <h2 className="text-3xl font-bold font-heading text-[#0A2D5B] mt-1">
+            <h2 className="text-3xl font-bold font-heading text-navy mt-1">
               Building & Facade Systems Portfolio
             </h2>
           </div>
           <Link
             href="/products"
-            className="text-xs font-bold text-[#2F7BFF] hover:underline flex items-center gap-1.5"
+            className="text-xs font-bold text-blue hover:underline flex items-center gap-1.5"
           >
             <span>Browse Full Product Catalog</span>
             <ArrowRight className="w-4 h-4" />
@@ -123,7 +186,7 @@ export default function ArchitecturalProductsPage() {
             <Card
               key={fam.id}
               variant="interactive"
-              className="flex flex-col justify-between overflow-hidden group hover:border-[#2F7BFF] transition-all"
+              className="flex flex-col justify-between overflow-hidden group hover:border-blue transition-all"
             >
               <div>
                 <div className="relative w-full h-48 bg-slate-900 rounded-lg overflow-hidden mb-4">
@@ -132,7 +195,7 @@ export default function ArchitecturalProductsPage() {
                       src={fam.coverImage}
                       alt={fam.name}
                       fill
-                      className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   ) : (
@@ -144,13 +207,13 @@ export default function ArchitecturalProductsPage() {
                   )}
                   {fam.groupKey && (
                     <div className="absolute top-2.5 left-2.5">
-                      <span className="text-[10px] font-mono font-bold bg-[#0A2D5B]/90 text-cyan-300 px-2.5 py-1 rounded shadow-xs">
+                      <span className="text-[10px] font-mono font-bold bg-navy/90 text-cyan-300 px-2.5 py-1 rounded shadow-xs">
                         GROUP {fam.groupKey}
                       </span>
                     </div>
                   )}
                 </div>
-                <h3 className="text-lg font-bold font-heading text-[#0A2D5B] group-hover:text-[#2F7BFF] transition-colors">
+                <h3 className="text-lg font-bold font-heading text-navy group-hover:text-blue transition-colors">
                   {fam.name}
                 </h3>
                 <p className="text-xs text-slate-600 mt-2 leading-relaxed">
@@ -170,17 +233,17 @@ export default function ArchitecturalProductsPage() {
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
+              <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between">
                 <Link
                   href={`/products/architectural/${fam.slug}`}
-                  className="text-xs font-heading font-semibold text-[#0A2D5B] group-hover:text-[#2F7BFF] flex items-center gap-1"
+                  className="text-xs font-heading font-semibold text-navy group-hover:text-blue flex items-center gap-1"
                 >
                   <span>Explore Solution</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   href={`/rfq?division=architectural&family=${fam.slug}`}
-                  className="text-xs font-heading font-bold text-[#2F7BFF] hover:underline"
+                  className="text-xs font-heading font-bold text-blue hover:underline"
                 >
                   Request Quote →
                 </Link>
@@ -192,11 +255,11 @@ export default function ArchitecturalProductsPage() {
 
 
       {/* 3. SURFACE FINISHING & AKZONOBEL POWDER COATING HIGHLIGHT */}
-      <section className="py-16 bg-[#061D3B] text-white border-t border-b border-slate-800 px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-navy-dark text-white border-t border-b border-slate-800 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-7">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#2F7BFF]">
+              <span className="text-xs font-bold uppercase tracking-widest text-blue">
                 Long-Term Weathering Protection
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold font-heading text-white mt-2">
@@ -276,42 +339,42 @@ export default function ArchitecturalProductsPage() {
       {/* 4. APPLICATIONS IN CONSTRUCTION (Residential, Commercial, Resorts) */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-bold font-heading text-[#2F7BFF] uppercase tracking-widest">
+          <span className="text-xs font-bold font-heading text-blue uppercase tracking-widest">
             Project Sectors
           </span>
-          <h2 className="text-3xl font-bold font-heading text-[#0A2D5B] mt-2">
+          <h2 className="text-3xl font-bold font-heading text-navy mt-2">
             Tailored for Diverse Construction Applications
           </h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-xs">
-            <Home className="w-8 h-8 text-[#2F7BFF] mb-3" />
-            <h3 className="font-bold text-sm text-[#0A2D5B]">Luxury Residential Villas</h3>
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+            <Home className="w-8 h-8 text-blue mb-3" />
+            <h3 className="font-bold text-sm text-navy">Luxury Residential Villas</h3>
             <p className="text-xs text-slate-600 mt-2 leading-relaxed">
               Ultra-slim panoramic sliding systems, motorized pergolas, minimalist casements, and glass balcony railings.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-xs">
-            <Building2 className="w-8 h-8 text-[#2F7BFF] mb-3" />
-            <h3 className="font-bold text-sm text-[#0A2D5B]">Commercial High-Rise</h3>
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+            <Building2 className="w-8 h-8 text-blue mb-3" />
+            <h3 className="font-bold text-sm text-navy">Commercial High-Rise</h3>
             <p className="text-xs text-slate-600 mt-2 leading-relaxed">
               Unitized curtain wall frames, pressure plates, acoustic louvers, and ventilated rainscreen facades.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-xs">
-            <Hotel className="w-8 h-8 text-[#2F7BFF] mb-3" />
-            <h3 className="font-bold text-sm text-[#0A2D5B]">Hospitality & Resorts</h3>
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+            <Hotel className="w-8 h-8 text-blue mb-3" />
+            <h3 className="font-bold text-sm text-navy">Hospitality & Resorts</h3>
             <p className="text-xs text-slate-600 mt-2 leading-relaxed">
               Modular aluminium bungalow frameworks, beachfront pavilions, cabanas, and marine-grade corrosion coatings.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-xs">
-            <Compass className="w-8 h-8 text-[#2F7BFF] mb-3" />
-            <h3 className="font-bold text-sm text-[#0A2D5B]">Public & Institutional</h3>
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+            <Compass className="w-8 h-8 text-blue mb-3" />
+            <h3 className="font-bold text-sm text-navy">Public & Institutional</h3>
             <p className="text-xs text-slate-600 mt-2 leading-relaxed">
               Airports, train terminals, hospitals, and educational facilities with linear baffle ceilings and crowd-rated handrails.
             </p>
@@ -320,9 +383,18 @@ export default function ArchitecturalProductsPage() {
       </section>
 
       {/* 5. PROJECT INQUIRY CTA */}
-      <section className="py-20 bg-linear-to-r from-[#0A2D5B] to-[#061D3B] text-white px-4 sm:px-6 lg:px-8 border-t border-white/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#2F7BFF]">
+      <section className="relative overflow-hidden py-20 bg-linear-to-r from-navy to-navy-dark text-white px-4 sm:px-6 lg:px-8 border-t border-white/10">
+        {/* Subtle Architectural Ambient Background */}
+        <div className="absolute inset-0 opacity-15 mix-blend-overlay pointer-events-none">
+          <Image
+            src="/media/architectural/hero/architectural-curtain-wall-card-01.webp"
+            alt="Architectural Facade System"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <span className="text-xs font-bold uppercase tracking-widest text-blue">
             Architectural Project Sourcing
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold font-heading text-white mt-2">

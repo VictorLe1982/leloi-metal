@@ -25,18 +25,18 @@ export const DossierHero: React.FC<DossierHeroProps> = ({
   eyebrow = 'ARCHITECTURAL ALUMINIUM SYSTEMS',
   title,
   description,
-  imageSrc = '/images/products/architectural-systems/window-door/hero.webp',
+  imageSrc = '/media/architectural/hero/architectural-windows-doors-hero-01.webp',
   rfqHref,
   uploadHref,
   verifiedBadges = [
     'Alloy 6063-T5 / T6 Verified',
     'EN 755-9 Precision Tolerances',
     'Polyamide PA66 GF25 Thermal Break',
-    'AkzoNobel Approved Coater'
+    'AkzoNobel Powder Systems'
   ]
 }) => {
   return (
-    <section className="relative bg-gradient-to-b from-slate-900 via-[#0A2D5B] to-slate-900 text-white pt-10 pb-16 lg:pb-24 overflow-hidden border-b border-slate-800">
+    <section className="relative bg-gradient-to-b from-slate-900 via-navy to-slate-900 text-white pt-10 pb-16 lg:pb-24 overflow-hidden border-b border-slate-800">
       {/* Background Architectural Grid Pattern */}
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
@@ -108,7 +108,7 @@ export const DossierHero: React.FC<DossierHeroProps> = ({
               <Link href={rfqHref}>
                 <Button
                   size="lg"
-                  className="bg-[#2F7BFF] hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg shadow-blue-500/20 flex items-center gap-2 transition-transform active:scale-95"
+                  className="bg-blue hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg shadow-blue-500/20 flex items-center gap-2 transition-transform active:scale-95"
                 >
                   <span>Send Project Requirement</span>
                   <ArrowRight className="w-4 h-4" />

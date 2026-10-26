@@ -130,6 +130,22 @@ export type VerificationStatus =
   | 'INVALID_VERIFICATION'
   | 'PENDING_REVIEW';
 
+/**
+ * How strong the evidence behind a claim actually is.
+ *
+ * A "VERIFIED" badge backed only by our own blueprint is circular reasoning,
+ * and a buyer who checks will treat every other badge on the page as suspect.
+ * Tiering the source lets the UI say what kind of evidence exists rather than
+ * implying all evidence is equal.
+ */
+export type ClaimEvidenceTier =
+  /** Certificate issued to us by an accredited third party (ISO, lab report). */
+  | 'THIRD_PARTY_CERTIFICATE'
+  /** A published international or national standard we work to. */
+  | 'INTERNATIONAL_STANDARD'
+  /** Our own specification, blueprint or process sheet. Self-asserted. */
+  | 'INTERNAL_SPECIFICATION';
+
 export interface ClaimSource {
   id: string;
   sourceType:
@@ -138,6 +154,8 @@ export interface ClaimSource {
     | 'DRAWING_STANDARD'
     | 'MATERIAL_CERTIFICATE'
     | 'EXECUTIVE_ORDER';
+  /** Required: determines how the claim is labelled in public UI. */
+  evidenceTier: ClaimEvidenceTier;
   title: string;
   fileUrl?: string;
   reference: string;
@@ -145,6 +163,25 @@ export interface ClaimSource {
   expiryDate?: string;
   notes?: string;
 }
+
+/** Public-facing label and tone for each evidence tier. */
+export const EVIDENCE_TIER_LABELS: Record<
+  ClaimEvidenceTier,
+  { label: string; description: string }
+> = {
+  THIRD_PARTY_CERTIFICATE: {
+    label: 'Third-party certified',
+    description: 'Certificate issued by an accredited external body.'
+  },
+  INTERNATIONAL_STANDARD: {
+    label: 'To published standard',
+    description: 'Produced to a published international or national standard.'
+  },
+  INTERNAL_SPECIFICATION: {
+    label: 'Manufacturer specification',
+    description: 'Stated by LELOI METAL from internal process specifications; not externally audited.'
+  }
+};
 
 export interface TechnicalClaim {
   id: string;

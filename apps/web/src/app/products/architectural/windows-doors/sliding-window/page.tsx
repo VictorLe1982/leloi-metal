@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@leloi/ui';
 import { getPublicClaimsByEntityId, getClaimSourceById } from '@leloi/types';
+import { EvidenceTierBadge } from '@/components/architectural/EvidenceTierBadge';
 
 export const metadata: Metadata = {
   title: 'Aluminium Sliding Window Systems | 2-Track & 3-Track Profiles | LELOI METAL',
@@ -36,6 +37,44 @@ export const metadata: Metadata = {
   ]
 };
 
+/**
+ * Single source for this page's FAQ. Rendered into the visible accordion and
+ * into FAQPage JSON-LD, so the structured data can never describe questions the
+ * page does not actually show — which Google treats as a policy violation.
+ */
+const SLIDING_WINDOW_FAQS = [
+  {
+    question: 'How does the sliding window prevent water leakage during high typhoons?',
+    answer:
+      'The outer sill is engineered with an internal water gutter and cascade fall. Weep hole slots are punched with spring-loaded non-return flutter valves that vent hydrostatic water pressure while preventing wind pressure backdraft.'
+  },
+  {
+    question: 'Can we order custom lengths to eliminate cutting waste at our factory?',
+    answer:
+      'Yes. While standard extrusion lengths are 5.8m and 6.0m (optimized for 20GP and 40HQ containers), our automated precision cut-to-length saws can supply pre-cut lengths to your exact bill of materials with tolerances down to ±0.5mm.'
+  },
+  {
+    question: 'Can the 3-track frame support an integrated stainless steel insect wire screen?',
+    answer:
+      'Yes. The third exterior track is specifically designed to carry a lightweight insect screen sash fitted with 304 stainless steel or fiberglass insect mesh.'
+  },
+  {
+    question: 'What track configurations are available for this sliding window system?',
+    answer:
+      'We supply 2-track profiles (for 2 or 4 sliding panels) and 3-track profiles (for 3 panels, or 2 sliding panels with an integrated insect screen track).'
+  },
+  {
+    question: 'What glass thicknesses can be glazed into the sash profiles?',
+    answer:
+      'The sash accommodates single glass from 5mm to 8mm, double-glazed insulated units (IGUs) up to 24mm, as well as laminated safety glass from 6.38mm to 10.76mm.'
+  },
+  {
+    question: 'What warranty is offered on the powder coating?',
+    answer:
+      'Warranties of up to 10 years are available on approved AkzoNobel powder coating systems, subject to the coating system selected, project location, environmental exposure and applicable warranty conditions.'
+  }
+];
+
 export default function SlidingWindowSystemPage() {
   const publicClaims = getPublicClaimsByEntityId('sys-arch-win-sliding');
 
@@ -43,28 +82,34 @@ export default function SlidingWindowSystemPage() {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: 'Aluminium Sliding Window System',
-    image: 'https://leloimetal.com/images/products/architectural-systems/window-door/hero.webp',
+    image:
+      'https://leloimetal.com/media/architectural/gallery/architectural-sliding-door-gallery-01.webp',
+    url: 'https://leloimetal.com/products/architectural/windows-doors/sliding-window',
     description:
       'Precision architectural aluminium sliding window system featuring 2-track and 3-track configurations, stainless steel roller rails, and AkzoNobel powder coating.',
+    material: '6063-T5 aluminium',
     brand: {
       '@type': 'Brand',
       name: 'LELOI METAL'
     },
     manufacturer: {
       '@type': 'Organization',
-      name: 'LELOI EXIM GLOBAL'
+      name: 'LELOI EXIM GLOBAL CO., LTD'
     },
-    offers: {
-      '@type': 'AggregateOffer',
-      priceCurrency: 'USD',
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        priceType: 'https://schema.org/InvoicePrice',
-        description: 'B2B Wholesale Quotation upon technical drawing submission'
+    // No offers node: schema.org requires a numeric price, and this system is
+    // priced per drawing and container volume.
+    additionalProperty: [
+      {
+        '@type': 'PropertyValue',
+        name: 'Pricing model',
+        value: 'B2B wholesale quotation upon technical drawing submission'
       },
-      itemCondition: 'https://schema.org/NewCondition',
-      availability: 'https://schema.org/InStock'
-    }
+      {
+        '@type': 'PropertyValue',
+        name: 'Track configurations',
+        value: '2-track (88mm depth) and 3-track (128mm depth)'
+      }
+    ]
   };
 
   const jsonLdBreadcrumbs = {
@@ -107,32 +152,11 @@ export default function SlidingWindowSystemPage() {
   const jsonLdFaq = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'What track configurations are available for this sliding window system?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'We supply 2-track profiles (for 2 or 4 sliding panels) and 3-track profiles (for 3 panels or 2 sliding panels with an integrated insect screen track).'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'What glass thicknesses can be glazed into the sash profiles?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'The sash accommodates single glass from 5mm to 8mm, double-glazed insulated units (IGUs) up to 24mm, as well as laminated safety glass.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'What warranty is offered on the powder coating?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'We offer warranties up to 10 years on approved AkzoNobel powder coating systems.'
-        }
-      }
-    ]
+    mainEntity: SLIDING_WINDOW_FAQS.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer }
+    }))
   };
 
   return (
@@ -152,7 +176,7 @@ export default function SlidingWindowSystemPage() {
       />
 
       {/* 1. HERO SECTION */}
-      <section className="relative bg-gradient-to-b from-slate-900 via-[#0A2D5B] to-slate-900 text-white pt-10 pb-16 lg:pb-20 border-b border-slate-800">
+      <section className="relative bg-gradient-to-b from-slate-900 via-navy to-slate-900 text-white pt-10 pb-16 lg:pb-20 border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-6">
@@ -225,7 +249,7 @@ export default function SlidingWindowSystemPage() {
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs text-slate-200">
                   <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-                  AkzoNobel Approved
+                  AkzoNobel Powder Systems
                 </span>
               </div>
 
@@ -233,7 +257,7 @@ export default function SlidingWindowSystemPage() {
                 <Link href="/rfq?division=architectural&family=windows-doors&system=sliding-window">
                   <Button
                     size="lg"
-                    className="bg-[#2F7BFF] hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg shadow-blue-500/20 flex items-center gap-2"
+                    className="bg-blue hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg shadow-blue-500/20 flex items-center gap-2"
                   >
                     <span>Send Project Requirement</span>
                     <ArrowRight className="w-4 h-4" />
@@ -257,8 +281,8 @@ export default function SlidingWindowSystemPage() {
               <div className="relative rounded-2xl overflow-hidden border border-slate-700/60 shadow-2xl bg-slate-800/50">
                 <div className="aspect-[4/3] relative w-full overflow-hidden">
                   <Image
-                    src="/images/products/architectural-systems/window-door/hero.webp"
-                    alt="Aluminium Sliding Window System"
+                    src="/media/architectural/gallery/architectural-sliding-door-gallery-01.webp"
+                    alt="Seamless multi-track aluminium sliding window system"
                     fill
                     priority
                     className="object-cover"
@@ -280,11 +304,11 @@ export default function SlidingWindowSystemPage() {
       <section className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-              <Sliders className="w-3.5 h-3.5 text-[#2F7BFF]" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+              <Sliders className="w-3.5 h-3.5 text-blue" />
               <span>Track Architecture</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
               2-Track & 3-Track Flexible Opening Configurations
             </h2>
             <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -298,7 +322,7 @@ export default function SlidingWindowSystemPage() {
               <div className="flex justify-between items-start">
                 <div>
                   <span className="text-xs font-mono font-bold text-blue-600 uppercase">Configuration A</span>
-                  <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">2-Track Frame System</h3>
+                  <h3 className="text-xl font-bold font-heading text-navy">2-Track Frame System</h3>
                 </div>
                 <span className="px-2.5 py-1 rounded bg-blue-100 text-blue-800 text-xs font-bold font-mono">
                   88mm Depth
@@ -328,7 +352,7 @@ export default function SlidingWindowSystemPage() {
               <div className="flex justify-between items-start">
                 <div>
                   <span className="text-xs font-mono font-bold text-blue-600 uppercase">Configuration B</span>
-                  <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">3-Track Frame System with Flyscreen</h3>
+                  <h3 className="text-xl font-bold font-heading text-navy">3-Track Frame System with Flyscreen</h3>
                 </div>
                 <span className="px-2.5 py-1 rounded bg-blue-100 text-blue-800 text-xs font-bold font-mono">
                   128mm Depth
@@ -360,11 +384,11 @@ export default function SlidingWindowSystemPage() {
       <section className="py-16 bg-slate-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-10">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#2F7BFF]" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+              <ShieldCheck className="w-3.5 h-3.5 text-blue" />
               <span>Verified Claims</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
               Profile Design & Verified Specifications
             </h2>
             <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -390,12 +414,9 @@ export default function SlidingWindowSystemPage() {
                       <td className="py-3.5 px-5 font-semibold text-slate-900 capitalize">
                         {claim.field.replace(/([A-Z])/g, ' $1').trim()}
                       </td>
-                      <td className="py-3.5 px-5 font-medium text-[#0A2D5B]">{claim.value}</td>
+                      <td className="py-3.5 px-5 font-medium text-navy">{claim.value}</td>
                       <td className="py-3.5 px-5">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>VERIFIED</span>
-                        </span>
+                        <EvidenceTierBadge tier={source?.evidenceTier} />
                       </td>
                       <td className="py-3.5 px-5 font-mono text-[11px] text-slate-500">
                         {source ? (
@@ -412,12 +433,21 @@ export default function SlidingWindowSystemPage() {
               </tbody>
             </table>
 
-            <div className="p-4 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
-              <span className="flex items-center gap-1.5">
-                <Info className="w-4 h-4 text-blue-500" />
-                <span>Zero unverified thermal U-values or acoustic ratings rendered publicly. Project-specific simulations provided upon drawing submission.</span>
+            <div className="p-4 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 space-y-1.5">
+              <span className="flex items-start gap-1.5">
+                <Info className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                <span>
+                  Every value above carries its source. We publish no thermal U-value or acoustic
+                  rating, because those require project-specific simulation and testing we have not
+                  had carried out for this system.
+                </span>
               </span>
-              <span className="font-mono text-[11px]">Audit Passed: 100% Provenance</span>
+              <p className="pl-5.5 text-[11px] leading-relaxed">
+                Badges state the <strong>kind</strong> of evidence, not a uniform verification.
+                &ldquo;Manufacturer specification&rdquo; means stated by us from internal process
+                documents and not externally audited. Certificates and test reports are available
+                to buyers under NDA.
+              </p>
             </div>
           </div>
         </div>
@@ -429,11 +459,11 @@ export default function SlidingWindowSystemPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Glazing Pocket Compatibility */}
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider">
-                <Layers className="w-3.5 h-3.5 text-[#2F7BFF]" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider">
+                <Layers className="w-3.5 h-3.5 text-blue" />
                 <span>Fenestration Engineering</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#0A2D5B]">
+              <h3 className="text-xl sm:text-2xl font-bold font-heading text-navy">
                 Glazing Pocket Compatibility
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -454,11 +484,11 @@ export default function SlidingWindowSystemPage() {
 
             {/* Hardware Integration */}
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider">
-                <Sliders className="w-3.5 h-3.5 text-[#2F7BFF]" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider">
+                <Sliders className="w-3.5 h-3.5 text-blue" />
                 <span>Hardware Compatibility</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#0A2D5B]">
+              <h3 className="text-xl sm:text-2xl font-bold font-heading text-navy">
                 Hardware Integration & Rollers
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -484,11 +514,11 @@ export default function SlidingWindowSystemPage() {
       <section className="py-16 bg-slate-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-8">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-[#2F7BFF]" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-blue" />
               <span>Surface Treatment</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
               Surface Finishes & AkzoNobel Powder Coating
             </h2>
             <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
@@ -498,17 +528,17 @@ export default function SlidingWindowSystemPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
             <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
-              <h4 className="text-sm font-bold font-heading text-[#0A2D5B]">Mill Finish</h4>
+              <h4 className="text-sm font-bold font-heading text-navy">Mill Finish</h4>
               <p className="text-xs text-slate-600">Clean, extruded bare aluminium ready for third-party finishing or non-exposed framing.</p>
             </div>
             <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2">
-              <h4 className="text-sm font-bold font-heading text-[#0A2D5B]">Architectural Anodized</h4>
+              <h4 className="text-sm font-bold font-heading text-navy">Architectural Anodized</h4>
               <p className="text-xs text-slate-600">15–20µm anodic layer in natural clear satin, bronze, champagne, or deep matte black.</p>
             </div>
             <div className="p-6 rounded-2xl bg-white border-2 border-blue-500/30 shadow-xs space-y-2">
               <div className="flex justify-between items-center">
-                <h4 className="text-sm font-bold font-heading text-[#0A2D5B]">AkzoNobel Powder Coated</h4>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#0A2D5B] text-white">Approved</span>
+                <h4 className="text-sm font-bold font-heading text-navy">AkzoNobel Powder Coated</h4>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-navy text-white">Approved</span>
               </div>
               <p className="text-xs text-slate-600">Warranties up to 10 years* across classic RAL colors and custom metallic architectural tones.</p>
             </div>
@@ -530,7 +560,7 @@ export default function SlidingWindowSystemPage() {
               <span className="text-xs font-mono text-blue-600 uppercase font-semibold tracking-wider">
                 Fenestration Suite
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#0A2D5B]">
+              <h3 className="text-xl sm:text-2xl font-bold font-heading text-navy">
                 Related Architectural Window & Door Systems
               </h3>
             </div>
@@ -550,7 +580,7 @@ export default function SlidingWindowSystemPage() {
             >
               <div>
                 <span className="text-xs text-slate-500 font-mono">System LM-CW</span>
-                <h4 className="text-sm font-bold font-heading text-[#0A2D5B] group-hover:text-blue-600 transition-colors">
+                <h4 className="text-sm font-bold font-heading text-navy group-hover:text-blue-600 transition-colors">
                   Architectural Casement Windows
                 </h4>
               </div>
@@ -563,7 +593,7 @@ export default function SlidingWindowSystemPage() {
             >
               <div>
                 <span className="text-xs text-slate-500 font-mono">System LM-SD</span>
-                <h4 className="text-sm font-bold font-heading text-[#0A2D5B] group-hover:text-blue-600 transition-colors">
+                <h4 className="text-sm font-bold font-heading text-navy group-hover:text-blue-600 transition-colors">
                   Heavy-Duty Patio Sliding Doors
                 </h4>
               </div>
@@ -576,7 +606,7 @@ export default function SlidingWindowSystemPage() {
             >
               <div>
                 <span className="text-xs text-slate-500 font-mono">System LM-TB</span>
-                <h4 className="text-sm font-bold font-heading text-[#0A2D5B] group-hover:text-blue-600 transition-colors">
+                <h4 className="text-sm font-bold font-heading text-navy group-hover:text-blue-600 transition-colors">
                   Polyamide Thermal-Break Profiles
                 </h4>
               </div>
@@ -590,42 +620,25 @@ export default function SlidingWindowSystemPage() {
       <section className="py-16 bg-slate-50 border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-              <HelpCircle className="w-3.5 h-3.5 text-[#2F7BFF]" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+              <HelpCircle className="w-3.5 h-3.5 text-blue" />
               <span>Sliding Window Engineering FAQ</span>
             </div>
-            <h3 className="text-2xl font-bold font-heading text-[#0A2D5B]">
+            <h3 className="text-2xl font-bold font-heading text-navy">
               Frequently Asked Questions: Sliding Windows
             </h3>
           </div>
 
           <div className="space-y-4 text-xs sm:text-sm">
-            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1.5">
-              <h4 className="font-bold text-[#0A2D5B]">
-                How does the sliding window prevent water leakage during high typhoons?
-              </h4>
-              <p className="text-slate-600 leading-relaxed">
-                The outer sill is engineered with an internal water gutter and cascade fall. Weep hole slots are punched with spring-loaded non-return flutter valves that vent hydrostatic water pressure while preventing wind pressure backdraft.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1.5">
-              <h4 className="font-bold text-[#0A2D5B]">
-                Can we order custom lengths to eliminate cutting waste at our factory?
-              </h4>
-              <p className="text-slate-600 leading-relaxed">
-                Yes. While standard extrusion lengths are 5.8m and 6.0m (optimized for 20GP and 40HQ containers), our automated precision cut-to-length saws can supply pre-cut lengths to your exact bill of materials with tolerances down to ±0.5mm.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1.5">
-              <h4 className="font-bold text-[#0A2D5B]">
-                Can the 3-track frame support an integrated stainless steel insect wire screen?
-              </h4>
-              <p className="text-slate-600 leading-relaxed">
-                Yes. The third exterior track is specifically designed to carry a lightweight insect screen sash fitted with 304 stainless steel or fiberglass insect mesh.
-              </p>
-            </div>
+            {SLIDING_WINDOW_FAQS.map((faq) => (
+              <div
+                key={faq.question}
+                className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1.5"
+              >
+                <h4 className="font-bold text-navy">{faq.question}</h4>
+                <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -633,7 +646,17 @@ export default function SlidingWindowSystemPage() {
       {/* 11. RFQ CTA SECTION */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-3xl bg-gradient-to-br from-[#0A2D5B] via-[#0D3B75] to-slate-900 text-white p-8 sm:p-14 overflow-hidden shadow-xl border border-blue-900/50">
+          <div className="relative rounded-3xl bg-gradient-to-br from-navy via-[#0D3B75] to-slate-900 text-white p-8 sm:p-14 overflow-hidden shadow-xl border border-blue-900/50">
+            {/* Subtle Architectural Ambient Background */}
+            <div className="absolute inset-0 opacity-15 mix-blend-overlay pointer-events-none">
+              <Image
+                src="/media/architectural/hero/architectural-sliding-door-gallery-01.webp"
+                alt="Architectural Aluminium Facade"
+                fill
+                className="object-cover"
+              />
+            </div>
+
             <div className="relative z-10 max-w-3xl space-y-5">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold uppercase tracking-wider">
                 Direct Extrusion Manufacturer
@@ -649,7 +672,7 @@ export default function SlidingWindowSystemPage() {
                 <Link href="/rfq?division=architectural&family=windows-doors&system=sliding-window">
                   <Button
                     size="lg"
-                    className="bg-[#2F7BFF] hover:bg-blue-600 text-white font-semibold px-7 py-3 rounded-xl shadow-lg shadow-blue-500/25 flex items-center gap-2"
+                    className="bg-blue hover:bg-blue-600 text-white font-semibold px-7 py-3 rounded-xl shadow-lg shadow-blue-500/25 flex items-center gap-2"
                   >
                     <span>Send Project Requirement</span>
                     <ArrowRight className="w-4 h-4" />

@@ -167,17 +167,17 @@ export default function BuyersPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#F1F4F8]">
+    <div className="min-h-screen bg-light-gray">
       <AdminNav />
 
       <div className="p-6 lg:p-10 space-y-6 max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-[#2F7BFF]">
+            <div className="text-xs font-semibold uppercase tracking-wider text-blue">
               LEAD SCORING & BUYER SEGMENTATION
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B]">
+            <h1 className="text-2xl sm:text-3xl font-bold font-heading text-navy">
               Verified Buyer Accounts Directory
             </h1>
           </div>
@@ -200,7 +200,7 @@ export default function BuyersPage() {
         </div>
 
         {/* Filters Toolbar */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
+        <div className="bg-white rounded-xl border border-slate-200 p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-semibold text-slate-500 mr-2 flex items-center gap-1">
               <Filter className="w-3.5 h-3.5" /> Buyer Type:
@@ -218,7 +218,7 @@ export default function BuyersPage() {
                 onClick={() => setSelectedType(t.code)}
                 className={`px-3 py-1 rounded-md text-xs font-semibold transition-colors ${
                   selectedType === t.code
-                    ? 'bg-[#0A2D5B] text-white'
+                    ? 'bg-navy text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -234,17 +234,17 @@ export default function BuyersPage() {
               placeholder="Search company, country or alloy..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#F8FAFC] border border-[#CBD5E1] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2F7BFF]"
+              className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue"
             />
           </div>
         </div>
 
         {/* Main Table */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] shadow-xs overflow-hidden">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-[#0A2D5B] text-white">
+                <tr className="bg-navy text-white">
                   <th className="py-3 px-4">Company & Country</th>
                   <th className="py-3 px-3">Segment</th>
                   <th className="py-3 px-3">Est. Annual Volume</th>
@@ -255,11 +255,11 @@ export default function BuyersPage() {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E2E8F0] text-slate-700">
+              <tbody className="divide-y divide-slate-200 text-slate-700">
                 {filtered.map((buyer) => (
                   <tr key={buyer.id} className="hover:bg-slate-50 transition-colors">
                     <td className="py-3.5 px-4">
-                      <div className="font-bold text-[#0A2D5B] text-sm">{buyer.name}</div>
+                      <div className="font-bold text-navy text-sm">{buyer.name}</div>
                       <div className="text-[11px] text-slate-500 flex items-center gap-1.5 mt-0.5">
                         <span className="font-mono font-semibold">{buyer.countryCode}</span>
                         <span>•</span>
@@ -267,7 +267,7 @@ export default function BuyersPage() {
                       </div>
                     </td>
                     <td className="py-3.5 px-3 font-medium">{buyer.buyerTypeLabel}</td>
-                    <td className="py-3.5 px-3 font-semibold text-[#0A2D5B]">
+                    <td className="py-3.5 px-3 font-semibold text-navy">
                       {buyer.annualTons.toLocaleString()} Tons/yr
                     </td>
                     <td className="py-3.5 px-3 font-mono">{buyer.primaryAlloy}</td>
@@ -286,12 +286,12 @@ export default function BuyersPage() {
                     </td>
                     <td className="py-3.5 px-3">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-sm text-[#0A2D5B]">
+                        <span className="font-bold text-sm text-navy">
                           {buyer.qualificationScore}/100
                         </span>
                         <div className="w-16 bg-slate-200 rounded-full h-1.5 overflow-hidden">
                           <div
-                            className="bg-[#2F7BFF] h-1.5 rounded-full"
+                            className="bg-blue h-1.5 rounded-full"
                             style={{ width: `${buyer.qualificationScore}%` }}
                           />
                         </div>
@@ -333,10 +333,10 @@ export default function BuyersPage() {
             <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-6 shadow-2xl border border-slate-200">
               <div className="flex items-start justify-between border-b border-slate-100 pb-4">
                 <div>
-                  <div className="text-xs uppercase font-mono text-[#2F7BFF]">
+                  <div className="text-xs uppercase font-mono text-blue">
                     {activeModalAccount.id} • {activeModalAccount.country}
                   </div>
-                  <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+                  <h3 className="text-xl font-bold font-heading text-navy">
                     {activeModalAccount.name}
                   </h3>
                   <div className="text-xs text-slate-500">
@@ -345,7 +345,7 @@ export default function BuyersPage() {
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-extrabold text-[#2F7BFF]">
+                  <div className="text-2xl font-extrabold text-blue">
                     {activeModalAccount.qualificationScore}
                   </div>
                   <div className="text-[10px] text-slate-400 font-bold uppercase">Total Score</div>
@@ -361,7 +361,7 @@ export default function BuyersPage() {
                 <div className="p-3 bg-slate-50 rounded-lg space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="text-slate-700">1. Target Market & FTA Fit</span>
-                    <span className="text-[#0A2D5B]">
+                    <span className="text-navy">
                       {activeModalAccount.scoreBreakdown.marketFit} / 25 pts
                     </span>
                   </div>
@@ -373,7 +373,7 @@ export default function BuyersPage() {
                 <div className="p-3 bg-slate-50 rounded-lg space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="text-slate-700">2. Volume & Press Envelope Match</span>
-                    <span className="text-[#0A2D5B]">
+                    <span className="text-navy">
                       {activeModalAccount.scoreBreakdown.volumeCapacity} / 25 pts
                     </span>
                   </div>
@@ -385,7 +385,7 @@ export default function BuyersPage() {
                 <div className="p-3 bg-slate-50 rounded-lg space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="text-slate-700">3. Process & Surface Finish Match</span>
-                    <span className="text-[#0A2D5B]">
+                    <span className="text-navy">
                       {activeModalAccount.scoreBreakdown.processMatch} / 25 pts
                     </span>
                   </div>
@@ -397,7 +397,7 @@ export default function BuyersPage() {
                 <div className="p-3 bg-slate-50 rounded-lg space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="text-slate-700">4. Commercial & Payment Reliability</span>
-                    <span className="text-[#0A2D5B]">
+                    <span className="text-navy">
                       {activeModalAccount.scoreBreakdown.commercialRisk} / 25 pts
                     </span>
                   </div>

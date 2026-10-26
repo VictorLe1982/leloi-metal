@@ -11,13 +11,24 @@ import {
   FileCheck,
   ArrowRight,
   ShieldCheck,
-  CheckCircle2
+  CheckCircle2,
+  Award,
+  Network
 } from 'lucide-react';
+import { CERTIFICATIONS, FACTORY_EQUIPMENT, AFFILIATED_NETWORK } from '@/data/company';
 
 export const metadata: Metadata = {
-  title: 'Manufacturing Capabilities | Precision Aluminium Extrusion & CNC Machining Vietnam',
+  title: 'Manufacturing Capabilities | Aluminium Extrusion Factory Vietnam | LELOI METAL',
   description:
-    'Comprehensive manufacturing capabilities of LELOI METAL: Extrusion presses, in-house die design, CNC long-bed machining, precision mitre cutting, anodizing, powder coating and CMM quality control.'
+    'ISO 9001:2015 certified aluminium factory in Hung Yen, Vietnam: 5-inch and 6-inch extrusion presses, age-hardening oven, two German-standard powder coating lines, wood-grain transfer and four CNC fabrication centres.',
+  keywords: [
+    'aluminium extrusion factory vietnam',
+    'aluminium press 5 inch 6 inch',
+    'german standard powder coating line vietnam',
+    'wood grain aluminium profile vietnam',
+    'iso 9001 aluminium manufacturer'
+  ],
+  alternates: { canonical: 'https://leloimetal.com/capabilities' }
 };
 
 const CAPABILITIES = [
@@ -67,14 +78,14 @@ const CAPABILITIES = [
 
 export default function CapabilitiesPage() {
   return (
-    <div className="min-h-screen bg-[#F1F4F8]/50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-gray/50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-[#2F7BFF]">
+          <div className="text-xs uppercase font-heading font-semibold tracking-widest text-blue">
             PRECISION MANUFACTURING
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0A2D5B] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-navy tracking-tight">
             Factory Manufacturing Capabilities
           </h1>
           <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
@@ -89,33 +100,37 @@ export default function CapabilitiesPage() {
             return (
               <Card key={cap.slug} variant="technical" className="p-6 flex flex-col justify-between">
                 <div>
-                  <div className="w-12 h-12 rounded-lg bg-[#0A2D5B]/5 flex items-center justify-center text-[#0A2D5B] mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-navy/5 flex items-center justify-center text-navy mb-4">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold font-heading text-[#0A2D5B]">
+                  <h3 className="text-xl font-bold font-heading text-navy">
                     {cap.name}
                   </h3>
                   <p className="text-xs text-slate-600 mt-2 leading-relaxed">
                     {cap.description}
                   </p>
 
-                  <div className="mt-4 pt-3 border-t border-[#E2E8F0] space-y-1.5">
+                  <div className="mt-4 pt-3 border-t border-slate-200 space-y-1.5">
                     {cap.specs.map((s, idx) => (
-                      <div key={idx} className="flex items-center gap-1.5 text-xs text-[#0A2D5B]">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#2F7BFF] shrink-0" />
+                      <div key={idx} className="flex items-center gap-1.5 text-xs text-navy">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue shrink-0" />
                         <span>{s}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                    Verified Process
-                  </span>
+                <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between">
+                  <Link
+                    href={`/capabilities/${cap.slug}`}
+                    className="text-xs font-heading font-semibold text-blue hover:underline flex items-center gap-1"
+                  >
+                    View Capability Detail
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                   <Link
                     href={`/rfq?capability=${cap.slug}`}
-                    className="text-xs font-heading font-semibold text-[#0A2D5B] hover:text-[#2F7BFF] flex items-center gap-1"
+                    className="text-xs font-heading font-semibold text-navy hover:text-blue"
                   >
                     Request Quote →
                   </Link>
@@ -125,8 +140,73 @@ export default function CapabilitiesPage() {
           })}
         </div>
 
+        {/* Installed Equipment & Certification */}
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+          <div className="px-6 sm:px-8 py-6 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div className="text-xs uppercase font-heading font-semibold tracking-widest text-blue mb-1">
+                GROUP MANUFACTURING FACILITY
+              </div>
+              <h2 className="text-2xl font-bold font-heading text-navy">
+                Installed Equipment — Hung Yen Plant
+              </h2>
+            </div>
+            {CERTIFICATIONS.map((cert) => (
+              <span
+                key={cert.standard}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold"
+                title={cert.scope}
+              >
+                <Award className="w-3.5 h-3.5 text-emerald-600" />
+                {cert.standard} Certified
+              </span>
+            ))}
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr className="bg-light-gray border-b border-slate-200 text-xs uppercase tracking-wider text-navy">
+                  <th className="py-3 px-6 font-bold">Equipment</th>
+                  <th className="py-3 px-6 font-bold w-20 text-center">Units</th>
+                  <th className="py-3 px-6 font-bold">Production Role</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {FACTORY_EQUIPMENT.map((item) => (
+                  <tr key={item.name} className="hover:bg-blue-50/30 transition-colors">
+                    <td className="py-4 px-6 font-semibold text-navy align-top">
+                      {item.name}
+                    </td>
+                    <td className="py-4 px-6 text-center align-top">
+                      <span className="inline-block px-2.5 py-1 rounded-lg bg-navy text-white text-xs font-mono font-bold">
+                        {item.quantity}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6 text-xs text-slate-600 leading-relaxed align-top">
+                      {item.detail}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="px-6 sm:px-8 py-5 bg-light-gray border-t border-slate-200 flex items-start gap-3">
+            <Network className="w-5 h-5 text-blue shrink-0 mt-0.5" />
+            <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <span className="font-bold text-navy block mb-0.5">
+                Plus {AFFILIATED_NETWORK.factoryCount} affiliated partner factories —{' '}
+                {AFFILIATED_NETWORK.combinedAnnualCapacityTonnes.toLocaleString('en-US')}+
+                tonnes/year combined
+              </span>
+              {AFFILIATED_NETWORK.description}
+            </div>
+          </div>
+        </div>
+
         {/* Engineering CTA */}
-        <div className="bg-[#0A2D5B] text-white rounded-2xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="bg-navy text-white rounded-2xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-xl space-y-2">
             <h3 className="text-2xl sm:text-3xl font-bold font-heading text-white">
               Have an Engineering Specification or Drawing?

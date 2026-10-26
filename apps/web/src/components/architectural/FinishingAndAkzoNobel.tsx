@@ -64,11 +64,11 @@ export const FinishingAndAkzoNobel: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-[#2F7BFF]" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-blue" />
             <span>Surface Finishing & Durability</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0A2D5B] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold font-heading text-navy tracking-tight">
             Surface Finishes & AkzoNobel Powder Coating
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -81,7 +81,7 @@ export const FinishingAndAkzoNobel: React.FC = () => {
           {/* Pillar 1: Mill Finish */}
           <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-blue-200 hover:shadow-sm transition-all space-y-3">
             <span className="text-xs font-bold font-mono text-slate-500 uppercase tracking-wider">01 / Extrusion</span>
-            <h3 className="text-lg font-bold font-heading text-[#0A2D5B]">Mill Finish</h3>
+            <h3 className="text-lg font-bold font-heading text-navy">Mill Finish</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
               Clean, bare extruded aluminium direct from the extrusion press. Uniform surface condition suitable for local fabricators who apply their own custom finishing or for internal structural sub-frames.
             </p>
@@ -100,7 +100,7 @@ export const FinishingAndAkzoNobel: React.FC = () => {
           {/* Pillar 2: Architectural Anodized */}
           <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-blue-200 hover:shadow-sm transition-all space-y-3">
             <span className="text-xs font-bold font-mono text-slate-500 uppercase tracking-wider">02 / Electrochemical</span>
-            <h3 className="text-lg font-bold font-heading text-[#0A2D5B]">Architectural Anodized</h3>
+            <h3 className="text-lg font-bold font-heading text-navy">Architectural Anodized</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
               Controlled anodic oxide layer forming an integral, sapphire-hard surface that cannot peel or flake. Ideal for contemporary metallic design and marine coastal resilience.
             </p>
@@ -120,9 +120,9 @@ export const FinishingAndAkzoNobel: React.FC = () => {
           <div className="p-6 rounded-2xl border-2 border-blue-500/30 bg-gradient-to-b from-blue-50/40 to-white shadow-xs space-y-3 relative">
             <div className="flex justify-between items-center">
               <span className="text-xs font-bold font-mono text-blue-600 uppercase tracking-wider">03 / Premium Coating</span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#0A2D5B] text-white">AkzoNobel Coater</span>
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-navy text-white">AkzoNobel Powder Systems</span>
             </div>
-            <h3 className="text-lg font-bold font-heading text-[#0A2D5B]">AkzoNobel Powder Coating</h3>
+            <h3 className="text-lg font-bold font-heading text-navy">AkzoNobel Powder Coating</h3>
             <p className="text-xs text-slate-700 leading-relaxed font-medium">
               Premium architectural powder coating using AkzoNobel powder coating systems for exterior and interior aluminium applications.
             </p>
@@ -149,11 +149,11 @@ export const FinishingAndAkzoNobel: React.FC = () => {
         {/* Color Selector Section */}
         <div id="colors" className="pt-6 border-t border-slate-200 scroll-mt-28">
           <div className="max-w-3xl mb-8">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-[#0A2D5B] text-xs font-semibold uppercase tracking-wider mb-2">
-              <Palette className="w-3.5 h-3.5 text-[#2F7BFF]" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-50 text-navy text-xs font-semibold uppercase tracking-wider mb-2">
+              <Palette className="w-3.5 h-3.5 text-blue" />
               <span>Architectural Palette</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#0A2D5B]">
+            <h3 className="text-xl sm:text-2xl font-bold font-heading text-navy">
               Standard Architectural Colors & Custom Project Matching
             </h3>
             <p className="mt-1 text-xs sm:text-sm text-slate-600">
@@ -175,7 +175,7 @@ export const FinishingAndAkzoNobel: React.FC = () => {
                     }}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                       selectedGroup === key
-                        ? 'bg-[#0A2D5B] text-white shadow-xs'
+                        ? 'bg-navy text-white shadow-xs'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
@@ -194,7 +194,7 @@ export const FinishingAndAkzoNobel: React.FC = () => {
                       onClick={() => setActiveColor(color)}
                       className={`p-3 rounded-xl border text-left transition-all ${
                         isSelected
-                          ? 'border-[#2F7BFF] bg-blue-50/50 ring-2 ring-blue-400/30'
+                          ? 'border-blue bg-blue-50/50 ring-2 ring-blue-400/30'
                           : 'border-slate-200 bg-white hover:border-slate-300'
                       }`}
                     >
@@ -217,7 +217,7 @@ export const FinishingAndAkzoNobel: React.FC = () => {
 
               {/* Custom RAL Matching Callout */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-start gap-3">
-                <Sparkles className="w-4 h-4 text-[#2F7BFF] shrink-0 mt-0.5" />
+                <Sparkles className="w-4 h-4 text-blue shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-slate-800">Custom Project Color Matching:</span>{' '}
                   Need a bespoke shade? Provide your RAL, Pantone, or physical master sample. Our automated dosing powder coating lab matches custom architectural gloss, metallic pearlescence, and fine textures for qualifying orders.
@@ -231,7 +231,7 @@ export const FinishingAndAkzoNobel: React.FC = () => {
                 <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                   <div>
                     <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Active Selection</span>
-                    <h4 className="text-lg font-bold font-heading text-[#0A2D5B]">{activeColor.name}</h4>
+                    <h4 className="text-lg font-bold font-heading text-navy">{activeColor.name}</h4>
                   </div>
                   <span className="px-2.5 py-1 rounded bg-slate-100 font-mono text-xs font-bold text-slate-700">
                     {activeColor.code}
@@ -270,7 +270,7 @@ export const FinishingAndAkzoNobel: React.FC = () => {
                     )}`}
                     className="block w-full"
                   >
-                    <Button className="w-full bg-[#0A2D5B] hover:bg-blue-900 text-white text-xs py-2.5 justify-center flex items-center gap-2">
+                    <Button className="w-full bg-navy hover:bg-blue-900 text-white text-xs py-2.5 justify-center flex items-center gap-2">
                       <span>Request Sample with this Color</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Button>
